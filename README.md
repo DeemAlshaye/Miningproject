@@ -1,6 +1,6 @@
 # IT326 project | data science salaries 
 Student Name: Norah Mohammed Alwohaibi | Student ID: 443200753
- Student Name: | Student ID: 
+ Student Name: Deem Alshaye | Student ID: 443200583
  Student Name:  | Student ID: 
  Student Name:  | Student ID: 
 
