@@ -11,8 +11,12 @@ summary(ds_salaries$remote_ratio)
 boxplot.stats(ds_salaries$salary)$out
 boxplot.stats(ds_salaries$salary_in_usd)$out              
 boxplot.stats(ds_salaries$remote_ratio)$out
+#sum Outliars
+sum(boxplot.stats(ds_salaries$salary)$out)
 
+sum(boxplot.stats(ds_salaries$salary_in_usd)$out)
 
+sum(boxplot.stats(ds_salaries$remote_ratio)$out)
 #data cleaning
 
 #checking for missing values
