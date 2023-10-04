@@ -7,8 +7,36 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
+summary of the data
 ```{r}
-plot(cars)
+str(ds_salaries)
+```
+```{r}
+ds_salaries[1:10,]
+```
+sample of raw data
+```{r}
+ds_salaries[100:110,]
+```
+statical mesurment
+```{r}
+summary(ds_salaries$salary)
+```
+```{r}
+summary(ds_salaries$remote_ratio)
+```
+```{r}
+summary(ds_salaries$salary_in_usd)
+```
+finding outliars
+```{r}
+boxplot.stats(ds_salaries$salary)$out
+```
+```{r}
+boxplot.stats(ds_salaries$salary_in_usd)$out
+```
+```{r}
+boxplot.stats(ds_salaries$remote_ratio)$out
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
