@@ -9,13 +9,12 @@ output:
 
 #uploding the data
 ```{r}
+library(dbplyr)
 ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 View(ds_salaries)
 ```
 
-```{r}
-library(dbplyr)
-```
+
 #summray the data
 ```{r}
 str(ds_salaries)
