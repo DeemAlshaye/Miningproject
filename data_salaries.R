@@ -1,7 +1,7 @@
 #missing values
 sum(is.na(ds_salaries))
 
-#raw data sambles
+#raw data samples
 
 ds_salaries[1:10,]
 ds_salaries[100:110,]
