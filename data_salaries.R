@@ -1,6 +1,11 @@
 #missing values
 sum(is.na(ds_salaries))
 
+#raw data sambles
+
+ds_salaries[1:10,]
+ds_salaries[100:110,]
+ds_salaries[1000:1010,]
 #statical mesurment
 summary(ds_salaries$salary)
 
