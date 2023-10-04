@@ -36,4 +36,4 @@ boxplot.stats(ds_salaries$salary)$out
 outliers <- boxplot(ds_salaries$salary_in_usd, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary_in_usd%in% outliers),]
 boxplot.stats(ds_salaries$salary_in_usd)$out
-
+mmmm
