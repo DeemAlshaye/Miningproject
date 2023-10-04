@@ -36,4 +36,8 @@ boxplot.stats(ds_salaries$salary)$out
 outliers <- boxplot(ds_salaries$salary_in_usd, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary_in_usd%in% outliers),]
 boxplot.stats(ds_salaries$salary_in_usd)$out
-mmmm
+
+#normlize the data
+
+ds_salaries$salary<-normalize(ds_salaries$salary)
+ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
