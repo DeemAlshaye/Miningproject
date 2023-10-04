@@ -7,6 +7,7 @@ output:
   pdf_document: default
 ---
 
+#uploding the data
 ```{r}
 ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 View(ds_salaries)
@@ -15,20 +16,20 @@ View(ds_salaries)
 ```{r}
 library(dbplyr)
 ```
-
+#summray the data
 ```{r}
 str(ds_salaries)
 ```
-
+#data sample
 ```{r}
 samp = sample_n(ds_salaries,10)
 print(samp)
 ```
-
+#missing data
 ```{r}
 sum(is.na(ds_salaries))
 ```
-
+#statistical summarise
 ```{r}
 summary(ds_salaries$salary)
 ```
