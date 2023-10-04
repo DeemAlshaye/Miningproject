@@ -6,38 +6,43 @@ output:
     df_print: paged
   pdf_document: default
 ---
+
 ```{r}
-dataset= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
-View(dataset)
+ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
+View(ds_salaries)
 ```
 
 ```{r}
 library(dbplyr)
 ```
+
 ```{r}
 str(ds_salaries)
 ```
-
 
 ```{r}
 samp = sample_n(ds_salaries,10)
 print(samp)
 ```
+
 ```{r}
 sum(is.na(ds_salaries))
 ```
+
 ```{r}
 summary(ds_salaries$salary)
 ```
+
 ```{r}
 summary(ds_salaries$salary_in_usd)
 ```
+
 ```{r}
 summary(ds_salaries$remote_ratio)
 ```
+
 ```{r}
 var(ds_salaries$salary)
 var(ds_salaries$salary_in_usd)
 var(ds_salaries$remote_ratio)
 ```
-

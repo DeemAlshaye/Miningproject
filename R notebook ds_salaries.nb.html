@@ -1754,9 +1754,9 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YXNldD0gcmVhZC5jc3YodXJsKFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZW1BbHNoYXllL01pbmluZ3Byb2plY3QvbWFpbi9kYXRhc2V0L2RzX3NhbGFyaWVzLmNzdlwiKSwgaGVhZGVyPVRSVUUpXG5WaWV3KGRhdGFzZXQpXG5gYGAifQ== -->
-<pre class="r"><code>dataset= read.csv(url(&quot;https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv&quot;), header=TRUE)
-View(dataset)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZHNfc2FsYXJpZXM9IHJlYWQuY3N2KHVybChcImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9EZWVtQWxzaGF5ZS9NaW5pbmdwcm9qZWN0L21haW4vZGF0YXNldC9kc19zYWxhcmllcy5jc3ZcIiksIGhlYWRlcj1UUlVFKVxuVmlldyhkc19zYWxhcmllcylcbmBgYCJ9 -->
+<pre class="r"><code>ds_salaries= read.csv(url(&quot;https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv&quot;), header=TRUE)
+View(ds_salaries)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1766,6 +1766,8 @@ View(dataset)</code></pre>
 <pre class="r"><code>library(dbplyr)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKGRzX3NhbGFyaWVzKVxuYGBgIn0= -->
 <pre class="r"><code>str(ds_salaries)</code></pre>
@@ -1800,6 +1802,8 @@ print(samp)</code></pre>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGlzLm5hKGRzX3NhbGFyaWVzKSlcbmBgYCJ9 -->
 <pre class="r"><code>sum(is.na(ds_salaries))</code></pre>
@@ -1808,57 +1812,38 @@ print(samp)</code></pre>
 <pre><code>[1] 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShkc19zYWxhcmllcyRzYWxhcnkpXG5gYGAifQ== -->
 <pre class="r"><code>summary(ds_salaries$salary)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgIE1pbi4gIDFzdCBRdS4gICBNZWRpYW4gICAgIE1lYW4gIDNyZCBRdS4gICAgIE1heC4gXG4gICAgNjAwMCAgIDEwMDAwMCAgIDEzODAwMCAgIDE5MDY5NiAgIDE4MDAwMCAzMDQwMDAwMCBcbiJ9 -->
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    6000   100000   138000   190696   180000 30400000 </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShkc19zYWxhcmllcyRzYWxhcnlfaW5fdXNkKVxuYGBgIn0= -->
 <pre class="r"><code>summary(ds_salaries$salary_in_usd)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgTWluLiAxc3QgUXUuICBNZWRpYW4gICAgTWVhbiAzcmQgUXUuICAgIE1heC4gXG4gICA1MTMyICAgOTUwMDAgIDEzNTAwMCAgMTM3NTcwICAxNzUwMDAgIDQ1MDAwMCBcbiJ9 -->
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   5132   95000  135000  137570  175000  450000 </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShkc19zYWxhcmllcyRyZW1vdGVfcmF0aW8pXG5gYGAifQ== -->
 <pre class="r"><code>summary(ds_salaries$remote_ratio)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgTWluLiAxc3QgUXUuICBNZWRpYW4gICAgTWVhbiAzcmQgUXUuICAgIE1heC4gXG4gICAwLjAwICAgIDAuMDAgICAgMC4wMCAgIDQ2LjI3ICAxMDAuMDAgIDEwMC4wMCBcbiJ9 -->
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   46.27  100.00  100.00 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyKGRzX3NhbGFyaWVzJHNhbGFyeSlcbmBgYCJ9 -->
-<pre class="r"><code>var(ds_salaries$salary)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQ1MTE0OTMyMTMzNVxuIn0= -->
-<pre><code>[1] 451149321335</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyKGRzX3NhbGFyaWVzJHNhbGFyeV9pbl91c2QpXG5gYGAifQ== -->
-<pre class="r"><code>var(ds_salaries$salary_in_usd)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDM5NzYwMTE4NzlcbiJ9 -->
-<pre><code>[1] 3976011879</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyKGRzX3NhbGFyaWVzJHJlbW90ZV9yYXRpbylcbmBgYCJ9 -->
-<pre class="r"><code>var(ds_salaries$remote_ratio)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIzNjAuODk2XG4ifQ== -->
-<pre><code>[1] 2360.896</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyKGRzX3NhbGFyaWVzJHNhbGFyeSlcbnZhcihkc19zYWxhcmllcyRzYWxhcnlfaW5fdXNkKVxudmFyKGRzX3NhbGFyaWVzJHJlbW90ZV9yYXRpbylcbmBgYCJ9 -->
+<pre class="r"><code>var(ds_salaries$salary)
+var(ds_salaries$salary_in_usd)
+var(ds_salaries$remote_ratio)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6DQogIHdvcmRfZG9jdW1lbnQ6IGRlZmF1bHQNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBkZl9wcmludDogcGFnZWQNCiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0DQotLS0NCmBgYHtyfQ0KZGF0YXNldD0gcmVhZC5jc3YodXJsKCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlbUFsc2hheWUvTWluaW5ncHJvamVjdC9tYWluL2RhdGFzZXQvZHNfc2FsYXJpZXMuY3N2IiksIGhlYWRlcj1UUlVFKQ0KVmlldyhkYXRhc2V0KQ0KYGBgDQoNCmBgYHtyfQ0KbGlicmFyeShkYnBseXIpDQpgYGANCmBgYHtyfQ0Kc3RyKGRzX3NhbGFyaWVzKQ0KYGBgDQoNCg0KYGBge3J9DQpzYW1wID0gc2FtcGxlX24oZHNfc2FsYXJpZXMsMTApDQpwcmludChzYW1wKQ0KYGBgDQpgYGB7cn0NCnN1bShpcy5uYShkc19zYWxhcmllcykpDQpgYGANCmBgYHtyfQ0Kc3VtbWFyeShkc19zYWxhcmllcyRzYWxhcnkpDQpgYGANCmBgYHtyfQ0Kc3VtbWFyeShkc19zYWxhcmllcyRzYWxhcnlfaW5fdXNkKQ0KYGBgDQpgYGB7cn0NCnN1bW1hcnkoZHNfc2FsYXJpZXMkcmVtb3RlX3JhdGlvKQ0KYGBgDQpgYGB7cn0NCnZhcihkc19zYWxhcmllcyRzYWxhcnkpDQp2YXIoZHNfc2FsYXJpZXMkc2FsYXJ5X2luX3VzZCkNCnZhcihkc19zYWxhcmllcyRyZW1vdGVfcmF0aW8pDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6DQogIHdvcmRfZG9jdW1lbnQ6IGRlZmF1bHQNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBkZl9wcmludDogcGFnZWQNCiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0DQotLS0NCg0KYGBge3J9DQpkc19zYWxhcmllcz0gcmVhZC5jc3YodXJsKCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlbUFsc2hheWUvTWluaW5ncHJvamVjdC9tYWluL2RhdGFzZXQvZHNfc2FsYXJpZXMuY3N2IiksIGhlYWRlcj1UUlVFKQ0KVmlldyhkc19zYWxhcmllcykNCmBgYA0KDQpgYGB7cn0NCmxpYnJhcnkoZGJwbHlyKQ0KYGBgDQoNCmBgYHtyfQ0Kc3RyKGRzX3NhbGFyaWVzKQ0KYGBgDQoNCmBgYHtyfQ0Kc2FtcCA9IHNhbXBsZV9uKGRzX3NhbGFyaWVzLDEwKQ0KcHJpbnQoc2FtcCkNCmBgYA0KDQpgYGB7cn0NCnN1bShpcy5uYShkc19zYWxhcmllcykpDQpgYGANCg0KYGBge3J9DQpzdW1tYXJ5KGRzX3NhbGFyaWVzJHNhbGFyeSkNCmBgYA0KDQpgYGB7cn0NCnN1bW1hcnkoZHNfc2FsYXJpZXMkc2FsYXJ5X2luX3VzZCkNCmBgYA0KDQpgYGB7cn0NCnN1bW1hcnkoZHNfc2FsYXJpZXMkcmVtb3RlX3JhdGlvKQ0KYGBgDQoNCmBgYHtyfQ0KdmFyKGRzX3NhbGFyaWVzJHNhbGFyeSkNCnZhcihkc19zYWxhcmllcyRzYWxhcnlfaW5fdXNkKQ0KdmFyKGRzX3NhbGFyaWVzJHJlbW90ZV9yYXRpbykNCmBgYA0K</div>
 
 
 
