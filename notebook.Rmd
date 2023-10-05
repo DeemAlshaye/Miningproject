@@ -1,10 +1,36 @@
 ---
 title: "R Notebook"
 output: html_notebook
+github_document: default
 ---
+##Goal of collecting this Dataset 
+Predicting Data Science job salaries using classification.
 
+##The source of the dataset
+Link to the source Dataset:
+<https://www.kaggle.com/datasets/arnabchaki/data-science-salaries-2023?resource=download>
 
-#uploding the data
+##Informition about the Dataset 
+Number of Attributes: 11
+Type of Attributes: nominal, ordinal, numeric
+Number of objects: 3755
+Class name: salary
+
+  |Attributes name| Description| Data type |Possible values|
+    |---------------|------------|-----------|---------------|
+    |work_year      |The year the salary was paid| ordinal |Range between 2020-2023|
+    |experience_level|The experience level in the job during the year| ordinal|(SE,MI,EN,EX)|
+    |employment_type|The type of employment for the role| ordinal| (FT,PT,CT,FL)|
+    |job_title| The role worked in during the year| nominal|(Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer)|
+    |salary|The total gross salary amount paid| numeric interval|Range Between [6000 - 30.4m]|
+    |salary_currency|The currency of the salary paid as an ISO 4217 currency code|nominal|(USD,EUR,GBP,INR,CAD)|
+    | salaryinusd        |  The salary in USD      |    numeric interval| Between[5132-450k]           |
+    |employee_residence |Employee's primary country of residence in during the work year as an ISO 3166 country code| nominal |(US,GB,CA,ES,IN)|
+    |remote_ratio |The overall amount of work done remotely |numeric Ratio | Range Between [0-100]|
+    |company_location| The country of the employer's main office or contracting branch| nominal |(US,GB,CA,ES,IN)|
+    |company_size | The median number of people that worked for the company during the year| ordinal |(S,M,L)|
+
+##uploding the data
 ```{r}
 ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 View(ds_salaries)
@@ -14,11 +40,11 @@ View(ds_salaries)
 library(dplyr)
 ```
 
-#summray the data
+##summray the data
 ```{r}
 str(ds_salaries)
 ```
-#sample
+##sample
 ```{r}
 
 library(dplyr)
@@ -26,12 +52,12 @@ samp = sample_n(ds_salaries,10)
 print(samp)
 ```
 
-#missing data
+##missing data
 ```{r}
 sum(is.na(ds_salaries))
 ```
 
-#statical mesurment
+##statical mesurment
 ```{r}
 summary(ds_salaries$salary)
 ```
