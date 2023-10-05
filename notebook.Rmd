@@ -1,6 +1,7 @@
 ---
 title: "R Notebook"
 output: html_notebook
+html_notebook: default
 github_document: default
 ---
 ##Goal of collecting this Dataset 
