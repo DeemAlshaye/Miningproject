@@ -12,6 +12,16 @@ summary(ds_salaries$salary)
 summary(ds_salaries$salary_in_usd)
 summary(ds_salaries$remote_ratio)
 
+#graphs
+
+#Histogram
+
+#Barchart
+
+#Boxplot
+
+
+
 #finding outliars
 boxplot.stats(ds_salaries$salary)$out
 boxplot.stats(ds_salaries$salary_in_usd)$out              
