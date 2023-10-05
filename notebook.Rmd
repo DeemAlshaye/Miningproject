@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+#uploding the data
+```{r}
+ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
+View(ds_salaries)
+```
+
+```{r}
+library(dplyr)
+```
+
+#summray the data
+```{r}
+str(ds_salaries)
+```
+#sample
+```{r}
+
+library(dplyr)
+samp = sample_n(ds_salaries,10)
+print(samp)
+```
+
+#missing data
+```{r}
+sum(is.na(ds_salaries))
+```
+
+#statical mesurment
+```{r}
+summary(ds_salaries$salary)
+```
+
+```{r}
+summary(ds_salaries$salary_in_usd)
+```
+
+```{r}
+summary(ds_salaries$remote_ratio)
+```
+
+```{r}
+var(ds_salaries$salary)
+var(ds_salaries$salary_in_usd)
+var(ds_salaries$remote_ratio)
+```
+
+
