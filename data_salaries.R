@@ -59,3 +59,15 @@ ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 
 #cor between salary and salary in usd
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
+with(ds_salaries,plot(ds_salaries$salary,ds_salaries$remote_ratio))
+boxplot(ds_salaries$remote_ratio)
+boxplot(ds_salaries$salary)
+boxplot(ds_salaries$salary_in_usd)
+
+library(dplyr)
+ds_salaries2 <- ds_salaries %>% sample_n(50)
+
+tab <- ds_salaries2%>% table()
+precentges <- tab %>% prop.table() %>% round(3)*100
+txt<- paste0(names(tab),'\n',precentges,'%')
+pie(tab,labels = txt)
