@@ -12,6 +12,16 @@ summary(ds_salaries$salary)
 summary(ds_salaries$salary_in_usd)
 summary(ds_salaries$remote_ratio)
 
+#graphs
+
+#Histogram
+
+#Barchart
+
+#Boxplot
+
+
+
 #finding outliars
 boxplot.stats(ds_salaries$salary)$out
 boxplot.stats(ds_salaries$salary_in_usd)$out              
@@ -46,3 +56,6 @@ boxplot.stats(ds_salaries$salary_in_usd)$out
 
 ds_salaries$salary<-normalize(ds_salaries$salary)
 ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
+
+#cor between salary and salary in usd
+cor(ds_salaries$salary,ds_salaries$salary_in_usd)
