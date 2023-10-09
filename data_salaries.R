@@ -102,6 +102,8 @@ boxplot.stats(ds_salaries$work_year)$out
 ds_salaries$salary<-normalize(ds_salaries$salary)
 ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 
+#we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
+
 #cor between salary and salary in usd
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 
