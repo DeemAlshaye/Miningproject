@@ -15,7 +15,7 @@ summary(ds_salaries$remote_ratio)
 
 #encoding
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
-
+ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
 
 #graphs:
 
