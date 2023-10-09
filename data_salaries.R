@@ -43,22 +43,22 @@ boxplot(company_size~employment_type, data=ds_salaries)
 with(ds_salaries,plot(company_size,salary,xlab="company_size", ylab="salary"))
 
 
-# pie chart
+#Pie chart
 library(dplyr)
-ds_salaries2 <- ds_salaries %>% sample_n(50)
+ds_salaries2 <- ds_salaries %>% sample_n(500)
 ds_salaries2$experience_level %>% table() %>% pie() 
 tab <- ds_salaries2$experience_level %>% table()
 precentages <- tab %>% prop.table() %>% round(3) * 100 
 txt <- paste0(names(tab), '\n', precentages, '%')
-pie(tab, labels=txt) 
+pie(tab, labels=txt ,xlab="experience level") 
 
 
-ds_salaries2 <- ds_salaries %>% sample_n(50)
-ds_salaries2$experience_level %>% table() %>% pie() 
-tab <- ds_salaries2$experience_level %>% table()
+ds_salaries2 <- ds_salaries %>% sample_n(500)
+ds_salaries2$company_size %>% table() %>% pie() 
+tab <- ds_salaries2$company_size %>% table()
 precentages <- tab %>% prop.table() %>% round(3) * 100 
-txt <- paste0(names(tab), '\n', precentages, '%') 
-pie(tab, labels=txt) 
+txt <- paste0(names(tab), '\n', precentages, '%')
+pie(tab, labels=txt , xlab="company size")
 
 #finding outliars
 boxplot.stats(ds_salaries$salary)$out
