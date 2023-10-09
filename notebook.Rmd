@@ -20,7 +20,7 @@ library(tidyverse)
 ##uploding the data and raw samples
 
 ```{r}
-ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE,sep=',')
+ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 head(ds_salaries)
 tail(ds_salaries)
 ```
