@@ -12,13 +12,35 @@ summary(ds_salaries$salary)
 summary(ds_salaries$salary_in_usd)
 summary(ds_salaries$remote_ratio)
 
-#graphs
+
+#encoding
+ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
+
+
+#graphs:
 
 #Histogram
+hist(Salary,ylim=c(0,100))
 
-#Barchart
+#Bar plot
+library(magrittr)
+
+ds_salaries$job_title %>% table() %>% barplot(xlab="job title", ylab="number of employees", main="barplot of jobs")
+ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
+ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
+
 
 #Boxplot
+boxplot(remote_ratio~company_size, data=ds_salaries)
+boxplot(salary~experience_level, data=ds_salaries)
+boxplot(salary~employment_type, data=ds_salaries)
+boxplot(salary~company_size, data=ds_salaries)
+boxplot(salary~work_year, data=ds_salaries)
+boxplot(work_year~experience_level, data=ds_salaries)
+boxplot(company_size~employment_type, data=ds_salaries)
+
+#scatter plot
+with(ds_salaries,plot(company_size,salary,xlab="company_size", ylab="salary"))
 
 
 
