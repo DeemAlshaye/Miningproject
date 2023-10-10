@@ -36,6 +36,7 @@ ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barp
 #the bar plot represent the total of remote ratio for each employee, it show that 0(onsite) is the most remote ratio
 ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
 #the bar plot represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees
+#the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning is the highest salary
 
 #Boxplot
 boxplot(remote_ratio~company_size, data=ds_salaries)
