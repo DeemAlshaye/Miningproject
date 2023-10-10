@@ -26,15 +26,16 @@ ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("E
 
 #Histogram
 hist(Salary,ylim=c(0,100))
-#the histogram represent the frequency of salaries for each employee, it shows that most of employees has small amount of salary 
+#the histogram represent the amout of salaries for each employee, it shows that most of employees has small amount of salary 
 
 #Bar plot
 library(magrittr)
 
 ds_salaries$job_title %>% table() %>% barplot(xlab="job title", ylab="number of employees", main="barplot of jobs")
 ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
+#the bar plot represent the total of remote ratio for each employee, it show that 0(onsite) is the most remote ratio
 ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
-
+#the bar plot represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees
 
 #Boxplot
 boxplot(remote_ratio~company_size, data=ds_salaries)
