@@ -1,7 +1,12 @@
-#missing values
+#missing values, we used is.null function to show any null values in the dataset, we did not have any.
 sum(is.na(ds_salaries))
 
 #raw data sambles
+#sample of 10 rows of our raw data 
+
+set.seed(10)
+n<-sample(1:nrow(ds_salaries),10)
+ds_salaries[n, ]
 
 ds_salaries[1:10,]
 ds_salaries[100:110,]
@@ -17,7 +22,7 @@ summary(ds_salaries$remote_ratio)
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
 ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
 
-#graphs:
+#graphs:we compared some variables with each other to find how they are distributed
 
 #Histogram
 hist(Salary,ylim=c(0,100))
