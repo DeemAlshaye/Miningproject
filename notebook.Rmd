@@ -243,9 +243,29 @@ boxplot.stats(ds_salaries$work_year)$out
 
 ### Normalization
 
+```{r}
+normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
+ds_salaries$salary<-normalize(ds_salaries$salary)
+ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
+
+num1_cols=ds_salaries[, c(5,7 )]
+head(num1_cols)
+```
+
+we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
+
 ### Discretization
 
 ### Encoding
+
+```{r}
+ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
+ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
+
+num_cols=ds_salaries[, c(2,11 )]
+head(num_cols)
+
+```
 
 ## Feature Selection
 
