@@ -23,25 +23,19 @@ Number of objects: 3755
 
 Class name: salary
 
-| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                             |
-|----------------|---------------------|----------------|---------------------|
-| work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                     |
-| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                                                                               |
-| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                                                                               |
-| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer) |
-| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                |
-| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD)                                                                        |
-| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                          |
-| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN)                                                                            |
-| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                       |
-| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (US,GB,CA,ES,IN)                                                                            |
-| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                     |
-
-```{r}
-library(dplyr)
-library(tidyverse)
-library(g)
-```
+| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
+|------------------|-------------------|------------------|-------------------|
+| work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                        |
+| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                              |
+| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                               |
+| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer...) |
+| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                   |
+| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD...)                                                                        |
+| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                             |
+| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN...)                                                                            |
+| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                                   |
+| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (US,GB,CA,ES,IN...)                                                                            |
+| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                        |
 
 ### uploding the data and raw samples
 
@@ -106,7 +100,7 @@ var(ds_salaries$work_year)
 
 ```{r}
 ds_salaries$salary_1000s <- ds_salaries$salary /1000
-(ds_salaries$salary_1000s)
+head(ds_salaries$salary_1000s)
 
 ds_salaries$salaryusd_1000s <- ds_salaries$salary_in_usd /1000
 head(ds_salaries$salaryusd_1000s)
@@ -193,7 +187,7 @@ ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
 
 ```{r}
   library(dplyr)
-#group data by work_year and calculating the average Salary
+
 yearly_salary_avg<-ds_salaries%>%
   group_by(work_year)%>%
   summarise(avg_salary=mean(salary))
@@ -232,6 +226,10 @@ outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary%in% outliers),]
 boxplot.stats(ds_salaries$salary)$out
 
+outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
+ds_salaries <- ds_salaries[-which(ds_salaries$salary%in% outliers),]
+boxplot.stats(ds_salaries$salary)$out
+
 outliers <- boxplot(ds_salaries$salary_in_usd, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary_in_usd%in% outliers),]
 boxplot.stats(ds_salaries$salary_in_usd)$out
@@ -265,8 +263,8 @@ chisq.test(ds_salaries$employee_residence,ds_salaries$company_location,correct =
 we reject the null hypothesis, they are correaltd so we will only take company_location
 
 ```{r}
-library(tidyvers)
+library(tidyverse)
 my_data <- ds_salaries %>%
   select(salary,experience_level,employment_type,job_title,salary,salary_currency,company_location,company_size)
-  print(my_data)
+  head(my_data)
 ```
