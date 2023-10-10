@@ -26,6 +26,7 @@ ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("E
 
 #Histogram
 hist(Salary,ylim=c(0,100))
+#the histogram represent the frequency of salaries for each employee, it shows that most of employees has small amount of salary 
 
 #Bar plot
 library(magrittr)
@@ -45,7 +46,7 @@ boxplot(work_year~experience_level, data=ds_salaries)
 boxplot(company_size~employment_type, data=ds_salaries)
 
 #scatter plot
-with(ds_salaries,plot(company_size,salary,xlab="company_size", ylab="salary"))
+with(ds_salaries,plot(salar_in_usd,salary,xlab="company_size", ylab="salary"))
 
 
 #Pie chart
@@ -56,6 +57,7 @@ tab <- ds_salaries2$experience_level %>% table()
 precentages <- tab %>% prop.table() %>% round(3) * 100 
 txt <- paste0(names(tab), '\n', precentages, '%')
 pie(tab, labels=txt ,xlab="experience level") 
+#the pie chart represent the percentages for experience level by taken sample of employees, it shows that SE(Senior level) has the highest frequency 
 
 
 ds_salaries2 <- ds_salaries %>% sample_n(500)
@@ -64,6 +66,9 @@ tab <- ds_salaries2$company_size %>% table()
 precentages <- tab %>% prop.table() %>% round(3) * 100 
 txt <- paste0(names(tab), '\n', precentages, '%')
 pie(tab, labels=txt , xlab="company size")
+#the pie chart represent the percentages for company size by taken sample of company, it shows that 2(Medium) has the highest frequency 
+
+
 
 #finding outliars
 boxplot.stats(ds_salaries$salary)$out
@@ -103,7 +108,7 @@ ds_salaries <- ds_salaries[-which(ds_salaries$work_year%in% outliers),]
 boxplot.stats(ds_salaries$work_year)$out
 
 #normlize the data
-
+normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
 ds_salaries$salary<-normalize(ds_salaries$salary)
 ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 
@@ -111,5 +116,3 @@ ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 
 #cor between salary and salary in usd
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
-
-
