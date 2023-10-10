@@ -191,6 +191,31 @@ yearly_salary_avg
 
 ## Data cleaning
 
+### categorizeing job title
+
+adding new colum with categorized job title
+
+```{r}
+library(tidyverse)
+categorize_job_title <- function(title) {
+  title <- tolower(title)
+  if (grepl("data scientist|research scientist|researcher|scientist|science", title)) {
+    return("Data Scientist")
+  } else if (grepl("data engineer|etl|machine learning software engineer|ai|data architect|engineer|data modeler|machine learning engineer|devops", title)) {
+    return("Data Engineer")
+  } else if (grepl("data analyst|bi|analyst|head of data|data lead|data strategist|data analytics|specialist|data manager", title)) {
+    return("Data Analyst")
+  } else {
+    return("Other")
+  }
+}
+ds_salaries <- ds_salaries %>% 
+  mutate(categorized_job_title = sapply(job_title, categorize_job_title))
+head(ds_salaries)
+```
+
+we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other)
+
 ### finding missing data
 
 ```{r}
