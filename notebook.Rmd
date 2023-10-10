@@ -55,12 +55,6 @@ dim(ds_salaries)
 summary(ds_salaries)
 ```
 
-### missing data
-
-```{r}
-sum(is.na(ds_salaries))
-```
-
 ### statical mesurment
 
 ```{r}
@@ -197,6 +191,14 @@ yearly_salary_avg
 
 ## Data cleaning
 
+### finding missing data
+
+```{r}
+sum(is.na(ds_salaries))
+```
+
+we have no missing data
+
 ### finding outliers:
 
 ```{r}
@@ -280,7 +282,7 @@ we see that salary and salary_in_usd are highly correlated so we will only take 
 chisq.test(ds_salaries$employee_residence,ds_salaries$company_location,correct = FALSE)
 ```
 
-we reject the null hypothesis, they are correaltd so we will only take company_location
+we reject the null hypothesis, x-squared\>\>\> p -value they are strongly correlated so we will only take company_location
 
 ```{r}
 library(tidyverse)
