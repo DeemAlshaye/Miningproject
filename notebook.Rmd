@@ -24,7 +24,7 @@ Number of objects: 3755
 Class name: salary
 
 | Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
-|------------------|-------------------|------------------|-------------------|
+|------------------|------------------|------------------|------------------|
 | work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                        |
 | experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                              |
 | employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                               |
@@ -283,11 +283,31 @@ we normalized the attributes salary, salary in usd, so it takes values between 0
 
 ### Discretization
 
+```{r}
+breaks <- quantile(ds_salaries$salary_in_usd, 
+                   probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
+                   na.rm = TRUE)
+
+ds_salaries$salary_in_usd_encoded <- cut(ds_salaries$salary_in_usd, 
+                             breaks = breaks, 
+                             include.lowest = TRUE, 
+                             labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
+head(ds_salaries$salary_in_usd)
+```
+
 ### Encoding
 
 ```{r}
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
 ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
+
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
+ds_salaries$employment_type  <- factor(ds_salaries$employment_type)
+ds_salaries$employee_residence  <- factor(ds_salaries$employee_residence)
+ds_salaries$company_location  <- factor(ds_salaries$company_location)
+ds_salaries$salary_currency  <- factor(ds_salaries$salary_currency)
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
 
 num_cols=ds_salaries[, c(2,11 )]
 head(num_cols)
@@ -312,6 +332,8 @@ we reject the null hypothesis, x-squared\>\>\> p -value they are strongly correl
 ```{r}
 library(tidyverse)
 my_data <- ds_salaries %>%
-  select(salary,experience_level,employment_type,job_title,salary,salary_currency,company_location,company_size)
+  select(work_year,salary,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
   head(my_data)
 ```
+
+### 
