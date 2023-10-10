@@ -288,11 +288,11 @@ breaks <- quantile(ds_salaries$salary_in_usd,
                    probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
                    na.rm = TRUE)
 
-ds_salaries$salary_in_usd_encoded <- cut(ds_salaries$salary_in_usd, 
+ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd, 
                              breaks = breaks, 
                              include.lowest = TRUE, 
                              labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
-head(ds_salaries$salary_in_usd)
+head(ds_salaries$salary_in_usd_disc)
 ```
 
 ### Encoding
