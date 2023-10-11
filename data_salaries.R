@@ -36,6 +36,7 @@ ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barp
 #the bar plot represent the total of remote ratio for each employee, it show that 0(onsite) is the most remote ratio
 ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
 #the bar plot represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees
+#the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning is the highest salary
 
 #Boxplot
 boxplot(remote_ratio~company_size, data=ds_salaries)
@@ -116,4 +117,42 @@ ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 #we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
 
 #cor between salary and salary in usd
+<<<<<<< HEAD
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
+<<<<<<< HEAD
+=======
+cor(ds_salaries$salary,ds_salaries$salary_in_usd)
+=======
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+
+
+library(tidyverse)
+categorize_company_location <- function(title) {
+  title <- tolower(title)
+  if (grepl("AE | AM | DZ | EG | IQ | IL | IR | JO | KW | LB | LY | MA | OM | PS | QA | SA | SY | TN | TR | YE", title)) {
+    return("Middle East")
+  } else if (grepl("AL | BA | BG | HR | CZ | EE | HU | LT | LV | MK | MD | ME | PL | RO | RS | SI | SK", title)) {
+    return("Eastern Europe")
+  } else if (grepl("AR | BO | BR | BS | CL | CO | CR | DO | EC | GT | HN | MX | NI | PA | PE | PR | PY | SV | UY | VE", title)) {
+    return("Latin America")
+  } else if (grepl("AS | AU | GU | MP | NC | NR | NF | NZ | PG | SB | TK | TO | TV | VU | WF", title)) {
+    return("Oceania")
+  }else if (grepl("AT | BE | CH | DE | DK | FI | FR | GB | IE | LU | NL | NO | SE", title)) {
+    return("Europe")
+  }else if (grepl("CA | US", title)) {
+    return("North America")
+  }else if (grepl("CN | HK | ID | IN | JP | KR | MY | PH | SG | TH | TW | VN", title)) {
+    return("Asia")
+  }else if (grepl("CF | GH | KE | MA | NG | ZA", title)) {
+    return("Africa")
+  }else {
+    return("Other")
+  }
+}
+ds_salaries <- ds_salaries %>% 
+  mutate(company_location = sapply(company_location, categorize_company_location))
+head(ds_salaries)
+<<<<<<< HEAD
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe

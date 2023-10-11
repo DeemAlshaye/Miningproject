@@ -1,5 +1,6 @@
----
-title: "R Notebook"
+#missing values, we used is.null function to show any null values in the dataset, we did not have any.
+
+title: "data salaries"
 output:
 html_notebook: default
 github_document: default
@@ -23,23 +24,19 @@ Number of objects: 3755
 
 Class name: salary
 
-| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                             |
-|--------------------|-----------------|----------------|-------------------|
-| work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                     |
-| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                                                                               |
-| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                                                                               |
-| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer) |
-| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                |
-| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD)                                                                        |
-| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                          |
-| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN)                                                                            |
-| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                       |
-| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (US,GB,CA,ES,IN)                                                                            |
-| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                     |
-
-```{r}
-library(dplyr)
-```
+| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
+|------------------|------------------|------------------|------------------|
+| work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                        |
+| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                              |
+| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                               |
+| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer...) |
+| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                   |
+| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD...)                                                                        |
+| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                             |
+| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN...)                                                                            |
+| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                                   |
+| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (US,GB,CA,ES,IN...)                                                                            |
+| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                        |
 
 ### uploding the data and raw samples
 
@@ -57,12 +54,6 @@ dim(ds_salaries)
 
 ```{r}
 summary(ds_salaries)
-```
-
-### missing data
-
-```{r}
-sum(is.na(ds_salaries))
 ```
 
 ### statical mesurment
@@ -98,46 +89,134 @@ var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
 
-### graphs:
+### graphs: we compared some variables with each other to find how they are distributed
+
+### changing the salary and salary in usd to be in 1000s
+
+```{r}
+ds_salaries$salary_1000s <- ds_salaries$salary /1000
+head(ds_salaries$salary_1000s)
+
+ds_salaries$salaryusd_1000s <- ds_salaries$salary_in_usd /1000
+head(ds_salaries$salaryusd_1000s)
+```
 
 #### boxplot:
 
 ```{r}
-boxplot(ds_salaries$salary,ylim=c(0,1000000))
+<<<<<<< HEAD
+<<<<<<< HEAD
+boxplot(ds_salaries$salary,ylim=c(0,1000000),main="salary")
+#box plot represents salaries of employees
 ```
 
 ```{r}
-boxplot(ds_salaries$salary_in_usd,ylim=c(0,1000000))
+boxplot(ds_salaries$salary_in_usd,ylim=c(0,1000000),main="salary in usd")
+#box plot represents salary in (usd)
 ```
 
 ```{r}
-boxplot(ds_salaries$remote_ratio)
+boxplot(ds_salaries$remote_ratio,main="remote ratio")
+#box plot represents the remote ratio of employees (onsite,online or both)
 ```
 
 ```{r}
-boxplot(ds_salaries$work_year)
+boxplot(ds_salaries$work_year,main="work year")
+#box plot represents work year (2020,2021,2022,2023)
+=======
+boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s")
+```
+
+```{r}
+boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s")
+```
+
+```{r}
+boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency")
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s")
+```
+
+```{r}
+boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s")
+```
+
+```{r}
+boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency")
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
 ```
 
 ### histogram
 
 ```{r}
-hist(ds_salaries$salary,ylim=c(0,100))
+<<<<<<< HEAD
+<<<<<<< HEAD
+hist(ds_salaries$salary,ylim=c(0,100),xlab="salary",main="Histogram of salary")
+#histogram represents salaries of employees
+=======
+hist(ds_salaries$salary_1000s,ylim=c(0,100),ylab="Frequency",xlab="salary in 1000s",main = "Salary Frequency")
+#the histogram represent the amout of salaries for each employee, it shows that most of employees has small amount of salary
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+hist(ds_salaries$salary_1000s,ylim=c(0,100),ylab="Frequency",xlab="salary in 1000s",main = "Salary Frequency")
+#the histogram represent the amout of salaries for each employee, it shows that most of employees has small amount of salary
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
 ```
-
 ### bar plot
 
 ```{r}
 library(magrittr)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 ds_salaries$job_title %>% table() %>% barplot(xlab="job title", ylab="number of employees", main="barplot of jobs")
+#barplot represents frequency of job titles, it shows that Data Engineer is the most frequency
 ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
+#barplot represents frequency of remote ration, it show that the 0(onsite) has the most frequency
 ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
+#the bar plot represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees
+=======
+ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
+#the bar plot represent the total of remote ratio for each employee, it show that 0(onsite) is the most remote ratio
+
+ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
+=======
+ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
+#the bar plot represent the total of remote ratio for each employee, it show that 0(onsite) is the most remote ratio
+
+ds_salaries$work_year %>% table() %>% barplot(xlab="work year", ylab="number of employees", main="barplot of work year")
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+#the bar plot represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees
+
+  library(ggplot2)
+library(tidyverse)
+top_5_job_salaries<-ds_salaries%>%
+  group_by(job_title)%>%
+  summarise(Avg_Sal=mean(salary_1000s))%>%
+  arrange(desc(Avg_Sal))%>%
+  head()
+top_5_job_salaries
+#we took the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning is the highest salary
+<<<<<<< HEAD
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
 ```
 
 ### Scatter plot
 
 ```{r}
+<<<<<<< HEAD
+<<<<<<< HEAD
 with(ds_salaries,plot(ds_salaries$salary,ds_salaries$remote_ratio,xlab="salary",ylab = "remote ratio"))
+#the scatter plot represent the redundant in salary and salary in usd, it shows that most of salary and salary in usd are the same value
+=======
+  with(ds_salaries,plot(ds_salaries$salary_1000s,ds_salaries$salaryusd_1000s,xlab="salary in 1000s",ylab = "salary in usd 1000s",main="Scatter plot with salary and salary in USD") )
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+  with(ds_salaries,plot(ds_salaries$salary_1000s,ds_salaries$salaryusd_1000s,xlab="salary in 1000s",ylab = "salary in usd 1000s",main="Scatter plot with salary and salary in USD") )
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
 ```
 
 ### pie chart
@@ -150,9 +229,92 @@ tab <- ds_salaries2$company_size%>% table()
 precentages <- tab %>% prop.table() %>% round(3)*100
 txt <- paste0(names(tab),'\n',precentages,'%')
 pie(tab,labels=txt)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#the pie chart represent the percentages for company size by taking sample of companies, it shows that M(Medium company size) has the highest frequency 
+```
+```{r}
+ds_salaries2 <- ds_salaries %>% sample_n(500)
+ds_salaries2$experience_level %>% table() %>% pie() 
+tab <- ds_salaries2$experience_level %>% table()
+precentages <- tab %>% prop.table() %>% round(3) * 100 
+txt <- paste0(names(tab), '\n', precentages, '%')
+pie(tab, labels=txt ,xlab="experience level") 
+#the pie chart represent the percentages for experience level by taking sample of employees, it shows that SE(Senior level) has the highest frequency 
+=======
+=======
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+#the pie chart represent the percentages for company size by taken sample of company, it shows that 2(Medium) has the highest frequency
+```
+
+
+### Visualisation
+
+```{r}
+ggplot(top_5_job_salaries, aes(x=job_title, y=Avg_Sal)) +
+  geom_col() +
+  labs(title="Top 5 Job Title Salaries", x="Job Title", y="Salary in 1000s") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r}
+ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
+  geom_boxplot(fill="pink") +
+  labs(title="Distribution of Salary by Experience Level", x="Experience Level", y="Salary in 1000s") +
+  theme_minimal()
+```
+
+### Average Salaries in each Year
+
+```{r}
+  library(dplyr)
+
+yearly_salary_avg<-ds_salaries%>%
+  group_by(work_year)%>%
+  summarise(avg_salary=mean(salary))
+yearly_salary_avg
+    
+<<<<<<< HEAD
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
+=======
+>>>>>>> e74bb41ee745f6f64653331cde801db8c67fabfe
 ```
 
 ## Data cleaning
+
+### categorizeing job title
+
+adding new colum with categorized job title
+
+```{r}
+library(tidyverse)
+categorize_job_title <- function(title) {
+  title <- tolower(title)
+  if (grepl("data scientist|research scientist|researcher|scientist|science", title)) {
+    return("Data Scientist")
+  } else if (grepl("data engineer|etl|machine learning software engineer|ai|data architect|engineer|data modeler|machine learning engineer|devops", title)) {
+    return("Data Engineer")
+  } else if (grepl("data analyst|bi|analyst|head of data|data lead|data strategist|data analytics|specialist|data manager", title)) {
+    return("Data Analyst")
+  } else {
+    return("Other")
+  }
+}
+ds_salaries <- ds_salaries %>% 
+  mutate(job_title = sapply(job_title, categorize_job_title))
+head(ds_salaries)
+```
+
+we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other)
+
+### finding missing data
+
+```{r}
+sum(is.na(ds_salaries))
+```
+
+we have no missing data
 
 ### finding outliers:
 
@@ -183,6 +345,10 @@ outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary%in% outliers),]
 boxplot.stats(ds_salaries$salary)$out
 
+outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
+ds_salaries <- ds_salaries[-which(ds_salaries$salary%in% outliers),]
+boxplot.stats(ds_salaries$salary)$out
+
 outliers <- boxplot(ds_salaries$salary_in_usd, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$salary_in_usd%in% outliers),]
 boxplot.stats(ds_salaries$salary_in_usd)$out
@@ -191,3 +357,76 @@ outliers <- boxplot(ds_salaries$work_year, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$work_year%in% outliers),]
 boxplot.stats(ds_salaries$work_year)$out
 ```
+
+## 
+
+## Data transformation
+
+### Normalization
+
+```{r}
+normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
+ds_salaries$salary<-normalize(ds_salaries$salary)
+ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
+
+num1_cols=ds_salaries[, c(5,7 )] 
+head(num1_cols)
+```
+
+we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
+
+### Discretization
+
+```{r}
+breaks <- quantile(ds_salaries$salary_in_usd, 
+                   probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
+                   na.rm = TRUE)
+
+ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd, 
+                             breaks = breaks, 
+                             include.lowest = TRUE, 
+                             labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
+head(ds_salaries$salary_in_usd_disc)
+```
+
+### Encoding
+
+```{r}
+ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
+ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
+
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
+ds_salaries$employment_type  <- factor(ds_salaries$employment_type)
+ds_salaries$employee_residence  <- factor(ds_salaries$employee_residence)
+ds_salaries$company_location  <- factor(ds_salaries$company_location)
+ds_salaries$salary_currency  <- factor(ds_salaries$salary_currency)
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
+ds_salaries$job_title  <- factor(ds_salaries$job_title)
+
+num_cols=ds_salaries[, c(2,11 )]
+head(num_cols)
+```
+
+## Removing irrelevant and duplicate data from the dataset
+
+```{r}
+
+cor(ds_salaries$salary,ds_salaries$salary_in_usd)
+```
+
+we see that salary and salary_in_usd are highly correlated so we will only take the salary
+
+```{r}
+chisq.test(ds_salaries$employee_residence,ds_salaries$company_location,correct = FALSE)
+```
+
+we reject the null hypothesis, x-squared\>\>\> p -value they are strongly correlated so we will only take company_location
+
+```{r}
+library(tidyverse)
+ds_salaries <- ds_salaries %>%
+  select(work_year,salary,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
+  head(ds_salaries)
+```
+
+## 
