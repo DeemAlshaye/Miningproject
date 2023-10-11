@@ -22,7 +22,7 @@ Type of Attributes: nominal, ordinal, numeric
 
 Number of objects: 3755
 
-Class name: salary
+Class name: salary in usd 
 
 | Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
 |------------------|------------------|------------------|------------------|
@@ -39,7 +39,7 @@ Class name: salary
 | company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                        |
 
 ### uploding the data and raw samples
-
+raw data samples
 ```{r}
 ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 head(ds_salaries)
@@ -51,12 +51,13 @@ dim(ds_salaries)
 ```
 
 ### summray the data
-
+we used summary function to show each numeric value min, median, max, Q1 and Q3
 ```{r}
 summary(ds_salaries)
 ```
 
 ### statical mesurment
+Statistical measurements allows to explore our data in a quantitative manner,it helps to understand its distribution, variability, and key characteristics.
 
 ```{r}
 mean(ds_salaries$salary)
@@ -89,7 +90,7 @@ var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
 
-### graphs: we compared some variables with each other to find how they are distributed
+
 
 ### changing the salary and salary in usd to be in 1000s
 
@@ -101,6 +102,7 @@ ds_salaries$salaryusd_1000s <- ds_salaries$salary_in_usd /1000
 head(ds_salaries$salaryusd_1000s)
 ```
 
+### graphs: we compared some variables with each other to find how they are distributed
 #### boxplot:
 
 ```{r}
@@ -196,7 +198,7 @@ yearly_salary_avg
 
 ### categorizeing job title
 
-adding new colum with categorized job title
+##Categorize job title coulmn
 
 ```{r}
 library(tidyverse)
@@ -217,25 +219,64 @@ ds_salaries <- ds_salaries %>%
 head(ds_salaries)
 ```
 
-we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other)
+Our column job title had 93 different categories,  By using this categorization process, the code assigns each job title in the dataset to a general job title, we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other) , allowing for easier analysis and grouping of data based on their job title.
+### categorizeing company location
+```{r}
+ds_salaries<-read.csv("C:/Users/noram/Downloads/data mining project/ds_salaries.csv")
+
+# Define the country categories
+asia <- c("AE", "CN", "HK", "ID", "IN", "JP", "KR", "MY", "PH", "SG", "TH", "TW", "VN")
+europe <- c("AL", "AM", "AT", "BA", "BE", "BG", "BY", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GR", "HR", "HU", "IE", "IL", "IT", "LT", "LU", "LV", "MD", "MK", "MT", "NL", "NO", "PL", "PT", "RO", "RS", "RU", "SE", "SI", "SK", "TR", "UA", 'ES')
+
+north_america <- c("CA", "US")
+south_america <- c("AR", "BO", "BR", "BS", "CL", "CO", "CR", "DO", "EC", "GT", "HN", "JM", "MX", "NI", "PA", "PE", "PY", "SV", "UY", "VE")
+oceania <- c("AS", "AU", "FJ", "GU", "KI", "MH", "MP", "NC", "NF", "NZ", "PG", "PW", "SB", "TO", "TV", "VU", "WS")
+africa <- c("BF", "BI", "BJ", "BW", "CD", "CG", "CI", "CM", "CV", "DJ", "DZ", "EG", "ET", "GA", "GH", "GM", "GN", "GQ", "KE", "LR", "LS", "LY", "MA", "MG", "ML", "MR", "MU", "MW", "MZ", "NA", "NE", "NG", "RE", "RW", "SC", "SD", "SH", "SL", "SN", "SO", "SS", "ST", "SZ", "TD", "TG", "TN", "TZ", "UG", "ZA", "ZM", "ZW")
+
+# Function to categorize the company locations
+categorize_location <- function(location) {
+  if (location %in% asia) {
+    return("Asia")
+  } else if (location %in% europe) {
+    return("Europe")
+  } else if (location %in% north_america) {
+    return("North America")
+  } else if (location %in% south_america) {
+    return("South America")
+  } else if (location %in% oceania) {
+    return("Oceania")
+  } else if (location %in% africa) {
+    return("Africa")
+  } else {
+    return("Other")
+  }
+}
+
+# Apply the categorization to the company location column
+ds_salaries$company_location <- sapply(ds_salaries$company_location,categorize_location)
+
+# Print the updated dataset with categories
+tail(ds_salaries)
+```
+our column company location did have 72 different categories,  By using this categorization process, the code assigns each company location in the dataset to a specific geographical region, such as Asia, Europe, North America, South America, Oceania, and Africa, allowing for easier analysis and grouping of data based on different regions of the world.
 
 ### finding missing data
-
+ we used is.null function to show any null values in the dataset.
 ```{r}
 sum(is.na(ds_salaries))
 ```
 
-we have no missing data
+ we did not have any missing values.
 
 ### finding outliers:
-
+By detecting outliers, analysts can identify potential errors or anomalies in the data collection process, data entry, or measurement inaccuracies
 ```{r}
 boxplot.stats(ds_salaries$salary)$out
 boxplot.stats(ds_salaries$salary_in_usd)$out              
 boxplot.stats(ds_salaries$remote_ratio)$out
 boxplot.stats(ds_salaries$work_year)$out
 ```
-
+we did detect the outliers in our numeric attributes 
 ### sum outliers:
 
 ```{r}
@@ -249,7 +290,7 @@ sum(boxplot.stats(ds_salaries$work_year)$out)
 ```
 
 ### removing the outliers:
-
+Outliers can sometimes distort our analysis and models, so by removing them, we get a clearer picture of the data and can make better predictions or understand patterns more accurately
 ```{r}
 library(outliers)
 outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
@@ -268,12 +309,13 @@ outliers <- boxplot(ds_salaries$work_year, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$work_year%in% outliers),]
 boxplot.stats(ds_salaries$work_year)$out
 ```
+We did this to make sure our data is more accurate and representative of the majority of the values.
 
-## 
 
 ## Data transformation
 
 ### Normalization
+Normalizing data helps in improving the performance of machine learning models,reducing the training time and improving efficiency.
 
 ```{r}
 normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
@@ -287,7 +329,7 @@ head(num1_cols)
 we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
 
 ### Discretization
-
+transforming continuous data into categorical values.
 ```{r}
 breaks <- quantile(ds_salaries$salary_in_usd, 
                    probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
@@ -299,8 +341,9 @@ ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd,
                              labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
 head(ds_salaries$salary_in_usd_disc)
 ```
-
+Discretization makes it easier to analyze and interpret the data
 ### Encoding
+onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs.
 
 ```{r}
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
@@ -317,9 +360,11 @@ ds_salaries$job_title  <- factor(ds_salaries$job_title)
 num_cols=ds_salaries[, c(2,11 )]
 head(num_cols)
 ```
+we encoded our ordinal and nominal variables using factor 
+
 
 ## Removing irrelevant and duplicate data from the dataset
-
+our dataset has 2 salary coulmns salary, and salary in usd, for this, we will measure the correlation between them 
 ```{r}
 
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
@@ -327,6 +372,8 @@ cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 
 we see that salary and salary_in_usd are highly correlated so we will only take the salary
 
+
+using chi-x we will measure the correlation between the variables employee residence and company_location 
 ```{r}
 chisq.test(ds_salaries$employee_residence,ds_salaries$company_location,correct = FALSE)
 ```
