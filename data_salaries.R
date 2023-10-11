@@ -118,3 +118,31 @@ ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 
 #cor between salary and salary in usd
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
+
+
+library(tidyverse)
+categorize_company_location <- function(title) {
+  title <- tolower(title)
+  if (grepl("AE | AM | DZ | EG | IQ | IL | IR | JO | KW | LB | LY | MA | OM | PS | QA | SA | SY | TN | TR | YE", title)) {
+    return("Middle East")
+  } else if (grepl("AL | BA | BG | HR | CZ | EE | HU | LT | LV | MK | MD | ME | PL | RO | RS | SI | SK", title)) {
+    return("Eastern Europe")
+  } else if (grepl("AR | BO | BR | BS | CL | CO | CR | DO | EC | GT | HN | MX | NI | PA | PE | PR | PY | SV | UY | VE", title)) {
+    return("Latin America")
+  } else if (grepl("AS | AU | GU | MP | NC | NR | NF | NZ | PG | SB | TK | TO | TV | VU | WF", title)) {
+    return("Oceania")
+  }else if (grepl("AT | BE | CH | DE | DK | FI | FR | GB | IE | LU | NL | NO | SE", title)) {
+    return("Europe")
+  }else if (grepl("CA | US", title)) {
+    return("North America")
+  }else if (grepl("CN | HK | ID | IN | JP | KR | MY | PH | SG | TH | TW | VN", title)) {
+    return("Asia")
+  }else if (grepl("CF | GH | KE | MA | NG | ZA", title)) {
+    return("Africa")
+  }else {
+    return("Other")
+  }
+}
+ds_salaries <- ds_salaries %>% 
+  mutate(company_location = sapply(company_location, categorize_company_location))
+head(ds_salaries)
