@@ -1,9 +1,7 @@
-#missing values, we used is.null function to show any null values in the dataset, we did not have any.
-
-title: "data salaries"
-output:
-html_notebook: default
-github_document: default
+---
+title: "Data salaries" 
+  output: html_notebook: default 
+    github_document: default 
 ---
 
 ## Goal of collecting this Dataset
@@ -22,7 +20,7 @@ Type of Attributes: nominal, ordinal, numeric
 
 Number of objects: 3755
 
-Class name: salary in usd 
+Class name: salary in usd
 
 | Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
 |------------------|------------------|------------------|------------------|
@@ -38,8 +36,19 @@ Class name: salary in usd
 | company_location   | The country of the employer's main office or contracting branch                             | nominal          | (US,GB,CA,ES,IN...)                                                                            |
 | company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                        |
 
+## library used
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+```
+
 ### uploding the data and raw samples
+
 raw data samples
+
 ```{r}
 ds_salaries= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 head(ds_salaries)
@@ -51,12 +60,15 @@ dim(ds_salaries)
 ```
 
 ### summray the data
+
 we used summary function to show each numeric value min, median, max, Q1 and Q3
+
 ```{r}
 summary(ds_salaries)
 ```
 
 ### statical mesurment
+
 Statistical measurements allows to explore our data in a quantitative manner,it helps to understand its distribution, variability, and key characteristics.
 
 ```{r}
@@ -90,8 +102,6 @@ var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
 
-
-
 ### changing the salary and salary in usd to be in 1000s
 
 ```{r}
@@ -102,7 +112,10 @@ ds_salaries$salaryusd_1000s <- ds_salaries$salary_in_usd /1000
 head(ds_salaries$salaryusd_1000s)
 ```
 
-### graphs: we compared some variables with each other to find how they are distributed
+## graphs:
+
+we compared some variables with each other to find how they are distributed
+
 #### boxplot:
 
 ```{r}
@@ -123,6 +136,7 @@ boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency")
 hist(ds_salaries$salary_1000s,ylim=c(0,100),ylab="Frequency",xlab="salary in 1000s",main = "Salary Frequency")
 #the histogram represent the amout of salaries for each employee, it shows that most of employees has small amount of salary
 ```
+
 ### bar plot
 
 ```{r}
@@ -164,7 +178,6 @@ pie(tab,labels=txt)
 #the pie chart represent the percentages for company size by taken sample of company, it shows that 2(Medium) has the highest frequency
 ```
 
-
 ### Visualisation
 
 ```{r}
@@ -198,7 +211,7 @@ yearly_salary_avg
 
 ### categorizeing job title
 
-##Categorize job title coulmn
+Categorize job title coulmn
 
 ```{r}
 library(tidyverse)
@@ -219,10 +232,10 @@ ds_salaries <- ds_salaries %>%
 head(ds_salaries)
 ```
 
-Our column job title had 93 different categories,  By using this categorization process, the code assigns each job title in the dataset to a general job title, we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other) , allowing for easier analysis and grouping of data based on their job title.
-### categorizeing company location
+Our column job title had 93 different categories, By using this categorization process, the code assigns each job title in the dataset to a general job title, we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other) , allowing for easier analysis and grouping of data based on their job title. \### categorizeing company location
+
 ```{r}
-ds_salaries<-read.csv("C:/Users/noram/Downloads/data mining project/ds_salaries.csv")
+
 
 # Define the country categories
 asia <- c("AE", "CN", "HK", "ID", "IN", "JP", "KR", "MY", "PH", "SG", "TH", "TW", "VN")
@@ -258,26 +271,31 @@ ds_salaries$company_location <- sapply(ds_salaries$company_location,categorize_l
 # Print the updated dataset with categories
 tail(ds_salaries)
 ```
-our column company location did have 72 different categories,  By using this categorization process, the code assigns each company location in the dataset to a specific geographical region, such as Asia, Europe, North America, South America, Oceania, and Africa, allowing for easier analysis and grouping of data based on different regions of the world.
+
+our column company location did have 72 different categories, By using this categorization process, the code assigns each company location in the dataset to a specific geographical region, such as Asia, Europe, North America, South America, Oceania, and Africa, allowing for easier analysis and grouping of data based on different regions of the world.
 
 ### finding missing data
- we used is.null function to show any null values in the dataset.
+
+we used is.null function to show any null values in the dataset.
+
 ```{r}
 sum(is.na(ds_salaries))
 ```
 
- we did not have any missing values.
+we did not have any missing values.
 
 ### finding outliers:
+
 By detecting outliers, analysts can identify potential errors or anomalies in the data collection process, data entry, or measurement inaccuracies
+
 ```{r}
 boxplot.stats(ds_salaries$salary)$out
 boxplot.stats(ds_salaries$salary_in_usd)$out              
 boxplot.stats(ds_salaries$remote_ratio)$out
 boxplot.stats(ds_salaries$work_year)$out
 ```
-we did detect the outliers in our numeric attributes 
-### sum outliers:
+
+we did detect the outliers in our numeric attributes \### sum outliers:
 
 ```{r}
 sum(boxplot.stats(ds_salaries$salary)$out)
@@ -290,7 +308,9 @@ sum(boxplot.stats(ds_salaries$work_year)$out)
 ```
 
 ### removing the outliers:
+
 Outliers can sometimes distort our analysis and models, so by removing them, we get a clearer picture of the data and can make better predictions or understand patterns more accurately
+
 ```{r}
 library(outliers)
 outliers <- boxplot(ds_salaries$salary, plot=FALSE)$out
@@ -309,12 +329,13 @@ outliers <- boxplot(ds_salaries$work_year, plot=FALSE)$out
 ds_salaries <- ds_salaries[-which(ds_salaries$work_year%in% outliers),]
 boxplot.stats(ds_salaries$work_year)$out
 ```
-We did this to make sure our data is more accurate and representative of the majority of the values.
 
+We did this to make sure our data is more accurate and representative of the majority of the values.
 
 ## Data transformation
 
 ### Normalization
+
 Normalizing data helps in improving the performance of machine learning models,reducing the training time and improving efficiency.
 
 ```{r}
@@ -329,7 +350,9 @@ head(num1_cols)
 we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
 
 ### Discretization
+
 transforming continuous data into categorical values.
+
 ```{r}
 breaks <- quantile(ds_salaries$salary_in_usd, 
                    probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
@@ -341,9 +364,8 @@ ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd,
                              labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
 head(ds_salaries$salary_in_usd_disc)
 ```
-Discretization makes it easier to analyze and interpret the data
-### Encoding
-onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs.
+
+Discretization makes it easier to analyze and interpret the data \### Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
 
 ```{r}
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
@@ -360,11 +382,13 @@ ds_salaries$job_title  <- factor(ds_salaries$job_title)
 num_cols=ds_salaries[, c(2,11 )]
 head(num_cols)
 ```
-we encoded our ordinal and nominal variables using factor 
 
+we encoded our ordinal and nominal variables using factor
 
-## Removing irrelevant and duplicate data from the dataset
-our dataset has 2 salary coulmns salary, and salary in usd, for this, we will measure the correlation between them 
+## Removing irrelevant and duplicate attributs from the dataset
+
+our dataset has 2 salary coulmns salary, and salary in usd, for this, we will measure the correlation between them
+
 ```{r}
 
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
@@ -372,13 +396,7 @@ cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 
 we see that salary and salary_in_usd are highly correlated so we will only take the salary
 
-
-using chi-x we will measure the correlation between the variables employee residence and company_location 
-```{r}
-chisq.test(ds_salaries$employee_residence,ds_salaries$company_location,correct = FALSE)
-```
-
-we reject the null hypothesis, x-squared\>\>\> p -value they are strongly correlated so we will only take company_location
+we decided to remove employee resident due to its being irrelevant to our data
 
 ```{r}
 library(tidyverse)
@@ -386,5 +404,3 @@ ds_salaries <- ds_salaries %>%
   select(work_year,salary,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
   head(ds_salaries)
 ```
-
-## 
