@@ -260,7 +260,7 @@ head(ds_salaries)
 
 Our column job title had 93 different categories, By using this categorization process, the code assigns each job title in the dataset to a general job title, we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other) , allowing for easier analysis and grouping of data based on their job title.
 
-Categorizing company location:
+### Categorizing company location:
 
 ```{r}
 
@@ -325,7 +325,7 @@ boxplot.stats(ds_salaries$work_year)$out
 
 We did detect the outliers in our numeric attributes
 
-Sum outliers:
+### Sum outliers:
 
 ```{r}
 sum(boxplot.stats(ds_salaries$salary)$out)
@@ -408,8 +408,7 @@ ds_salaries$employment_type  <- factor(ds_salaries$employment_type)
 ds_salaries$employee_residence  <- factor(ds_salaries$employee_residence)
 ds_salaries$company_location  <- factor(ds_salaries$company_location)
 ds_salaries$salary_currency  <- factor(ds_salaries$salary_currency)
-ds_salaries$job_title  <- factor(ds_salaries$job_title)
-ds_salaries$job_title  <- factor(ds_salaries$job_title)
+
 
 num_cols=ds_salaries[, c(2,11 )]
 head(num_cols)
@@ -428,7 +427,7 @@ cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 
 we see that salary and salary_in_usd are highly correlated so we will only take the salary.
 
-we decided to remove employee resident due to its being irrelevant to our data since the employee resident has nothing to do with his salary.
+we decided to remove employee resident due to its being irrelevant to our data sense the employee resident has nothing to do with his salary.
 
 ```{r}
 library(tidyverse)
