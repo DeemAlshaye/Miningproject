@@ -1,18 +1,21 @@
 ---
-title: "Data salaries" 
-  output: html_notebook: default 
-    github_document: default 
+title: "Data Salries"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ## Goal of collecting this Dataset
 
 Predicting Data Science job salaries using regression.
 
-## The source of the dataset Link to the source Dataset:
+## The source of the dataset 
+Link to the source Dataset
 
 <https://www.kaggle.com/datasets/arnabchaki/data-science-salaries-2023?resource=download>
 
-## Informition about the Dataset :
+## Informition about the Dataset
 
 Number of Attributes: 11
 
@@ -22,19 +25,19 @@ Number of objects: 3755
 
 Class name: salary in usd
 
-| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                                                      |
-|-------------|-----------------------|-------------|------------------------|
-| work_year          | The year the salary was paid                                                                | numirec          | Range between 2020-2023                                                                                                              |
-| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                                                                    |
-| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                                                                     |
-| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer...)It has 93 categories                   |
-| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                                                         |
-| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD...)                                                                                                              |
-| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                                                                   |
-| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN...)It has 78 categories                                                                                              |
-| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                                                                         |
-| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (AE, AL, AM, AR. AS, AT, AU, BA BE, BO, BR, BS, CA, CF, CH, CL, CN, CO, CR, CZ, DE, DK, DZ, EE, EG,ES......)It has 72 categories     |
-| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                                                              |
+| Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                                                  |
+|----------------|----------------|----------------|------------------------|
+| work_year          | The year the salary was paid                                                                | numirec          | Range between 2020-2023                                                                                                          |
+| experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                                                                |
+| employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                                                                 |
+| job_title          | The role worked in during the year                                                          | nominal          | (Data Engineer, Data Scientist,Data Analyst, Machine Learning Engineer, Analytics Engineer...)It has 93 categories               |
+| salary             | The total gross salary amount paid                                                          | numeric interval | Range Between [6000 - 30.4m]                                                                                                     |
+| salary_currency    | The currency of the salary paid as an ISO 4217 currency code                                | nominal          | USD,EUR,GBP,INR,CAD...)                                                                                                          |
+| salaryinusd        | The salary in USD                                                                           | numeric interval | Between[5132-450k]                                                                                                               |
+| employee_residence | Employee's primary country of residence in during the work year as an ISO 3166 country code | nominal          | (US,GB,CA,ES,IN...)It has 78 categories                                                                                          |
+| remote_ratio       | The overall amount of work done remotely                                                    | numeric Ratio    | (0, 50, 100)                                                                                                                     |
+| company_location   | The country of the employer's main office or contracting branch                             | nominal          | (AE, AL, AM, AR. AS, AT, AU, BA BE, BO, BR, BS, CA, CF, CH, CL, CN, CO, CR, CZ, DE, DK, DZ, EE, EG,ES......)It has 72 categories |
+| company_size       | The median number of people that worked for the company during the year                     | ordinal          | (S,M,L)                                                                                                                          |
 
 ## library used
 
@@ -45,7 +48,7 @@ library(ggplot2)
 library(magrittr)
 ```
 
-### uploding the data and raw samples
+## uploding the data and raw samples
 
 raw data samples
 
@@ -59,7 +62,7 @@ tail(ds_salaries)
 dim(ds_salaries)
 ```
 
-### summray the data
+## summray the data
 
 we used summary function to show each numeric value min, median, max, Q1 and Q3
 
@@ -67,7 +70,7 @@ we used summary function to show each numeric value min, median, max, Q1 and Q3
 summary(ds_salaries)
 ```
 
-### statical mesurment
+## statical mesurment
 
 Statistical measurements allows to explore our data in a quantitative manner,it helps to understand its distribution, variability, and key characteristics.
 
@@ -102,7 +105,7 @@ var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
 
-### changing the salary and salary in usd to be in 1000s
+## changing the salary and salary in usd to be in 1000s
 
 ```{r}
 ds_salaries$salary_1000s <- ds_salaries$salary /1000
@@ -112,7 +115,7 @@ ds_salaries$salaryusd_1000s <- ds_salaries$salary_in_usd /1000
 head(ds_salaries$salaryusd_1000s)
 ```
 
-## graphs:
+## graphs
 
 we compared some variables with each other to find how they are distributed
 
@@ -215,14 +218,14 @@ ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
 
 the box plot represent the percentages for experience level by taken sample of employees, it shows that salary aare different for each experience level, Also employees with the same experience level can have significantly higher salary than there category which can be observed from the box plot as outliers
 
-### Average Salaries in each Year
+## Average Salaries in each Year
 
 ```{r}
   library(dplyr)
 
 yearly_salary_avg<-ds_salaries%>%
   group_by(work_year)%>%
-  summarise(avg_salary=mean(salary))
+  summarise(avg_salary=mean(salary_in_usd))
 yearly_salary_avg
     
 ```
@@ -392,6 +395,8 @@ head(ds_salaries$salary_in_usd_disc)
 ```
 
 Discretization makes it easier to analyze and interpret the data \### Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
+
+### Encoding
 
 ```{r}
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
