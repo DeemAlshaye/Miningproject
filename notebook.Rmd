@@ -23,7 +23,7 @@ Number of objects: 3755
 Class name: salary in usd
 
 | Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                |
-|------------------|------------------|------------------|------------------|
+|-------------|-----------------------|-------------|------------------------|
 | work_year          | The year the salary was paid                                                                | ordinal          | Range between 2020-2023                                                                        |
 | experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                              |
 | employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                               |
@@ -122,13 +122,19 @@ we compared some variables with each other to find how they are distributed
 boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s")
 ```
 
+Box plot represents salaries of employees
+
 ```{r}
 boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s")
 ```
 
+Box plot represents salary in (usd)
+
 ```{r}
 boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency")
 ```
+
+Box plot represents work year (2020,2021,2022,2023)
 
 ### histogram
 
