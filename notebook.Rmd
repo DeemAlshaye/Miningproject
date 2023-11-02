@@ -93,7 +93,7 @@ mean(ds_salaries$remote_ratio)
 median(ds_salaries$remote_ratio)
 quantile(ds_salaries$remote_ratio)
 ```
-with only 3 valus for ration we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
+with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
 ```{r}
 mean(ds_salaries$work_year)
 median(ds_salaries$work_year)
