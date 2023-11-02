@@ -80,32 +80,36 @@ mean(ds_salaries$salary)
 median(ds_salaries$salary)
 quantile(ds_salaries$salary)
 ```
+we see that the mean is close to the median,and quantiles has high changes
 
 ```{r}
 mean(ds_salaries$salary_in_usd)
 median(ds_salaries$salary_in_usd)
 quantile(ds_salaries$salary_in_usd)
 ```
-
+we see that the mean is close to the median,and quantiles are close to one another.
 ```{r}
 mean(ds_salaries$remote_ratio)
 median(ds_salaries$remote_ratio)
 quantile(ds_salaries$remote_ratio)
 ```
-
+with only 3 valus for ration we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
 ```{r}
 mean(ds_salaries$work_year)
 median(ds_salaries$work_year)
 quantile(ds_salaries$work_year)
 ```
-
+we see that the median is 2022 wich means that most pepole work year is 2022,and the quantile shows that the  number of employee with work year 2020 are the least.
 ```{r}
 var(ds_salaries$salary)
 var(ds_salaries$salary_in_usd)
 var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
-
+we see that the var of salary is really high  meaning higher risk
+var of salay in usd is also really high meaning higher risk
+the var of remot ratio is hight but not quit high as salary and salay in usd  meaning high risk
+work year var is low  meaning lower risk
 ## changing the salary and salary in usd to be in 1000s
 
 ```{r}
@@ -123,19 +127,19 @@ we compared some variables with each other to find how they are distributed
 #### boxplot:
 
 ```{r}
-boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s")
+boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s" ,main="boxplot of salary in 1000s")
 ```
 
 Box plot represents salaries of employees,it displays the five number summary of the salary it shows that the salary has a lot of outliers that's need to be smoothed to remove the noise
 
 ```{r}
-boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s")
+boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s" ,main="boxplot of salary in usd in 1000s")
 ```
 
 Box plot represents salary in (usd), it displays the five number summary of the salary in USD it shows that the salary in USD has a lot of outliers thats need to be smoothed to remove the noise
 
 ```{r}
-boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency")
+boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency"  ,main="boxplot of Work year")
 ```
 
 Box plot represents work year (2020,2021,2022,2023), the work year box plot shows that there is a one outlier of 2020 year, that will be smoothed later to have more accurate data
@@ -384,15 +388,15 @@ we normalized the attributes salary, salary in usd, so it takes values between 0
 transforming continuous data into categorical values.
 
 ```{r}
-breaks <- quantile(ds_salaries$salary_in_usd, 
+breaks <- quantile(ds_salaries$salary, 
                    probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
                    na.rm = TRUE)
 
-ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd, 
+ds_salaries$salary_disc <- cut(ds_salaries$salary, 
                              breaks = breaks, 
                              include.lowest = TRUE, 
                              labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
-head(ds_salaries$salary_in_usd_disc)
+head(ds_salaries$salary_disc)
 ```
 
 Discretization makes it easier to analyze and interpret the data \### Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
@@ -432,6 +436,6 @@ we decided to remove employee resident due to its being irrelevant to our data s
 ```{r}
 library(tidyverse)
 ds_salaries <- ds_salaries %>%
-  select(work_year,salary,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
+  select(work_year,salary_disc,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
   head(ds_salaries)
 ```
