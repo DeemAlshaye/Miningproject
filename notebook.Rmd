@@ -107,9 +107,11 @@ var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
 we see that the var of salary is really high  meaning higher risk
-var of salay in usd is also really high meaning higher risk
-the var of remot ratio is hight but not quit high as salary and salay in usd  meaning high risk
+var of salary in usd is also really high meaning higher risk
+the var of remote ratio is high but not quit high as salary and salary in usd  meaning high risk
 work year var is low  meaning lower risk
+
+
 ## changing the salary and salary in usd to be in 1000s
 
 ```{r}
@@ -388,18 +390,21 @@ we normalized the attributes salary, salary in usd, so it takes values between 0
 transforming continuous data into categorical values.
 
 ```{r}
-breaks <- quantile(ds_salaries$salary, 
+breaks <- quantile(ds_salaries$salary_in_usd, 
                    probs = c(0, 1/7, 2/7, 3/7, 4/7, 5/7,6/7,1), 
                    na.rm = TRUE)
 
-ds_salaries$salary_disc <- cut(ds_salaries$salary, 
+ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd, 
                              breaks = breaks, 
                              include.lowest = TRUE, 
                              labels=c("low", "Low-mid", "mid", "mid-high", "high","very-high","top"))
-head(ds_salaries$salary_disc)
+head(ds_salaries$salary_in_usd_disc)
 ```
 
-Discretization makes it easier to analyze and interpret the data \### Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
+Discretization makes it easier to analyze and interpret the data 
+
+
+Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
 
 ### Encoding
 
@@ -433,9 +438,14 @@ we see that salary and salary_in_usd are highly correlated so we will only take 
 
 we decided to remove employee resident due to its being irrelevant to our data sense the employee resident has nothing to do with his salary.
 
+we also decided to remove salary currency sense we only took salary in USD.
+
 ```{r}
 library(tidyverse)
 ds_salaries <- ds_salaries %>%
-  select(work_year,salary_disc,experience_level,employment_type,job_title,salary_currency,company_location,company_size,remote_ratio)
+  select(salary_in_usd_disc,work_year,experience_level,employment_type,job_title,company_location,company_size,remote_ratio)
   head(ds_salaries)
 ```
+
+
+
