@@ -434,7 +434,7 @@ our data set has 2 salary coulombs salary, and salary in usd, for this, we will 
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 ```
 
-we see that salary and salary_in_usd are highly correlated so we will only take the salary.
+we see that salary and salary_in_usd are highly correlated so we will only take the salary in USD.
 
 we decided to remove employee resident due to its being irrelevant to our data sense the employee resident has nothing to do with his salary.
 
