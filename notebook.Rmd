@@ -27,7 +27,7 @@ Number of objects: 3755
 Class name: salary in usd
 
 | Attributes names   | Description                                                                                 | Data type        | Possible values                                                                                                                  |
-|-----------------|-----------------|-----------------|----------------------|
+|-----------------|-----------------|-----------------|---------------------|
 | work_year          | The year the salary was paid                                                                | numirec          | Range between 2020-2023                                                                                                          |
 | experience_level   | The experience level in the job during the year                                             | ordinal          | (SE:"Senior",MI:"Mid level",EN:"Entry level,EX:"Executive level")                                                                |
 | employment_type    | The type of employment for the role                                                         | nominal          | (FT:"Full time",PT:"Part time",CT:"Contractual",FL:"Freelancer")                                                                 |
@@ -80,6 +80,7 @@ mean(ds_salaries$salary)
 median(ds_salaries$salary)
 quantile(ds_salaries$salary)
 ```
+
 we see that the mean is close to the median,and quantiles has high changes
 
 ```{r}
@@ -87,30 +88,33 @@ mean(ds_salaries$salary_in_usd)
 median(ds_salaries$salary_in_usd)
 quantile(ds_salaries$salary_in_usd)
 ```
+
 we see that the mean is close to the median,and quantiles are close to one another.
+
 ```{r}
 mean(ds_salaries$remote_ratio)
 median(ds_salaries$remote_ratio)
 quantile(ds_salaries$remote_ratio)
 ```
+
 with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
+
 ```{r}
 mean(ds_salaries$work_year)
 median(ds_salaries$work_year)
 quantile(ds_salaries$work_year)
 ```
-we see that the median is 2022 wich means that most pepole work year is 2022,and the quantile shows that the  number of employee with work year 2020 are the least.
+
+we see that the median is 2022 wich means that most pepole work year is 2022,and the quantile shows that the number of employee with work year 2020 are the least.
+
 ```{r}
 var(ds_salaries$salary)
 var(ds_salaries$salary_in_usd)
 var(ds_salaries$remote_ratio)
 var(ds_salaries$work_year)
 ```
-we see that the var of salary is really high  meaning higher risk
-var of salary in usd is also really high meaning higher risk
-the var of remote ratio is high but not quit high as salary and salary in usd  meaning high risk
-work year var is low  meaning lower risk
 
+we see that the var of salary is really high meaning higher risk var of salary in usd is also really high meaning higher risk the var of remote ratio is high but not quit high as salary and salary in usd meaning high risk work year var is low meaning lower risk
 
 ## changing the salary and salary in usd to be in 1000s
 
@@ -361,8 +365,6 @@ ds_salaries <- ds_salaries %>%
   )
 ```
 
-
-
 We did this to make sure our data is more accurate and representative of the majority of the values.
 
 ## Data transformation
@@ -401,8 +403,7 @@ head(ds_salaries$salary_in_usd_disc)
                                
 ```
 
-Discretization makes it easier to analyze and interpret the data 
-
+Discretization makes it easier to analyze and interpret the data
 
 Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
 
@@ -464,18 +465,17 @@ create_train_test <- function(data, size = 0.8, train = TRUE) {
 }
 ```
 
-
 ```{r}
 data_train <- create_train_test(ds_salaries, 0.8, train = TRUE)
 data_test <- create_train_test(ds_salaries, 0.8, train = FALSE)
 dim(data_train)
 ```
+
 ```{r}
 dim(data_test)
 ```
 
 # The train dataset has 2840 rows while the test dataset has 711 rows.
-
 
 # we use the function prop.table() combined with table() to verify if the randomization process is correct.
 
@@ -486,8 +486,8 @@ prop.table(table(data_train$salary_in_usd_disc))
 ```{r}
 prop.table(table(data_test$salary_in_usd_disc))
 ```
-# we see that the high salary in train data is higher than the test data
 
+# we see that the high salary in train data is higher than the test data
 
 ```{r}
 library(rpart)
@@ -496,18 +496,15 @@ fit <- rpart(salary_in_usd_disc~., data = data_train, method = 'class')
 rpart.plot(fit, extra = 100,type = 4)
 
 ```
+
 # rpart() function uses the Gini impurity measure to split the note.
-
-
 
 ```{r}
 predict_unseen <-predict(fit, data_test, type = 'class')
 ```
 
-
-
 ```{r}
-table_mat <- table(data_train$salary_in_usd_disc, predict_unseen)
+table_mat <- table(data_test$salary_in_usd_disc, predict_unseen)
 table_mat
 ```
 
@@ -519,6 +516,12 @@ accuracy_Test <- sum(diag(table_mat)) / sum(table_mat)
 print(paste('Accuracy for test', accuracy_Test))
 ```
 
+
+```{r}
+result<-table(predict_unseen, data_test$salary_in_usd_disc)
+co_result <- confusionMatrix(result)
+print(co_result)
+```
 
 ## gain ratio
 
@@ -532,6 +535,7 @@ train.indices <- sample(1:nrow(ds_salaries), 200)
 data.train <- ds_salaries[train.indices, ]
 data.test <- ds_salaries[-train.indices, ]
 ```
+
 Train decision tree
 
 ```{r}
@@ -539,23 +543,27 @@ model <- C5.0(salary_in_usd_disc ~., data=data.train)
 ```
 
 Test
+
 ```{r}
 results <- predict(object=model, newdata=data.test, type="class")
 
 ```
+
 Look at confusion matrix
+
 ```{r}
 table(results, data.test$salary_in_usd_disc)
 ```
-
-
-
 
 ```{r}
 plot(model)
 ```
 
 
+```{r}
+co_result <- confusionMatrix(result)
+print(co_result)
+```
 
 
 
@@ -575,19 +583,19 @@ test_data <- ds_salaries[ind == 2, ]
 ```{r}
 myFormula <- salary_in_usd_disc ~ work_year + experience_level + employment_type + job_title + company_location + company_size + remote_ratio
 
-dt_model <- rpart(myFormula, data = train_set, method = "class", parms = list(split = "information"))
+dt_model <- rpart(myFormula, data = train_data, method = "class", parms = list(split = "information"))
 
 ```
 
-
 # Plot the decision tree
+
 ```{r}
 
 rpart.plot(dt_model,extra = 100,type = 4)
 ```
 
-
 # Make predictions on the training data
+
 ```{r}
 
 trainPred <- predict(dt_model, newdata = train_data, type = "class")
@@ -595,6 +603,7 @@ table(trainPred, train_data$salary_in_usd_disc)
 ```
 
 # Make predictions on the test data
+
 ```{r}
 
 testPred <- predict(dt_model, newdata = test_data, type = "class")
@@ -606,10 +615,3 @@ result<-table(testPred, test_data$salary_in_usd_disc)
 co_result <- confusionMatrix(result)
 print(co_result)
 ```
-
-
-
-
-
-
-
