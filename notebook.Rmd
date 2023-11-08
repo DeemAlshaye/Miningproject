@@ -448,7 +448,117 @@ ds_salaries <- ds_salaries %>%
   head(ds_salaries)
 ```
 
-## gini index
+###checking for imbalance class lable
+
+```{r}
+barplot(table(ds_salaries$salary_in_usd_disc),
+        ylab = "Frequency",
+        xlab = "salary")
+```
+as shown in the bar plot above, our class lable is balanced, so we can split our data randomly
+
+# 1.Split the Dataset into two subsets: Training(70%) and Testing(30%):
+
+
+```{r}
+set.seed(132)
+
+# Generate indices for the data partition
+train_indices_1 <- createDataPartition(ds_salaries$salary_in_usd_disc, p = 0.7, list = FALSE, times = 1)
+
+# Create the training and test sets
+data_train70 <- ds_salaries[train_indices_1, ]
+data_test70 <- ds_salaries[-train_indices_1, ]
+
+```
+
+
+
+
+
+```{r}
+dim(data_train70)
+```
+
+
+```{r}
+dim(data_test70)
+```
+
+
+# The train set has 2491 rows while the test set has 106 rows.
+
+#A-Decision Tree Using gini index
+
+```{r}
+library(rpart)
+library(rpart.plot)
+fit <- rpart(salary_in_usd_disc~., data = data_train70, method = 'class')
+rpart.plot(fit, extra = 100,type = 4)
+```
+
+# rpart() function uses the Gini impurity measure to split the note.
+
+
+
+```{r}
+predict_unseen70 <-predict(fit, data_test70, type = 'class')
+table_mat70 <- table(data_test70$salary_in_usd_disc, predict_unseen70)
+table_mat70
+```
+```{r}
+accuracy_Test70 <- sum(diag(table_mat70)) / sum(table_mat70)
+```
+
+```{r}
+print(paste('Accuracy for test', accuracy_Test70))
+```
+
+
+```{r}
+result70_gini<-table(predict_unseen70, data_test70$salary_in_usd_disc)
+co_result70_gini <- confusionMatrix(result70_gini)
+print(co_result70_gini)
+```
+## B-Decision Tree Using gain ratio
+
+
+#Train decision tree
+
+```{r}
+model70 <- C5.0(salary_in_usd_disc ~., data=data_train70)
+```
+
+# Make predictions on the test data
+
+```{r}
+results70_gain <- predict(object=model70, newdata=data_test70, type="class")
+
+```
+
+
+```{r}
+plot(model70)
+```
+
+
+#Confusion Matrix and Statistics
+
+```{r}
+result70<-table(results70_gain, data_test70$salary_in_usd_disc)
+co_result70_gain <- confusionMatrix(result70)
+print(co_result70_gain)
+```
+
+## C-Decision Tree Using information gain
+
+
+
+
+
+
+
+
 
 # 1.Split the datasets into two subsets: Training(80%) and Testing(20%):
 
@@ -489,6 +599,8 @@ prop.table(table(data_test$salary_in_usd_disc))
 
 # we see that the high salary in train data is higher than the test data
 
+## A-Decision Tree Using gini index
+
 ```{r}
 library(rpart)
 library(rpart.plot)
@@ -523,7 +635,7 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-## gain ratio
+## B-Decision Tree Using gain ratio
 
 Split data data into train and test
 
@@ -567,7 +679,7 @@ print(co_result)
 
 
 
-## information gain
+## C-Decision Tree Using information gain
 
 ```{r}
 library(rpart)
