@@ -841,11 +841,12 @@ results <- predict(model, data_test, type="class")
 plot(model, type="simple")
 ```
 
-``{r}
+```{r}
 library(caret)
 result1<- table(results, data_test$salary_in_usd_disc)
 co_result1 <- confusionMatrix(result1)
 print(co_result1)
+
 ```
 
 ### information gain
