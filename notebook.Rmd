@@ -47,6 +47,15 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(magrittr)
+library(rpart)
+library(rpart.plot)
+library(caret)
+library(Rcpp)
+library(e1071)
+library(C50)
+library(printr)
+
+
 ```
 
 ## uploading the data and raw samples
@@ -162,7 +171,7 @@ The histogram represent the frequency of salaries for each employee, it shows th
 ### bar plot
 
 ```{r}
-library(magrittr)
+
 
 ds_salaries$remote_ratio %>% table() %>% barplot(xlab="remote ratio", main="barplot of remote ratio")
 
@@ -470,12 +479,12 @@ as shown in the bar plot above, our class lable is balanced, so we can split our
 
 ## Split the datasets into two subsets: Training(80%) and Testing(20%):
 
-### gini index
 
+###A-Decision Tree Using gini index
 
 
 ```{r}
-library(caret)
+
 set.seed(2021)
 create_train_test <- function(data, size = 0.8, train = TRUE) {
     n_row = nrow(data)
@@ -514,8 +523,7 @@ prop.table(table(data_test$salary_in_usd_disc))
 we see that the high salary in train data is higher than the test data
 
 ```{r}
-library(rpart)
-library(rpart.plot)
+
 fit <- rpart(salary_in_usd_disc~., data = data_train, method = 'class')
 rpart.plot(fit, extra = 100,type = 4)
 
@@ -546,14 +554,12 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-### gain ratio
+###B-Decision Tree Using gain ratio
 
 Split data data into train and test
 
 ```{r}
-library(C50)
-library(printr)
-library(caret)
+
 set.seed(123)
 
 data.train <- create_train_test(ds_salaries, 0.8, train = TRUE )
@@ -584,7 +590,8 @@ co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
 
-### information gain
+
+###C-Decision Tree Using information gain
 
 ```{r}
 classify_dataset <- function(dataset, class_label) {
@@ -619,3 +626,268 @@ classify_dataset <- function(dataset, class_label) {
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
+
+
+
+# 2-Split the Dataset into two subsets: Training(70%) and Testing(30%):
+
+
+```{r}
+set.seed(132)
+
+# Generate indices for the data partition
+train_indices_1 <- sample (2, nrow(ds_salaries), replace=TRUE, prob=c(0.7 , 0.3))
+
+# Create the training and test sets
+data_train70 <- ds_salaries[train_indices_1==1, ]
+data_test70 <- ds_salaries[train_indices_1==2, ]
+
+```
+
+
+
+
+
+```{r}
+dim(data_train70)
+```
+
+
+```{r}
+dim(data_test70)
+```
+
+
+# The train set has 2498 rows while the test set has 1049 rows.
+
+###A-Decision Tree Using gini index
+
+```{r}
+library(rpart)
+library(rpart.plot)
+fit <- rpart(salary_in_usd_disc~., data = data_train70, method = 'class')
+rpart.plot(fit, extra = 100,type = 4)
+```
+
+# rpart() function uses the Gini impurity measure to split the note.
+
+
+
+```{r}
+predict_unseen70 <-predict(fit, data_test70, type = 'class')
+table_mat70 <- table(data_test70$salary_in_usd_disc, predict_unseen70)
+table_mat70
+```
+```{r}
+accuracy_Test70 <- sum(diag(table_mat70)) / sum(table_mat70)
+```
+
+```{r}
+print(paste('Accuracy for test', accuracy_Test70))
+```
+
+
+```{r}
+
+
+result70_gini<-table(predict_unseen70, data_test70$salary_in_usd_disc)
+co_result70_gini <- confusionMatrix(result70_gini)
+print(co_result70_gini)
+```
+
+
+
+###B-Decision Tree Using gain ratio
+
+
+#Train decision tree
+
+```{r}
+library(C50)
+library(printr)
+model70 <- C5.0(salary_in_usd_disc ~., data=data_train70)
+```
+
+# Make predictions on the test data
+
+```{r}
+results70_gain <- predict(object=model70, newdata=data_test70, type="class")
+
+```
+
+
+```{r}
+plot(model70)
+```
+
+
+#Confusion Matrix and Statistics
+
+```{r}
+result70<-table(results70_gain, data_test70$salary_in_usd_disc)
+co_result70_gain <- confusionMatrix(result70)
+print(co_result70_gain)
+```
+
+
+###C-Decision Tree Using information gain
+
+```{r}
+classify_dataset <- function(dataset, class_label) {
+
+
+
+decision_tree <- rpart(formula = as.formula(paste(class_label, "~ .")), data = data_train70, method = "class", control = rpart.control(cp = 0))
+
+
+  rpart.plot(decision_tree, extra = 100, cex = 0.5)
+ 
+  predictions <- predict(decision_tree, newdata = data_test70, type = "class")
+
+  # Create confusion matrix
+  confusion_matrix <- confusionMatrix(predictions, data_test70[, class_label])
+  
+  # Print confusion matrix and statistics
+  print(confusion_matrix)
+}
+
+classify_dataset(ds_salaries, "salary_in_usd_disc")
+```
+
+
+# 3.Split the Dataset into two subsets: Training(90%) and Testing(10%):
+
+```{r}
+set.seed(65788)
+
+ind3 <- sample(2, nrow(ds_salaries), replace = TRUE, prob = c(0.9, 0.1))
+
+data_train90 <- ds_salaries[ind3 == 1, ]
+data_test90 <- ds_salaries[ind3 == 2, ]
+
+```
+
+
+```{r}
+dim(data_train90)
+```
+
+
+```{r}
+dim(data_test90)
+
+```
+
+# The train dataset has 3167 rows while the test dataset has 380 rows.
+
+###A-Decision Tree Using gini index
+
+```{r}
+
+library(rpart)
+library(rpart.plot)
+fit3 <- rpart(salary_in_usd_disc~., data = data_train90, method = 'class')
+rpart.plot(fit3,type = 4,)
+```
+# rpart() function uses the Gini impurity measure to split the note.
+
+```{r}
+predict_unseen90 <-predict(fit3, data_test90, type = 'class')
+```
+
+```{r}
+table_mat90 <- table(data_test90$salary_in_usd_disc, predict_unseen90)
+table_mat90
+```
+
+```{r}
+accuracy_Test90 <- sum(diag(table_mat90)) / sum(table_mat90)
+```
+
+```{r}
+print(paste('Accuracy for test', accuracy_Test90))
+```
+
+
+```{r}
+result90_gini<-table(predict_unseen90, data_test90$salary_in_usd_disc)
+co_result90_gini <- confusionMatrix(result90_gini)
+print(co_result90_gini)
+```
+
+
+###B-Decision Tree Using gain ratio
+
+
+
+```{r}
+library(C50)
+library(printr)
+
+```
+
+Train decision tree
+
+```{r}
+model90 <- C5.0(salary_in_usd_disc ~., data=data_train90)
+```
+
+Test
+
+```{r}
+results <- predict(object=model90, newdata=data_test90, type="class")
+
+```
+
+Look at confusion matrix
+
+```{r}
+table(results, data_test90$salary_in_usd_disc)
+```
+
+```{r}
+plot(model90)
+```
+
+
+```{r}
+co_result <- confusionMatrix(result)
+print(co_result)
+```
+
+
+
+###C-Decision Tree Using information gain
+
+```{r}
+classify_dataset <- function(dataset, class_label) 
+ 
+  # Load the required libraries
+  library(rpart)
+  library(rpart.plot)
+  library(caret)
+
+
+  # Create the decision tree model using information gain
+  decision_tree <- rpart(formula = as.formula(paste(class_label, "~ .")), data = data_train90, method = "class", control = rpart.control(cp = 0))
+
+
+  # Plot the decision tree with reduced text and symbol size
+  rpart.plot(decision_tree, extra = 100, cex = 0.5)
+  
+
+ # Predict on the test set
+  predictions <- predict(decision_tree, newdata = data_test90, type = "class")
+  
+  # Create confusion matrix
+  confusion_matrix <- confusionMatrix(predictions, data_test90[, class_label])
+   
+  # Print confusion matrix and statistics
+  print(confusion_matrix)
+
+
+
+
+classify_dataset(ds_salaries, "salary_in_usd_disc")
+```
+
