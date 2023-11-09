@@ -743,7 +743,7 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 ```
 
 
-## Split the datasets into two subsets: Training(90%) and Testing(20%):
+## Split the datasets into two subsets: Training(90%) and Testing(10%):
 
 
 
@@ -881,3 +881,4 @@ classify_dataset <- function(dataset, class_label) {
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
+
