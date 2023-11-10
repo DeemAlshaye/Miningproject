@@ -981,4 +981,20 @@ Balanced Accuracy: On average, the model's performance is around 75.55% for low 
 
 we see that the tree starts by looking at the location of the company and determines that if it is in Africa, Asia, Europe, Oceania, or South America, the salary in usd is likely to be low. If the company is in North America or Other, it further analyzes the job title and experience level to make a prediction. For example, if the job title is Data Analyst and the experience level is 1, the salary in usd is predicted to be low. The algorithm makes similar predictions for other job titles and experience levels, taking into account factors such as remote work opportunities and the year of work. Overall, the algorithm is trained to predict the salary in usd based on various input features, and these predictions are shown in the tree structure.
 
+### Comparing and Interpreting the performance of the model using diffrent selection measures
 
+Accuracy: Gain Ratio achieved the highest accuracy (60.28%), followed by Information Gain (59.44%) and Gini Index (57.46%).
+
+Balanced Accuracy: Gain Ratio also performed well in terms of balanced accuracy across classes. Information Gain and Gini Index were comparable but slightly lower.
+
+Kappa: Information Gain had the highest Kappa value (0.3545), indicating a moderate level of agreement. Gain Ratio and Gini Index had slightly lower Kappa values (0.3477 and 0.32, respectively).
+
+Sensitivity and Specificity: The performance across sensitivity and specificity varied for different classes. Gain Ratio tended to have a higher sensitivity for the low class, while Gini Index performed better for the high class.
+
+McNemar's Test P-Value: This test assesses whether the differences in performance are statistically significant. In all cases, the p-values are quite small, suggesting that the differences are statistically significant.
+
+-   Gain Ratio seems to be the most balanced attribute selection measure in terms of accuracy and balanced accuracy.
+
+-   Information Gain provides the highest accuracy but with slightly lower balanced accuracy compared to Gain Ratio.
+
+-   Gini Index, while providing competitive results, tends to have slightly lower accuracy and balanced accuracy compared to Information Gain and Gain Ratio.
