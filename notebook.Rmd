@@ -5,6 +5,7 @@ output:
     toc: true
     toc_depth: 2
 ---
+# information about the dataset
 
 ## Goal of collecting this Dataset
 
@@ -58,6 +59,8 @@ library(printr)
 
 ```
 
+
+
 ## uploading the data and raw samples
 
 raw data samples
@@ -71,6 +74,8 @@ tail(ds_salaries)
 ```{r}
 dim(ds_salaries)
 ```
+
+# summarization and plotting
 
 ## summary the data
 
@@ -251,6 +256,9 @@ yearly_salary_avg
 ```
 
 This table show the average salary increases annually for each year
+
+
+#preprocessing
 
 ## Data cleaning
 
@@ -472,7 +480,7 @@ ds_salaries <- ds_salaries %>%
 
 # Classification
 
-### checking if the data is balanced
+## checking if the data is balanced
 
 ```{r}
 barplot(prop.table(table(ds_salaries$salary_in_usd_disc)),
@@ -490,7 +498,7 @@ print(class_percentages)
 as shown in the bar plot above, and the class percentages, our class label is balanced, so we can split our data randomly without further steps.
 
 
-##1-Split the datasets into two subsets: Training(80%) and Testing(20%):
+## Split the datasets into two subsets: Training(80%) and Testing(20%):
 
 
 ```{r}
@@ -557,7 +565,7 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-###B-Decision Tree Using gain ratio
+### B-Decision Tree Using gain ratio
 
 
 
@@ -593,7 +601,7 @@ co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
 
-###C-Decision Tree Using information gain
+### C-Decision Tree Using information gain
 
 ```{r}
 classify_dataset <- function(dataset, class_label) {
@@ -627,7 +635,7 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 ```
 
 
-#2-Split the Dataset into two subsets: Training(70%) and Testing(30%):
+## Split the Dataset into two subsets: Training(70%) and Testing(30%):
 
 
 ```{r}
@@ -699,7 +707,7 @@ print(co_result70_gini)
 
 
 
-###B-Decision Tree Using gain ratio
+### B-Decision Tree Using gain ratio
 
 
 Train decision tree
@@ -732,7 +740,7 @@ print(co_result70_gain)
 ```
 
 
-###C-Decision Tree Using information gain
+### C-Decision Tree Using information gain
 
 ```{r}
 classify_dataset <- function(dataset, class_label) {
@@ -945,11 +953,6 @@ classify_dataset <- function(dataset, class_label) {
   # Print confusion matrix and statistics
   print(confusion_matrix)
   
-  # Generate rules from the decision tree
-rules <- rpart.rules(decision_tree)
-
-# Print the rules
-print(rules)
 
 }
 
