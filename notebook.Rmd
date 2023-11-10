@@ -258,7 +258,7 @@ yearly_salary_avg
 This table show the average salary increases annually for each year
 
 
-#preprocessing
+# preprocessing
 
 ## Data cleaning
 
