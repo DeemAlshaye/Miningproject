@@ -429,6 +429,12 @@ Encoding onverting categorical or ordinal variables into a numerical representat
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
 ds_salaries$experience_level = factor(ds_salaries$experience_level,levels = c("EN","MI","SE","EX"),labels = c(1,2,3,4))
 
+# Convert work_year to a categorical variable
+ds_salaries$work_year <- factor(ds_salaries$work_year, levels = c(2021, 2022, 2023), labels = c("2021", "2022", "2023"))
+
+# Convert remote_ratio to a categorical variable
+ds_salaries$remote_ratio <- factor(ds_salaries$remote_ratio, levels = c(100, 50, 0), labels = c("100%", "50%", "0%"))
+
 ds_salaries$job_title  <- factor(ds_salaries$job_title)
 ds_salaries$employment_type  <- factor(ds_salaries$employment_type)
 ds_salaries$employee_residence  <- factor(ds_salaries$employee_residence)
@@ -751,10 +757,11 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 ```
 
 
-#3-Split the datasets into two subsets: Training(90%) and Testing(10%):
+## Split the datasets into two subsets: Training(90%) and Testing(10%):
 
+we choose this partition sense more training data often leads to better model performance ,By reserving a smaller portion for testing, we reduce the risk of over-fitting to the test set.
 
-
+### Create train/test function
 
 ```{r}
 library(caret)
@@ -771,6 +778,8 @@ create_train_test <- function(data, size = 0.9, train = TRUE) {
 }
 ```
 
+### using the train/test function
+
 ```{r}
 data_train <- create_train_test(ds_salaries, 0.9, train = TRUE)
 data_test <- create_train_test(ds_salaries, 0.9, train = FALSE)
@@ -781,20 +790,13 @@ dim(data_train)
 dim(data_test)
 ```
 
-The train dataset has 3192 rows while the test dataset has 355 rows.
+we see that The train dataset has 3192 rows while the test dataset has 355 rows.
 
-we use the function prop.table() combined with table() to verify if the randomization process is correct.
+### gini index
 
-```{r}
-prop.table(table(data_train$salary_in_usd_disc))
-```
+Applying Decision trees classification using gini index selection measure
 
-```{r}
-prop.table(table(data_test$salary_in_usd_disc))
-```
-
-
-###A-Decision Tree Usinggini index
+### visual representation of the tree for gini index
 
 ```{r}
 library(rpart)
@@ -802,16 +804,28 @@ library(rpart.plot)
 fit <- rpart(salary_in_usd_disc~., data = data_train, method = 'class')
 rpart.plot(fit, extra = 100,type = 4)
 
+# Plot the tree with a simple text representation
+print(fit)
+
+# Generate rules from the decision tree
+rules <- rpart.rules(fit)
+
+# Print the rules
+print(rules)
+
 ```
 
+### Interpreting visual representation of the tree for gini index
+
+-   The model starts by checking the company location. If the company is located in Africa, Asia, Europe, Oceania, or South America, it predicts a low salary with a high probability.
+
+-   If the company is located in North America or Other, the model considers the job title. If the job title is "Data Analyst," it predicts a low salary with a higher probability. For other job titles like "Data Engineer," "Data Scientist," or "Other," the model predicts a high salary with a higher probability.
+
+-   Within the "Data Analyst" category, the model considers the experience level. If the experience level is 1 or 2, it predicts a mid salary with a higher probability. If the experience level is 3 or 4, it predicts a high salary with a higher probability.
 
 ```{r}
 predict_unseen <-predict(fit, data_test, type = 'class')
 ```
-
-
-
-
 
 ```{r}
 result<-table(predict_unseen, data_test$salary_in_usd_disc)
@@ -819,9 +833,19 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-###B-Decision Tree Using gain ratio
+### Interpreting the results of Confusion Matrix and Statistics for gini index
 
+In a simple way, the confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high). The precision values indicate the proportion of correct predictions for each class.
 
+-   For the "low" salary level, the model predicts it correctly 68.78% of the time. The model has a specificity of 75.30%, meaning it correctly identifies non-low salaries 75.30% of the time.
+-   For the "mid" salary level, the accuracy is lower, with the model predicting it correctly 23.66% of the time. The specificity for this class is 80.92%.
+-   For the "high" salary level, the model predicts it correctly 71.23% of the time. The specificity for this class is 78.72%.
+
+Overall, the accuracy of the model is 57.46%, meaning it predicts the correct salary level about 57.46% of the time. The Kappa value measures the level of agreement between the model's predictions and the actual salary levels, which is 0.32 indicating a fair level of agreement.
+
+### gain ratio
+
+Applying Decision trees classification using gain ratio selection measure
 
 ```{r}
 library(C50)
@@ -830,13 +854,38 @@ library(caret)
 
 ```
 
-Train decision tree
+### visual representation of the tree for gain ratio
 
 ```{r}
+library(C50)
+library(partykit)
+library(rpart.plot)
+library(rpart)
+library(rpart.plot)
+
 model <- C5.0(salary_in_usd_disc ~., data=data_train)
+party_model <- as.party(model)
+
+
+
+# Plot the tree using default plotting method
+plot(party_model,type="simple")
+
+
+
+# Plot the tree with a simple text representation
+print(party_model)
 ```
 
-Test
+### Interpreting visual representation of the tree for gain ratio
+
+-   The model starts by checking if the company location is in Africa, Asia, Europe, or Oceania. If so, it predicts a low salary with about 13.6% error.
+-   If the company location is in North America or Other, the model considers the employment type. If it's in CT, FL, or PT, it predicts a low salary with an 8.3% error.
+-   If the employment type is FT, the model looks at the job title. For example, if it's a Data Analyst, it predicts a low salary with a 52.5% error. For other job titles like Data Engineer or Data Scientist, it considers the experience level.
+-   Based on the experience level, the model predicts either a mid or high salary with specific errors.
+-   The model also takes into account factors such as remote work ratio and work year to make predictions.
+
+Overall, the model uses these factors to determine the most likely salary level within certain error rates for each prediction.
 
 ```{r}
 results <- predict(model, data_test, type="class")
@@ -844,19 +893,29 @@ results <- predict(model, data_test, type="class")
 ```
 
 ```{r}
-
-plot(model, type="simple")
-```
-
-```{r}
 library(caret)
 result1<- table(results, data_test$salary_in_usd_disc)
 co_result1 <- confusionMatrix(result1)
 print(co_result1)
-
 ```
 
-###C-Decision Tree Using information gain
+### Interpreting the results of Confusion Matrix and Statistics for gain ratio
+
+In a simple way, the results show how well the algorithm predicts salary levels based on different factors. The confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high).
+
+Overall, the accuracy of the model is 60.28%, meaning it predicts the correct salary level about 60.28% of the time. The Kappa value indicates a fair level of agreement between the model's predictions and the actual salary levels.
+
+When looking at individual salary levels: - For low salaries, the algorithm correctly predicts them 76.72% of the time. - For mid salaries, the algorithm has a lower accuracy, correctly predicting them 22.58% of the time. - For high salaries, the accuracy of the model is 65.75%.
+
+The specificity measures how well the model predicts non-target classes. - For lowl salaries, the model correctly identifies non-low salaries 72.29% of the time. - For mid salaries, the model identifies non-mid salaries with a specificity of 84.73%. - For high salaries, the specificity is 80.50%.
+
+In general, the model performs better at predicting non-low and non-mid salaries compared to predicting the exact salary level.
+
+### information gain
+
+Applying Decision trees classification using information gain selection measure
+
+### visual representation of the tree for information gain
 
 ```{r}
 classify_dataset <- function(dataset, class_label) {
@@ -874,6 +933,10 @@ classify_dataset <- function(dataset, class_label) {
   # Plot the decision tree with reduced text and symbol size
   rpart.plot(decision_tree, extra = 100, cex = 0.5)
   
+  # Plot the tree with a simple text representation
+print(decision_tree)
+
+
  # Predict on the test set
   predictions <- predict(decision_tree, newdata = data_test, type = "class")
   
@@ -882,10 +945,41 @@ classify_dataset <- function(dataset, class_label) {
   
   # Print confusion matrix and statistics
   print(confusion_matrix)
+  
+  # Generate rules from the decision tree
+rules <- rpart.rules(decision_tree)
+
+# Print the rules
+print(rules)
 
 }
 
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
+
+### Interpreting the results of Confusion Matrix and Statistics for information gain
+
+The confusion matrix and statistics provide information about how well the decision tree model performs in classifying salary in usd. Let's break down the important details:
+
+Overall Accuracy: The model's accuracy is 59.44%, meaning it correctly predicts salary in usd about 59.44% of the time.
+
+Kappa: The model's agreement with the actual salary in usd is fair, with a Kappa value of 0.3545.
+
+McNemar's Test: There is a significant difference in the predictions made by the model for different salary in usd.
+
+Sensitivity: The model correctly identifies 70.37% of low salary in usd , 35.48% of mid salary in usd, and 61.64% of high salary in usd.
+
+Specificity: The model correctly identifies 80.72% of non-low salary in usd, 78.63% of non-mid salary in usd, and 80.14% of non-high salary in usd.
+
+Positive Predictive Value: When the model predicts a salary in usd as low, it is right 80.61% of the time. For mid salary in usd, it is right 37.08% of the time, and for high salary in usd, it is right 44.55% of the time.
+
+Negative Predictive Value: When the model predicts a salary in usd as non-low, it is right 70.53% of the time. For non-mid salary in usd, it is right 77.44% of the time, and for non-high salary in usd, it is right 88.98% of the time.
+
+Balanced Accuracy: On average, the model's performance is around 75.55% for low salary in usd, 57.06% for mid salary in usd, and 70.89% for high salary in usd.
+
+### Interpreting visual representation of the tree for information gain
+
+we see that the tree starts by looking at the location of the company and determines that if it is in Africa, Asia, Europe, Oceania, or South America, the salary in usd is likely to be low. If the company is in North America or Other, it further analyzes the job title and experience level to make a prediction. For example, if the job title is Data Analyst and the experience level is 1, the salary in usd is predicted to be low. The algorithm makes similar predictions for other job titles and experience levels, taking into account factors such as remote work opportunities and the year of work. Overall, the algorithm is trained to predict the salary in usd based on various input features, and these predictions are shown in the tree structure.
+
 
