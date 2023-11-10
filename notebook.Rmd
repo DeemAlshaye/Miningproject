@@ -933,8 +933,7 @@ classify_dataset <- function(dataset, class_label) {
   # Plot the decision tree with reduced text and symbol size
   rpart.plot(decision_tree, extra = 100, cex = 0.5)
   
-  # Plot the tree with a simple text representation
-print(decision_tree)
+
 
 
  # Predict on the test set
