@@ -480,7 +480,7 @@ ds_salaries <- ds_salaries %>%
 
 # Classification
 
-The classification process involves dividing our dataset into training and testing subsets to build and evaluate machine learning models. In this context, we will explore three different split ratios:
+The classification process involves dividing our dataset into training and testing subsets to build and evaluate machine learning models.that will predict the class lable(salary in usd) which has three classes:low,mid,and high,the prediction is made on the rest attributes, we will explore three different split ratios:
 1- Training(80%) and Testing(20%)
 2- Training(70%) and Testing(30%) 
 3- Training(90%) and Testing(10%),
