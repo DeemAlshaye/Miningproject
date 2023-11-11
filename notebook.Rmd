@@ -480,6 +480,12 @@ ds_salaries <- ds_salaries %>%
 
 # Classification
 
+The classification process involves dividing our dataset into training and testing subsets to build and evaluate machine learning models. In this context, we will explore three different split ratios:
+1- Training(80%) and Testing(20%)
+2- Training(70%) and Testing(30%) 
+3- Training(90%) and Testing(10%),
+along with different decision tree algorithms that utilize the Gini index, Gain ratio, and Information gain as selection measures.
+
 ## checking if the data is balanced
 
 ```{r}
@@ -499,6 +505,9 @@ as shown in the bar plot above, and the class percentages, our class label is ba
 
 
 ## 1-Split the datasets into two subsets: Training(80%) and Testing(20%):
+
+We chose this split because it helps Allocating 80% of the data for training provides a substantial amount of data for the model to learn from. With more training data, the model has a better chance of capturing the underlying patterns and relationships within the data, leading to improved performance.
+Setting aside 20% of the data for testing ensures that there is a sizable portion of unseen data available for evaluating the model's performance. Having a sufficient amount of testing data helps in obtaining reliable estimates of the model's accuracy and generalization ability.
 
 
 ```{r}
@@ -539,7 +548,7 @@ prop.table(table(data_test$salary_in_usd_disc))
 ```
 
 
-###A-Decision Tree Using gini index
+### A-Decision Tree Using gini index
 
 ```{r}
 library(rpart)
@@ -588,6 +597,8 @@ Specificity:
 - For the high salary category, the specificity is 70.61%, suggesting some difficulty in correctly identifying instances that do not belong to the high salary category.
 
 Overall, the Gini Index shows moderate performance in predicting salary categories. It performs relatively well in identifying instances with high salaries, but struggles with instances in the mid salary range. The model achieves better accuracy for instances that do not belong to the low salary category compared to the mid and high salary categories.
+
+precision: indicating the proportion of instances correctly predicted as a specific class compared to all instances predicted as that class. The positive predictive values for the "low," "mid," and "high" classes are 0.7170, 0.36275, and 0.4517, respectively.
 
 ### B-Decision Tree Using gain ratio
 
@@ -651,6 +662,8 @@ Specificity:
 - For the low salary category, the specificity is 65.19%, meaning that the model accurately identifies instances that do not belong to the low salary category.
 - For the mid salary category, the specificity is 82.79%, indicating good performance in correctly identifying instances that do not belong to the mid salary category.
 - For the high salary category, the specificity is 79.85%, suggesting some difficulty in correctly identifying instances that do not belong to the high salary category.
+
+the precision values for the "low," "mid," and "high" classes are 0.7222, 0.5, and 0.5143, respectively.
 
 Overall, the model shows moderate performance in predicting salary categories. It performs relatively well in identifying instances with low and high salaries but struggles with instances in the mid salary range. The model achieves better accuracy for instances that do not belong to the mid and high salary categories compared to the low salary category.
 
@@ -721,6 +734,7 @@ In summary, the Gini index measure generally outperformed the Gain ratio and Inf
 
 ## 2-Split the Dataset into two subsets: Training(70%) and Testing(30%):
 
+We chese this split because the 70% training and 30% testing split offers a significant portion of the dataset for training the model, enabling comprehensive learning and improved performance. The larger training set allows the model to better 
 
 ```{r}
 
@@ -807,7 +821,9 @@ The Kappa statistic suggests a fair agreement between the predicted and actual c
 - The "low" class has a sensitivity of 67.49%, specificity of 81.67%, and positive predictive value of 72.40%.
 - The "mid" class has a sensitivity of 12.35%, specificity of 88.41%, and positive predictive value of 33.33%.
 - The "high" class has a sensitivity of 84.75%, specificity of 63.35%, and positive predictive value of 45.44%.
-- The negative predictive value is relatively high for all classes, indicating a good ability to correctly identify negative instances.
+- The negative predictive value is relatively high for all classes, indicating a good ability to correctly identify negative
+instances.
+- the precision values for the "low," "mid," and "high" classes are 0.7703, 0.3896, and 0.5330, respectively.
 
 ### B-Decision Tree Using gain ratio
 
@@ -923,6 +939,8 @@ The specificity values for each non-salary category:
 For non-"low" salaries: The model correctly identifies 91.32% of instances with non-low salaries.
 For non-"mid" salaries: The model correctly identifies 67.03% of instances with non-mid salaries.
 For non-"high" salaries: The model correctly identifies 74.58% of instances with non-high salaries.
+
+The Precisions, for the "low," "mid," and "high" classes are 0.8595, 0.5747, and 0.5212, respectively.
 
 
 ### Comparing and Interpreting the performance of the model using diffrent selection measures
