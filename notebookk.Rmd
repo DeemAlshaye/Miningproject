@@ -1338,46 +1338,41 @@ Total within-cluster sum of square represents the sum of square distances betwee
 
 #### BCubed precision and recall
 
+
 ```{r}
-# Define k_means_clustering function
-k_means_clustering <- function(data, k) {
-  k_means_result <- kmeans(data, centers = k)  # Perform k-means clustering
-  return(k_means_result$cluster)  # Return cluster assignments
+# Define k_medoids_clustering function
+k_medoids_clustering <- function(data, k) {
+  dissimilarity_matrix <- dist(data)  # Compute dissimilarity matrix
+  k_medoids_result <- pam(dissimilarity_matrix, k)  # Perform k-medoids clustering
+  return(k_medoids_result$clustering)  # Return cluster assignments
 }
 
-# Example usage
-selected_data <- ds_salaries_clustering  # Use the entire dataset
-k <- 3  # Number of clusters
-cluster_assignments <- k_means_clustering(selected_data, k)
 
-# Convert cluster assignments to integer codes
-cluster_codes <- as.integer(cluster_assignments)
+# Example usage
+
+selected_data <- ds_salaries_clustering
+k <- 2  # Number of clusters
+cluster_assignments <- k_medoids_clustering(selected_data, k)
 
 # Add cluster assignments to the selected data
-selected_data$Cluster <- as.factor(cluster_codes)
+selected_data$Cluster <- as.factor(cluster_assignments)
 
-# Corrected B-Cubed metrics calculation for k-means
+# Print the B-Cubed metrics
 bcubed_precision_recall <- function(labels_true, labels_pred) {
   labels_true <- as.factor(labels_true)
   labels_pred <- as.factor(labels_pred)
   
-  unique_labels <- unique(labels_true)
   num_points <- length(labels_true)
   
   precision_sum <- 0
   recall_sum <- 0
   
-  for (true_label in unique_labels) {
-    true_indices <- labels_true == true_label
-    pred_labels <- labels_pred[true_indices]
-    
-    unique_pred_labels <- unique(pred_labels)
-    
-    for (pred_label in unique_pred_labels) {
-      common_points <- sum(pred_labels == pred_label)
-      precision_sum <- precision_sum + common_points / sum(labels_pred == pred_label)
-      recall_sum <- recall_sum + common_points / sum(labels_true == true_label)
-    }
+  for (i in 1:num_points) {
+    true_label <- labels_true[i]
+    pred_label <- labels_pred[i]
+    common_points <- sum(labels_true == true_label & labels_pred == pred_label)
+    precision_sum <- precision_sum + common_points / sum(labels_pred == pred_label)
+    recall_sum <- recall_sum + common_points / sum(labels_true == true_label)
   }
   
   precision <- precision_sum / num_points
@@ -1386,14 +1381,25 @@ bcubed_precision_recall <- function(labels_true, labels_pred) {
   return(list(precision = precision, recall = recall))
 }
 
-precision_recall <- bcubed_precision_recall(selected_data$Cluster, cluster_codes)
+precision_recall <- bcubed_precision_recall(selected_data$Cluster, cluster_assignments)
 precision <- precision_recall$precision
 recall <- precision_recall$recall
 
 print(paste("B-Cubed Precision:", precision))
 print(paste("B-Cubed Recall:", recall))
-
 ```
+
+
+
+BCubed Precision and Recall metrics for the elbow value that equal to 3 to evaluate the Precision and Recall for every object in a clustering on our data set according to the ground truth”class label 
+
+The Precision value represents the number of items from the same category in its cluster per the number of items in its cluster.
+
+The average BCubed of the Precision is equal to 1
+
+The Recall value represents the number of items from the same category in its cluster per the number of items in its category
+
+The average BCubed of the Recall is equal to 1
 
 ## Clustering Findings
 
