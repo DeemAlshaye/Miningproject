@@ -9,9 +9,9 @@ output:
 
 # information about the dataset
 
-## Goal of collecting this Dataset
+## Goal of collecting this Dataset 
 
-Predicting Data Science job salaries using classification.
+Predicting Data Science job salaries using classification and clustering.
 
 ## The source of the dataset
 
