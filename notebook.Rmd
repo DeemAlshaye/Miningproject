@@ -255,6 +255,8 @@ This table show the average salary increases annually for each year
 
 ## Data cleaning
 
+
+
 ### categorizing job title
 
 Categorize job title column
