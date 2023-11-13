@@ -1235,6 +1235,12 @@ fviz_silhouette(silhouette_scores)
 
 We choose k=2 through visual examination, as it produced the most well-defined clusters without depending on formal validation techniques. The dataset clusters showed clear and easily distinguishable clusters.
 
+- Cluster 1 has a size of 3166 and an average silhouette width of 0.39. This indicates that the data points within Cluster 1 are relatively well-matched and separated from other clusters.
+- Cluster 2 has a size of 385 and an average silhouette width of 0.17. This suggests that the data points within Cluster 2 are less well-separated compared to Cluster 1, with potentially some overlap or ambiguity.
+
+The average silhouette width for k= 2 is equal to 0.37 have the highest value which it highst number of clustering that close to number 1 and we can cluster the data based on it
+
+
 ## k=3
 
 ```{r}
@@ -1257,6 +1263,15 @@ fviz_silhouette(silhouette_scores)
 
 k=3 is grounded in our observations, specifically guided by the Elbow method. Through this method, we identified k = 3 as the value nearest to the elbow point in the variation plot. This choice proves effective in dividing the dataset into clusters, yielding well-defined and distinct groupings.
 
+- Cluster 1 has a size of 1411 and an average silhouette width of 0.19. This indicates that the data points within Cluster 1 are relatively well-matched and separated from other clusters.
+- Cluster 2 has a size of 379 and an average silhouette width of 0.14. This suggests that the data points within Cluster 2 are less well-separated compared to Cluster 1, with potentially some overlap or ambiguity.
+- Cluster 3 has a size of 1761 and an average silhouette width of 0.36. This indicates that the data points within Cluster 3 are relatively well-matched and separated from other clusters, similar to Cluster 1.
+
+Overall, the results show that Cluster 1 and Cluster 3 have a higher quality in terms of clustering structure and separation, while Cluster 2 may have some overlapping data points or a less distinct clustering pattern.
+
+The average silhouette width for k= 3 is equal to 0.27 have the lowest value for all of the clusters
+
+
 ## k=10
 
 ```{r}
@@ -1276,6 +1291,19 @@ fviz_silhouette(silhouette_scores)
 ```
 
 We initially selected k=10 based on observations using the silhouette coefficient method, aiming for well-separated clusters where objects within the same cluster are close to each other. According to the silhouette coefficient, optimal clustering should yield values between zero and one. However, the actual clustering results did not align with our expectations. The quality of the clusters is considered poor, contradicting the anticipated characteristics. Therefore, k=10 may not be the optimal representation for clustering our dataset.
+
+
+- Cluster 1 has a size of 1287 and an average silhouette width of 0.36. This indicates that the data points within Cluster 1 are relatively well-matched and separated from other clusters.
+- Cluster 2 has a size of 156 and an average silhouette width of 0.14. This suggests that the data points within Cluster 2 are less well-separated compared to Cluster 1, with potentially some overlap or ambiguity.
+- Cluster 3 has a size of 203 and an average silhouette width of 0.09. This indicates that the data points within Cluster 3 are less well-separated compared to Cluster 1 and 2, with potentially more overlap or ambiguity.
+- Cluster 4 has a size of 41 and an average silhouette width of 0.41. This suggests that the data points within Cluster 4 are relatively well-separated and distinct from other clusters.
+- Cluster 5, 6, 7, 8, 9, and 10 also have their respective sizes and average silhouette widths.
+
+Overall, the results show that different clusters have varying levels of quality in terms of clustering structure and separation. Clusters 1, 4, 9, and 10 seem to have relatively higher quality with well-separated data points, while Clusters 3 and 7 have lower silhouette widths and potentially more 
+
+
+The average silhouette width for k= 10 is equal to 0.32 have the middle value which it between k=2 and k= 3
+
 
 ## Validation
 
