@@ -265,6 +265,8 @@ This table show the average salary increases annually for each year
 
 # Data preprocessing
 
+Data preprocessing is an essential step in the data analysis process. It involves cleaning and transforming raw data into a format suitable for analysis
+
 ## Data cleaning
 
 ### categorizing job title
@@ -290,7 +292,7 @@ ds_salaries <- ds_salaries %>%
 head(ds_salaries)
 ```
 
-Our column job title had 93 different categories, By using this categorization process, the code assigns each job title in the dataset to a general job title, we categorized the job title into four categorize ("Data Scientist","Data Engineer","Data Analyst",Other) , allowing for easier analysis and grouping of data based on their job title.
+The original dataset had 93 different job title categories, which could make analysis and grouping challenging. By categorizing the job titles into broader categories such as "Data Scientist," "Data Engineer," "Data Analyst," and "Other," it becomes easier to analyze and compare salaries based on job roles. The categorization is performed based on keyword matching using regular expressions.
 
 ### Categorizing company location:
 
@@ -332,11 +334,11 @@ ds_salaries$company_location <- sapply(ds_salaries$company_location,categorize_l
 tail(ds_salaries)
 ```
 
-Our column company location did have 72 different categories, By using this categorization process, the code assigns each company location in the dataset to a specific geographical region, such as Asia, Europe, North America, South America, Oceania, and Africa, allowing for easier analysis and grouping of data based on different regions of the world.
+The dataset had 72 different company location categories. To facilitate analysis based on geographical regions, the locations are categorized into broader regions such as Asia, Europe, North America, South America, Oceania, Africa, and Other. The categorization is done based on predefined lists of countries corresponding to each region.
 
 ### finding missing data
 
-we used is null function to show any null values in the dataset.
+Checking for missing values is essential to identify any gaps or inconsistencies in the dataset. By using the is.na() function, we determined that there were no missing values in the dataset. This ensures that our analysis is based on complete data without any missing information.
 
 ```{r}
 sum(is.na(ds_salaries))
@@ -346,7 +348,7 @@ we did not have any missing values.
 
 ### finding outliers:
 
-By detecting outliers, analysts can identify potential errors or anomalies in the data collection process, data entry, or measurement inaccuracies
+Outliers can significantly impact statistical analysis and modeling results. By using boxplots and the boxplot.stats() function, we identified outliers in the numeric attributes: salary, salary_in_usd, remote_ratio, and work_year. Outliers may indicate data entry errors or anomalies that need to be investigated further.
 
 ```{r}
 boxplot.stats(ds_salaries$salary)$out
@@ -358,6 +360,8 @@ boxplot.stats(ds_salaries$work_year)$out
 We did detect the outliers in our numeric attributes
 
 ### Sum outliers:
+
+The sum() function was used to calculate the total number of outliers in each numeric attribute. This provides an overview of the extent of outliers present in the dataset and helps understand their impact on the analysis.
 
 ```{r}
 sum(boxplot.stats(ds_salaries$salary)$out)
@@ -371,7 +375,7 @@ sum(boxplot.stats(ds_salaries$work_year)$out)
 
 ### removing the outliers:
 
-Outliers can sometimes distort our analysis and models, so by removing them, we get a clearer picture of the data and can make better predictions or understand patterns more accurately
+Outliers can introduce bias and skewness in the data, leading to inaccurate analysis and modeling results. In this case, the outliers were removed using the interquartile range (IQR) method. The filter() function from the dplyr package was used to remove the rows containing outliers in the specified numeric attributes. By removing outliers, we ensure that our data is more representative of the majority of values and reduces the potential for misleading conclusions.
 
 ```{r}
 
@@ -394,14 +398,13 @@ ds_salaries <- ds_salaries %>%
   )
 ```
 
-We did this to make sure our data is more accurate and representative of the majority of the values.
+We did this to make sure our data is more accurate and representative of the majority of the values.The justification for these techniques is to enhance the quality of the data and improve the validity of the analysis. By identifying and handling missing values, outliers, and anomalies, we ensure that our data is accurate, reliable, and suitable for analysis. 
 
 ## Data transformation
 
 ### Normalization
 
-Normalizing data helps in improving the performance of machine learning models,reducing the training time and improving efficiency.
-
+Normalizing the data helps in improving the performance of machine learning models by scaling the data between 0 and 1. In this case, the normalize() function was applied to the salary and salary_in_usd attributes. Normalization ensures that these variables are on a similar scale, preventing one from dominating the other during analysis or modeling.
 ```{r}
 normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
 ds_salaries$salary<-normalize(ds_salaries$salary)
@@ -411,11 +414,10 @@ num1_cols=ds_salaries[, c(5,7 )]
 head(num1_cols)
 ```
 
-we normalized the attributes salary, salary in usd, so it takes values between 0 and 1 ,which helps in handling the data
 
 ### Discretization
 
-transforming continuous data into categorical values.
+Discretization is used to transform continuous data into categorical values. In this case, the cut() function was utilized to discretize the salary_in_usd attribute into three categories: "low," "mid," and "high." Discretization simplifies the analysis and interpretation of the data.
 
 ```{r}
 
@@ -432,11 +434,10 @@ head(ds_salaries$salary_in_usd_disc)
                                
 ```
 
-Discretization makes it easier to analyze and interpret the data
-
-Encoding onverting categorical or ordinal variables into a numerical representation that can be used in data analysis and modeling. This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
 
 ### Encoding
+
+Encoding involves converting categorical or ordinal variables into a numerical representation that can be used for analysis and modeling. In this case, several attributes were encoded using the factor() function. The company_size and experience_level attributes were converted into ordinal variables by assigning numerical labels. The work_year and remote_ratio attributes were converted into categorical variables using specific levels and labels. The remaining attributes were also encoded as factors to ensure consistency in their representation.This transformation is necessary because many machine learning algorithms and statistical techniques require numerical inputs
 
 ```{r}
 ds_salaries$company_size = factor(ds_salaries$company_size,levels = c("S","M","L"),labels = c(1,2,3))
@@ -470,7 +471,7 @@ our data set has 2 salary coulombs salary, and salary in usd, for this, we will 
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 ```
 
-we see that salary and salary_in_usd are highly correlated so we will only take the salary in USD.
+we see that salary and salary_in_usd are highly correlated to avoid redundancy, we will only take the salary in USD.
 
 we decided to remove employee resident due to its being irrelevant to our data sense the employee resident has nothing to do with his salary.
 
@@ -483,11 +484,10 @@ ds_salaries <- ds_salaries %>%
   head(ds_salaries)
 ```
 
-# Data Mining Technique
 
 # Evaluation and Comparison
 
-## Classification
+# Data Mining Technique: Classification
 
 The classification process involves dividing our dataset into training and testing subsets to build and evaluate machine learning models.that will predict the class lable(salary in usd) which has three classes:low,mid,and high,the prediction is made on the rest attributes, we will explore three different split ratios: 1- Training(80%) and Testing(20%) 2- Training(70%) and Testing(30%) 3- Training(90%) and Testing(10%), along with different decision tree algorithms that utilize the Gini index, Gain ratio, and Information gain as selection measures.
 
@@ -1258,9 +1258,9 @@ In this classification study, we aimed to evaluate the performance of three diff
 -   The sensitivity, or true positive rate, for the low, mid, and high salary categories are 0.7672, 0.22581, and 0.6575, respectively.
 -   The specificity, or true negative rate, for the low, mid, and high salary categories are 0.7229, 0.84733, and 0.8050, respectively.
 
-## Clustering
+# Data Mining Technique: Clustering
 
-clustering the data set based on the number of k that represent number of clusters without knowing the class label (unsupervised learning)
+We will apply clustering on the data set based on the number of k that represent number of clusters without knowing the class label (unsupervised learning),By applying K-means clustering with different values of K (1,3, and 10), and evaluating the results using various metrics, we can gain insights into the optimal number of clusters and assess the quality of the clustering solution. Visualizing the results aids in understanding the patterns and relationships within the dataset and the algorithm's performance in grouping similar data points together.
 
 ```{r}
 #sbset of original dataset
@@ -1302,7 +1302,7 @@ ds_salaries_clustering=scale(ds_salaries_clustering)
 
 ## perform K-means clustering
 
-We used the K-means algorithm with varying values of 3 K for clustering, aiming to determine the optimal number of clusters. We computed the average silhouette width for each K, leading to the following conclusions:
+We used the K-means algorithm with varying values of 3 K for clustering, aiming to determine the optimal number of clusters.The kmeans() function from the base R package is used to perform K-means clustering, We computed the average silhouette width for each K, leading to the following conclusions:. 
 
 ```{r}
 perform_kmeans <- function(data, k) {
@@ -1314,6 +1314,9 @@ perform_kmeans <- function(data, k) {
 ```
 
 ## different number of clusters:
+
+To visualize the clustering results, the fviz_cluster() function from the factoextra package is used.
+The quality of the clustering results is evaluated using the silhouette coefficient. The silhouette() function from the cluster package is used to calculate the silhouette scores for each data point based on their assigned clusters. The fviz_silhouette() function from the factoextra package is then used to visualize the silhouette plot.
 
 ## k=2
 
@@ -1408,6 +1411,8 @@ we applied multiple validation methods for our clustering process, and we aim to
 
 #### Elbow method
 
+The elbow method is used to determine the optimal number of clusters by analyzing the within-cluster sum of squares (WSS) as a function of the number of clusters. The fviz_nbclust() function from the factoextra package is used to visualize the WSS values for different numbers of clusters.
+
 ```{r}
 library(factoextra) 
 fviz_nbclust(ds_salaries_clustering, kmeans, method = "wss") + geom_vline(xintercept= 3, linetype= 2)+
@@ -1417,6 +1422,8 @@ labs(subtitle = "Elbow method")
 we use the elbow method to determine the right number of clusters for our dataset by using the turning point in the curve to determine the number of clusters that was equal to 3.
 
 #### Silhouette method
+
+The fviz_nbclust() function from the factoextra package is used
 
 ```{r}
 fviz_nbclust(ds_salaries_clustering, kmeans, method = "silhouette")+ labs(subtitle = "Silhouette method")
@@ -1434,6 +1441,8 @@ print(total_wss)
 Total within-cluster sum of square represents the sum of square distances between every point in the dataset it is defined how close the points are "within the cluster" and here the value=9655.23 represent how tight the point in the same cluster are.
 
 #### BCubed precision and recall
+
+BCubed Precision and Recall are evaluation metrics used to assess the quality of clustering results, The bcubed_precision_recall() function defines the calculation of these metrics based on the true cluster labels (labels_true) and the predicted cluster assignments (labels_pred).
 
 ```{r}
 # Define k_means_clustering function
@@ -1504,7 +1513,7 @@ The average BCubed of the Recall isequal to 1
 
 # Findings
 
-## Clasfication Findings
+## Classification Findings
 
 The findings of the classification analysis reveal that the model is effective in accurately predicting the salary of an employee. The accuracy of the model, which ranges from 53.24% to 60.28%, is particularly impressive considering the complexity of the task at hand. The model has been trained to consider various factors such as work year, experience level, job title, and company location in order to accurately determine an employee's salary.
 
