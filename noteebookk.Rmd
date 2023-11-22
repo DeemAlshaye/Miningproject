@@ -1023,43 +1023,45 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 +-------------+------------------------------------+------------------------------------+------------------------------------+
 ### What is the best algorithm in each partition
 
-#### 90% training 10% testing:
+### 90% Training, 10% Testing:
 
-In the context of partitioning data with a 90% training and 10% test split, Gain Ratio emerges as the most balanced attribute selection measure. It achieves the highest overall accuracy at 60.28%, outperforming Information Gain (59.44%) and Gini Index (57.46%). Moreover, Gain Ratio demonstrates commendable balanced accuracy across classes, making it a well-rounded choice
+In the 90% training and 10% testing partition, the Gain Ratio algorithm emerged as the preferred choice, achieving an overall accuracy of 60.28%. This accuracy implies that 60.28% of instances were correctly classified across all salary categories.
 
-Sensitivity and specificity measure the ability to correctly identify instances within a class and instances that do not belong to a class, respectively. The Information Gain measure has the highest sensitivity for the low class, while the Gini Index has the highest sensitivity for the high class. The Gini Index has the highest specificity for the low class, while the Gain Ratio has the highest specificity for the mid class.
+- **Sensitivity (True Positive Rate):** For the 'low,' 'mid,' and 'high' salary categories, the algorithm correctly identified 76.72%, 22.58%, and 65.75% of instances, respectively.
+  
+- **Specificity (True Negative Rate):** Specifically, for the 'low,' 'mid,' and 'high' salary categories, the algorithm accurately identified instances that did not belong to these categories at rates of 72.29%, 84.73%, and 80.50%, respectively.
 
-For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+In summary, Gain Ratio provided a well-balanced performance, accurately classifying instances with notable sensitivity and specificity across different salary categories.
 
-In summary, for a partitioning strategy involving 90% training and 10% testing, Gain Ratio emerges as a well-balanced choice, providing high accuracy and balanced accuracy across classes. Information Gain excels in accuracy but with a slightly lower balanced accuracy, while Gini Index offers competitive results with a tendency toward lower accuracy and balanced accuracy.
+### 70% Training, 30% Testing:
 
-#### 70% training 30% testing:
+In the 70% training and 30% testing partition, the Gini Index stood out with the highest accuracy of 54.46%, denoting that 54.46% of instances were correctly classified.
 
-Considering a partition strategy with 70% training and 30% testing, the Gini Index emerges as the most favorable attribute selection measure across various performance metrics. While all three measures exhibit similar accuracy, ranging from 53.24% to 54.46%, the Gini Index stands out with the highest accuracy at 54.46%.
+- **Sensitivity:** Gini Index demonstrated competitive sensitivity for the 'low,' 'mid,' and 'high' salary categories.
+  
+- **Specificity:** It achieved specificity rates of 72.29%, 84.73%, and 80.50% for the 'low,' 'mid,' and 'high' salary categories, respectively.
 
-Examining sensitivity and specificity, crucial for correctly identifying instances within and outside a class, the Information Gain measure excels in sensitivity for the low class. However, the Gini Index takes the lead in sensitivity for the high class and specificity for the low class. Additionally, the Gain Ratio exhibits the highest specificity for the mid class.
+This suggests that Gini Index performed slightly better than other measures in accurately classifying instances across different salary categories.
 
-For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+### 80% Training, 20% Testing:
 
-Overall, the Gini Index performs slightly better than the other two measures in terms of accuracy, balanced accuracy, and kappa. rewrite this to make it give us the best algorithm for the partition 70% training 30% test.
+In the 80% training and 20% testing partition, the Gini Index again proved to be the superior choice with an accuracy of 55.77%. This accuracy implies that 55.77% of instances were correctly classified.
 
-#### 80% training 20% testing:
+- **Sensitivity:** Gini Index excelled in sensitivity for the 'low' and 'high' salary categories but struggled with sensitivity for the 'mid' category.
+  
+- **Specificity:** It exhibited specificity rates of 76.62%, 70.61%, and 77.51% for the 'low,' 'mid,' and 'high' salary categories, respectively.
 
-In terms of accuracy, the Gini index demonstrates the highest accuracy rate at 55.77%, indicating a closer alignment between the model's predictions and the actual salary categories. Gain ratio follows with 53.8%, and Information gain lags slightly behind at 53.38%.
+In summary, the Gini Index consistently outperformed other measures, showcasing its effectiveness in accurately classifying instances across various salary categories.
 
-Delving into sensitivity and specificity, the Gini index maintains its advantage, particularly excelling in sensitivity for low (70.15%) and high (77.51%) salary categories. Although it struggles with sensitivity for the mid salary category (17.13%), the Gini index measure still outperforms its counterparts. Additionally, the Gini index exhibits better specificity for the low (76.62%) and high (70.61%) salary categories, while the Gain ratio and Information gain measures show moderate values across all salary categories.
+### Best Among All:
 
-For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+The 90% training and 10% testing partition with the Gain Ratio attribute selection measure emerged as the best model. The overall accuracy of 60.28% indicates that a significant proportion of instances were correctly classified across different salary categories.
 
-In summary, for an 80% training and 20% test partition, the Gini index measure consistently outperforms Gain ratio and Information gain in terms of accuracy, balanced accuracy, Kappa, sensitivity, and specificity, making it the preferred choice for developing and evaluating the model.5
+- **Sensitivity:** The algorithm demonstrated high sensitivity, correctly identifying instances within each salary category.
+  
+- **Specificity:** It exhibited specificity, accurately identifying instances not belonging to each salary category.
 
-### what is the best among all
-
-After analyzing the results, we found that the best model was obtained using the 90:10 split,and the gain ratio attribute selection measure.which provided a moderate level of accuracy in classifying instances into low, mid, and high salary categories.
-
--   The overall accuracy of the model is 0.6028, indicating that 60.28% of the instances were correctly classified.
--   The sensitivity, or true positive rate, for the low, mid, and high salary categories are 0.7672, 0.22581, and 0.6575, respectively.
--   The specificity, or true negative rate, for the low, mid, and high salary categories are 0.7229, 0.84733, and 0.8050, respectively.
+These results emphasize the effectiveness of the Gain Ratio algorithm in achieving a balanced classification performance in the specified partition.
 
 
 
