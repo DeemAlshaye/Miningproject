@@ -558,13 +558,6 @@ rpart.plot(fit, extra = 100,type = 4)
 
 ```
 
-### Interpreting visual representation of the tree for gini index
-
--   The model starts by checking the company location. If the company is located in Africa, Asia, Europe, Oceania, or South America, it predicts a low salary with a high probability.
-
--   If the company is located in North America, the model considers the job title. If the job title is "Data Analyst," it predicts a low salary with a higher probability. For other job titles like "Data Engineer," "Data Scientist," or "Other," the model predicts a high salary with a higher probability.
-
--   Within the "Data Engineer," "Data Scientist," or "Other, the model considers the experience level. If the experience level is 1 or 2, it predicts a mid salary with a high probability. If the experience level is 3 or 4, it predicts a high salary with a higher probability.
 
 rpart() function uses the Gini impurity measure to split the note.
 
@@ -578,21 +571,7 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for gini index
 
-The overall accuracy of the model is 55.77%. This means that the model correctly predicts the salary category for approximately 55.77% of the instances in the unseen dataset.
-
-Sensitivity: - For the low salary category, the sensitivity is 70.15%, indicating that the model correctly identifies 70.15% of instances with low salaries. - For the mid salary category, the sensitivity is only 17.13%, suggesting that the model struggles to identify instances with mid-range salaries. - For the high salary category, the sensitivity is 77.51%, indicating good performance in identifying instances with high salaries.
-
-Specificity:
-
--   For the low salary category, the specificity is 76.62%, meaning that the model accurately identifies instances that do not belong to the low salary category.
--   For the mid salary category, the specificity is 86.84%, indicating good performance in correctly identifying instances that do not belong to the mid salary category.
--   For the high salary category, the specificity is 70.61%, suggesting some difficulty in correctly identifying instances that do not belong to the high salary category.
-
-Overall, the Gini Index shows moderate performance in predicting salary categories. It performs relatively well in identifying instances with high salaries, but struggles with instances in the mid salary range. The model achieves better accuracy for instances that do not belong to the low salary category compared to the mid and high salary categories.
-
-precision: indicating the proportion of instances correctly predicted as a specific class compared to all instances predicted as that class. The positive predictive values for the "low," "mid," and "high" classes are 0.7170, 0.36275, and 0.4517, respectively.
 
 ### B-Decision Tree Using gain ratio
 
@@ -621,14 +600,7 @@ results <- predict(model, data_test, type="class")
 plot(model, type="simple")
 ```
 
-### Interpreting visual representation of the tree for gain ratio
 
--   The model starts by checking if the company location is in Africa, Asia, Europe, or Oceania. If so, it predicts a low salary with about 14.3% error.
--   If the company location is in North America, the model considers the employment type. If it's in "CT" or "FL" or "PT",it predicts a low salary with about 11.1% error.
--   If the employment type "FT" and job title is "Data Engineer" or "Data Scientist" or "other" the model looks at the experience level. For example, if it's 1 or 2 the model looks for remote ratio if it was 100%(which means online) or 50%(which means both on site and online), it predicts a low salary. for 0%(on site), it predicts a mid salary.
--   if the experience level was 3 or 4 it takes into account factors such as work year and remote work ratio and experience level to make predictions.
-
-Overall, the model uses these factors to determine the most likely salary level within certain error rates for each prediction.
 
 ```{r}
 library(caret)
@@ -637,27 +609,7 @@ co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for gain ratio
 
-the confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high). The precision values indicate the proportion of correct predictions for each class.
-
-Overall Accuracy: The overall accuracy of the model is 53.8%. This means that the model correctly predicts the salary category for approximately 53.8% of the instances in the dataset.
-
-Sensitivity:
-
--   For the low salary category, the sensitivity is 80.31%, indicating that the model correctly identifies 80.31% of instances with low salaries.
--   For the mid salary category, the sensitivity is only 15.74%, suggesting that the model struggles to identify instances with mid-range salaries.
--   For the high salary category, the sensitivity is 51.48%, indicating a moderate performance in identifying instances with high salaries.
-
-Specificity:
-
--   For the low salary category, the specificity is 65.19%, meaning that the model accurately identifies instances that do not belong to the low salary category.
--   For the mid salary category, the specificity is 82.79%, indicating good performance in correctly identifying instances that do not belong to the mid salary category.
--   For the high salary category, the specificity is 79.85%, suggesting some difficulty in correctly identifying instances that do not belong to the high salary category.
-
-the precision values for the "low," "mid," and "high" classes are 0.7222, 0.5, and 0.5143, respectively.
-
-Overall, the model shows moderate performance in predicting salary categories. It performs relatively well in identifying instances with low and high salaries but struggles with instances in the mid salary range. The model achieves better accuracy for instances that do not belong to the mid and high salary categories compared to the low salary category.
 
 ### C-Decision Tree Using information gain
 
@@ -692,37 +644,7 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
 
-### Interpreting visual representation of the tree for information gain
 
-we see that the tree starts by looking at the location of the company and determines that if it is in Africa, Asia, Europe, Oceania, or South America, the salary in usd is likely to be low. If the company is in North America, it further analyzes the job title and experience level to make a prediction. For example, if the job title is Data Analyst and the experience level is 1, the salary in usd is predicted to be low. The algorithm makes similar predictions for other job titles and experience levels, taking into account factors such as remote work opportunities and the year of work.experience level, and company size, Overall, the algorithm is trained to predict the salary in usd based on various input features, and these predictions are shown in the tree structure.
-
-### Interpreting the results of Confusion Matrix and Statistics for information gain
-
--   The overall accuracy of the model is 53.38%. This means that the model correctly predicts the salary category for approximately 53.38% of the instances in the dataset.
-
-Sensitivity:
-
--   For the low salary category, the sensitivity is 76.92%, indicating that the model correctly identifies 76.92% of instances with low salaries.
--   For the mid salary category, the sensitivity is 19.44%, suggesting that the model struggles to identify instances with mid-range salaries.
--   For the high salary category, the sensitivity is 51.48%, indicating a moderate performance in identifying instances with high salaries.
-
-Specificity:
-
--   For the low salary category, the specificity is 72.99%, meaning that the model accurately identifies instances that do not belong to the low salary category.
--   For the mid salary category, the specificity is 78.95%, indicating good performance in correctly identifying instances that do not belong to the mid salary category.
--   For the high salary category, the specificity is 77.26%, suggesting some difficulty in correctly identifying instances that do not belong to the high salary category.
-
-### Comparing and Interpreting the performance of the model using diffrent selection measures
-
-The performance of the model was evaluated using three different selection measures: Gini index, Gain ratio, and Information gain.
-
-In terms of accuracy, the Gini index measure achieved the highest accuracy rate of 55.77%, followed by Gain ratio with 53.8%, and Information gain with 53.38%. This indicates that the model's predictions aligned more closely with the actual salary categories when using the Gini index measure.
-
-When considering balanced accuracy, which takes into account the performance across all classes, the Gini index measure outperformed the other two measures in most categories. It achieved a balanced accuracy of 73.39% for the low salary category, 74.06% for the high salary category, and 51.99% for the mid salary category. The Gain ratio and Information gain measures had relatively lower balanced accuracy scores in all categories.
-
-the Gini index measure demonstrated better performance in most cases. It achieved higher sensitivity values for low (70.15%) and high (77.51%) salary categories compared to the other measures. However, it struggled with sensitivity for the mid salary category (17.13%). The Gini index measure also exhibited better specificity for the low (76.62%) and high (70.61%) salary categories. The Gain ratio and Information gain measures showed moderate sensitivity and specificity values across all salary categories.
-
-In summary, the Gini index measure generally outperformed the Gain ratio and Information gain measures in terms of accuracy, balanced accuracy, Kappa, sensitivity, and specificity.
 
 ## 2-Split the Dataset into two subsets: Training(70%) and Testing(30%):
 
@@ -766,15 +688,7 @@ fit <- rpart(salary_in_usd_disc~., data = data_train70, method = 'class')
 rpart.plot(fit, extra = 100,type = 4)
 ```
 
-### Interpreting visual representation of the tree for gini index
 
--   The model starts by checking the company location. If the company is located in Africa, Asia, Europe, Oceania, or South America, it predicts a low salary with a high probability.
-
--   If the company is located in North America, the model considers the job title. If the job title is "Data Analyst," it predicts a low salary with a higher probability. For other job titles like "Data Engineer," "Data Scientist," or "Other," the model predicts a high salary with a higher probability.
-
--   Within the "Data Engineer," "Data Scientist," or "Other, the model considers the experience level. If the experience level is 1 or 2, it predicts a mid salary with a higher probability. If the experience level is 3 or 4, it predicts a high salary with a higher probability.
-
-rpart() function uses the Gini impurity measure to split the note.
 
 ```{r}
 predict_unseen70 <-predict(fit, data_test70, type = 'class')
@@ -801,17 +715,6 @@ co_result70_gini <- confusionMatrix(result70_gini)
 print(co_result70_gini)
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for gini index
-
-the confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high). The precision values indicate the proportion of correct predictions for each class.For example, the model predicted 299 instances as "low" when the true class was also "low," and it predicted 89 instances as "low" when the true class was "mid," and so on.
-
-The overall accuracy of the model is 54.46%, meaning it correctly classified approximately 54.46% of the instances. The Kappa statistic suggests a fair agreement between the predicted and actual classes.
-
--   The "low" class has a sensitivity of 67.49%, specificity of 81.67%, and positive predictive value of 72.40%.
--   The "mid" class has a sensitivity of 12.35%, specificity of 88.41%, and positive predictive value of 33.33%.
--   The "high" class has a sensitivity of 84.75%, specificity of 63.35%, and positive predictive value of 45.44%.
--   The negative predictive value is relatively high for all classes, indicating a good ability to correctly identify negative instances.
--   the precision values for the "low," "mid," and "high" classes are 0.7703, 0.3896, and 0.5330, respectively.
 
 ### B-Decision Tree Using gain ratio
 
@@ -834,14 +737,6 @@ results70_gain <- predict(object=model70, newdata=data_test70, type="class")
 plot(model70, type="simple")
 ```
 
-### Interpreting visual representation of the tree for gain ratio
-
--   The model starts by checking if the company location is in Africa, Asia, Europe, or Oceania. If so, it predicts a low salary with about 14.6% error.
--   If the company location is in North America, the model considers the job title. If it's in "Data Analyst" or other, the model predicts a low salary with an 51.9% error.
--   If the job title is "Data Engineer" or "Data Scientist", the model looks at the experience level. For example, if it's 3 or 4 the model looks for remote ratio if it was 100%(which means online), it predicts a high salary. for 50%(which means both on site and online), it predicts a mid salary with a 0.0% error, for the 0%(on site), it takes work year into concider.
--   if the experience level was 1 or 2 it takes into account factors such as employment type and remote work ratio and experience level to make predictions.
-
-Overall, the model uses these factors to determine the most likely salary level within certain error rates for each prediction.
 
 Confusion Matrix and Statistics
 
@@ -850,28 +745,6 @@ result70<-table(results70_gain, data_test70$salary_in_usd_disc)
 co_result70_gain <- confusionMatrix(result70)
 print(co_result70_gain)
 ```
-
-### Interpreting the results of Confusion Matrix and Statistics for gain ratio
-
-the confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high). The precision values indicate the proportion of correct predictions for each class.
-
-The overall accuracy of the model is 53.24%, indicating that it correctly classified approximately 53.24% of the instances. The 95% confidence interval suggests that the true accuracy of the model falls between 0.5019 and 0.5627.
-
-The performance measures for each class are as follows:
-
--   For the "low" class:
-
-Sensitivity: 71.11% Specificity: 80.23% Positive Predictive Value: 71.92%
-
--   For the "mid" class:
-
-Sensitivity: 28.23% Specificity: 76.28% Positive Predictive Value: 35.82%
-
--   For the "high" class:
-
-Sensitivity: 55.32% Specificity: 74.07% Positive Predictive Value: 43.45%
-
-the model shows varying performance for different classes. The highest accuracy is achieved for the "low" class, while the "mid" class has the lowest accuracy.
 
 ### C-Decision Tree Using information gain
 
@@ -897,39 +770,9 @@ decision_tree <- rpart(formula = as.formula(paste(class_label, "~ .")), data = d
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 ```
 
-### Interpreting visual representation of the tree for information gain
 
-we see that the tree starts by looking at the location of the company and determines that if it is in Africa, Asia, Europe, Oceania, or South America, the salary in usd is likely to be low. If the company is in North America or Other, it further analyzes the job title and experience level to make a prediction. For example, if the job title is Data Analyst and the experience level is 1, the salary in usd is predicted to be low. The algorithm makes similar predictions for other job titles and experience levels, taking into account factors such as remote work opportunities and the year of work.experience level, and company size, Overall, the algorithm is trained to predict the salary in usd based on various input features, and these predictions are shown in the tree structure.
 
-### Interpreting the results of Confusion Matrix and Statistics for information gain
 
-The overall accuracy of the model is 53.8%. This means that the model correctly classified approximately 53.8% of the instances in the dataset.
-
-The 95% confidence interval (CI) for accuracy ranges from 0.5075 to 0.5683. This interval provides a range of values within which we can be 95% confident that the true accuracy of the model lies.
-
-The sensitivity values for each salary category:
-
-For the "low" salary category: The model correctly identifies 59.37% of instances with low salaries. For the "mid" salary category: The model correctly identifies 44.12% of instances with mid-range salaries. For the "high" salary category: The model correctly identifies 56.74% of instances with high salaries.
-
-The specificity values for each non-salary category:
-
-For non-"low" salaries: The model correctly identifies 91.32% of instances with non-low salaries. For non-"mid" salaries: The model correctly identifies 67.03% of instances with non-mid salaries. For non-"high" salaries: The model correctly identifies 74.58% of instances with non-high salaries.
-
-The Precisions, for the "low," "mid," and "high" classes are 0.8595, 0.5747, and 0.5212, respectively.
-
-### Comparing and Interpreting the performance of the model using diffrent selection measures
-
--   In terms of accuracy, all three measures show similar performance, ranging from 53.24% to 54.46%. However, the Gini Index has the highest accuracy of 54.46% among the three.
-
--   Balanced accuracy measures the average performance across classes, and here the Gini Index has the highest balanced accuracy for both the low and high classes.
-
--   Kappa indicates the agreement between predicted and actual classes, and the Gini Index has the highest Kappa value among the three measures.
-
--   Sensitivity and specificity measure the ability to correctly identify instances within a class and instances that do not belong to a class, respectively. The Information Gain measure has the highest sensitivity for the low class, while the Gini Index has the highest sensitivity for the high class. The Gini Index has the highest specificity for the low class, while the Gain Ratio has the highest specificity for the mid class.
-
--   Mcnemar's Test P-Value indicates the statistical significance of the difference between the measures. In all cases, the p-values are very low, suggesting significant differences between the measures.
-
--   Overall, the Gini Index performs slightly better than the other two measures in terms of accuracy, balanced accuracy, and kappa.
 
 ## 3-Split the datasets into two subsets: Training(90%) and Testing(10%):
 
@@ -989,13 +832,7 @@ print(rules)
 
 ```
 
-### Interpreting visual representation of the tree for gini index
 
--   The model starts by checking the company location. If the company is located in Africa, Asia, Europe, Oceania, or South America, it predicts a low salary with a high probability.
-
--   If the company is located in North America or Other, the model considers the job title. If the job title is "Data Analyst," it predicts a low salary with a higher probability. For other job titles like "Data Engineer," "Data Scientist," or "Other," the model predicts a high salary with a higher probability.
-
--   Within the "Data Analyst" category, the model considers the experience level. If the experience level is 1 or 2, it predicts a mid salary with a higher probability. If the experience level is 3 or 4, it predicts a high salary with a higher probability.
 
 ```{r}
 predict_unseen <-predict(fit, data_test, type = 'class')
@@ -1007,15 +844,7 @@ co_result <- confusionMatrix(result)
 print(co_result)
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for gini index
 
-In a simple way, the confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high). The precision values indicate the proportion of correct predictions for each class.
-
--   For the "low" salary level, the model predicts it correctly 68.78% of the time. The model has a specificity of 75.30%, meaning it correctly identifies non-low salaries 75.30% of the time.
--   For the "mid" salary level, the accuracy is lower, with the model predicting it correctly 23.66% of the time. The specificity for this class is 80.92%.
--   For the "high" salary level, the model predicts it correctly 71.23% of the time. The specificity for this class is 78.72%.
-
-Overall, the accuracy of the model is 57.46%, meaning it predicts the correct salary level about 57.46% of the time. The Kappa value measures the level of agreement between the model's predictions and the actual salary levels, which is 0.32 indicating a fair level of agreement.
 
 ### gain ratio
 
@@ -1051,15 +880,7 @@ plot(party_model,type="simple")
 print(party_model)
 ```
 
-### Interpreting visual representation of the tree for gain ratio
 
--   The model starts by checking if the company location is in Africa, Asia, Europe, or Oceania. If so, it predicts a low salary with about 13.6% error.
--   If the company location is in North America or Other, the model considers the employment type. If it's in CT, FL, or PT, it predicts a low salary with an 8.3% error.
--   If the employment type is FT, the model looks at the job title. For example, if it's a Data Analyst, it predicts a low salary with a 52.5% error. For other job titles like Data Engineer or Data Scientist, it considers the experience level.
--   Based on the experience level, the model predicts either a mid or high salary with specific errors.
--   The model also takes into account factors such as remote work ratio and work year to make predictions.
-
-Overall, the model uses these factors to determine the most likely salary level within certain error rates for each prediction.
 
 ```{r}
 results <- predict(model, data_test, type="class")
@@ -1073,17 +894,7 @@ co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for gain ratio
 
-In a simple way, the results show how well the algorithm predicts salary levels based on different factors. The confusion matrix displays the number of correct and incorrect predictions for each salary level (low, mid, high).
-
-Overall, the accuracy of the model is 60.28%, meaning it predicts the correct salary level about 60.28% of the time. The Kappa value indicates a fair level of agreement between the model's predictions and the actual salary levels.
-
-When looking at individual salary levels: - For low salaries, the algorithm correctly predicts them 76.72% of the time. - For mid salaries, the algorithm has a lower accuracy, correctly predicting them 22.58% of the time. - For high salaries, the accuracy of the model is 65.75%.
-
-The specificity measures how well the model predicts non-target classes. - For lowl salaries, the model correctly identifies non-low salaries 72.29% of the time. - For mid salaries, the model identifies non-mid salaries with a specificity of 84.73%. - For high salaries, the specificity is 80.50%.
-
-In general, the model performs better at predicting non-low and non-mid salaries compared to predicting the exact salary level.
 
 ### information gain
 
@@ -1126,47 +937,8 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
 
-### Interpreting the results of Confusion Matrix and Statistics for information gain
 
-The confusion matrix and statistics provide information about how well the decision tree model performs in classifying salary in usd. Let's break down the important details:
 
-Overall Accuracy: The model's accuracy is 59.44%, meaning it correctly predicts salary in usd about 59.44% of the time.
-
-Kappa: The model's agreement with the actual salary in usd is fair, with a Kappa value of 0.3545.
-
-McNemar's Test: There is a significant difference in the predictions made by the model for different salary in usd.
-
-Sensitivity: The model correctly identifies 70.37% of low salary in usd , 35.48% of mid salary in usd, and 61.64% of high salary in usd.
-
-Specificity: The model correctly identifies 80.72% of non-low salary in usd, 78.63% of non-mid salary in usd, and 80.14% of non-high salary in usd.
-
-Positive Predictive Value: When the model predicts a salary in usd as low, it is right 80.61% of the time. For mid salary in usd, it is right 37.08% of the time, and for high salary in usd, it is right 44.55% of the time.
-
-Negative Predictive Value: When the model predicts a salary in usd as non-low, it is right 70.53% of the time. For non-mid salary in usd, it is right 77.44% of the time, and for non-high salary in usd, it is right 88.98% of the time.
-
-Balanced Accuracy: On average, the model's performance is around 75.55% for low salary in usd, 57.06% for mid salary in usd, and 70.89% for high salary in usd.
-
-### Interpreting visual representation of the tree for information gain
-
-we see that the tree starts by looking at the location of the company and determines that if it is in Africa, Asia, Europe, Oceania, or South America, the salary in usd is likely to be low. If the company is in North America or Other, it further analyzes the job title and experience level to make a prediction. For example, if the job title is Data Analyst and the experience level is 1, the salary in usd is predicted to be low. The algorithm makes similar predictions for other job titles and experience levels, taking into account factors such as remote work opportunities and the year of work. Overall, the algorithm is trained to predict the salary in usd based on various input features, and these predictions are shown in the tree structure.
-
-### Comparing and Interpreting the performance of the model using diffrent selection measures
-
-Accuracy: Gain Ratio achieved the highest accuracy (60.28%), followed by Information Gain (59.44%) and Gini Index (57.46%).
-
-Balanced Accuracy: Gain Ratio also performed well in terms of balanced accuracy across classes. Information Gain and Gini Index were comparable but slightly lower.
-
-Kappa: Information Gain had the highest Kappa value (0.3545), indicating a moderate level of agreement. Gain Ratio and Gini Index had slightly lower Kappa values (0.3477 and 0.32, respectively).
-
-Sensitivity and Specificity: The performance across sensitivity and specificity varied for different classes. Gain Ratio tended to have a higher sensitivity for the low class, while Gini Index performed better for the high class.
-
-McNemar's Test P-Value: This test assesses whether the differences in performance are statistically significant. In all cases, the p-values are quite small, suggesting that the differences are statistically significant.
-
--   Gain Ratio seems to be the most balanced attribute selection measure in terms of accuracy and balanced accuracy.
-
--   Information Gain provides the highest accuracy but with slightly lower balanced accuracy compared to Gain Ratio.
-
--   Gini Index, while providing competitive results, tends to have slightly lower accuracy and balanced accuracy compared to Information Gain and Gain Ratio.
 
 ## comparing 
 
@@ -1249,14 +1021,47 @@ McNemar's Test P-Value: This test assesses whether the differences in performanc
 |             |                                    |                                    |                                    |
 |             | -   'high': 80.14%                 | -   'high': 77.26%                 | -   'high': 77.26%                 |
 +-------------+------------------------------------+------------------------------------+------------------------------------+
+### What is the best algorithm in each partition
 
+#### 90% training 10% testing:
 
+In the context of partitioning data with a 90% training and 10% test split, Gain Ratio emerges as the most balanced attribute selection measure. It achieves the highest overall accuracy at 60.28%, outperforming Information Gain (59.44%) and Gini Index (57.46%). Moreover, Gain Ratio demonstrates commendable balanced accuracy across classes, making it a well-rounded choice
 
-In this classification study, we aimed to evaluate the performance of three different attribute selection measures on our dataset using three different splits. The attribute selection measures considered were the Gini index, Gain ratio, and Information gain. The dataset was divided into three subsets using the 90:10 split, 80:20 split, and 70:30 split. After analyzing the results, we found that the best model was obtained using the 90:10 split,and the gain ratio attribute selection measure.which provided a moderate level of accuracy in classifying instances into low, mid, and high salary categories.
+Sensitivity and specificity measure the ability to correctly identify instances within a class and instances that do not belong to a class, respectively. The Information Gain measure has the highest sensitivity for the low class, while the Gini Index has the highest sensitivity for the high class. The Gini Index has the highest specificity for the low class, while the Gain Ratio has the highest specificity for the mid class.
+
+For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+
+In summary, for a partitioning strategy involving 90% training and 10% testing, Gain Ratio emerges as a well-balanced choice, providing high accuracy and balanced accuracy across classes. Information Gain excels in accuracy but with a slightly lower balanced accuracy, while Gini Index offers competitive results with a tendency toward lower accuracy and balanced accuracy.
+
+#### 70% training 30% testing:
+
+Considering a partition strategy with 70% training and 30% testing, the Gini Index emerges as the most favorable attribute selection measure across various performance metrics. While all three measures exhibit similar accuracy, ranging from 53.24% to 54.46%, the Gini Index stands out with the highest accuracy at 54.46%.
+
+Examining sensitivity and specificity, crucial for correctly identifying instances within and outside a class, the Information Gain measure excels in sensitivity for the low class. However, the Gini Index takes the lead in sensitivity for the high class and specificity for the low class. Additionally, the Gain Ratio exhibits the highest specificity for the mid class.
+
+For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+
+Overall, the Gini Index performs slightly better than the other two measures in terms of accuracy, balanced accuracy, and kappa. rewrite this to make it give us the best algorithm for the partition 70% training 30% test.
+
+#### 80% training 20% testing:
+
+In terms of accuracy, the Gini index demonstrates the highest accuracy rate at 55.77%, indicating a closer alignment between the model's predictions and the actual salary categories. Gain ratio follows with 53.8%, and Information gain lags slightly behind at 53.38%.
+
+Delving into sensitivity and specificity, the Gini index maintains its advantage, particularly excelling in sensitivity for low (70.15%) and high (77.51%) salary categories. Although it struggles with sensitivity for the mid salary category (17.13%), the Gini index measure still outperforms its counterparts. Additionally, the Gini index exhibits better specificity for the low (76.62%) and high (70.61%) salary categories, while the Gain ratio and Information gain measures show moderate values across all salary categories.
+
+For the 'low' salary category, Information Gain consistently outperforms Gini Index and Gain Ratio in terms of specificity For the 'mid' salary category, Gain Ratio consistently outperforms Information Gain and Gini Index in terms of specificity For the 'high' salary category, Information Gain and Gain Ratio exhibit similar specificity values, while Gini Index tends to perform slightly lower.
+
+In summary, for an 80% training and 20% test partition, the Gini index measure consistently outperforms Gain ratio and Information gain in terms of accuracy, balanced accuracy, Kappa, sensitivity, and specificity, making it the preferred choice for developing and evaluating the model.5
+
+### what is the best among all
+
+After analyzing the results, we found that the best model was obtained using the 90:10 split,and the gain ratio attribute selection measure.which provided a moderate level of accuracy in classifying instances into low, mid, and high salary categories.
 
 -   The overall accuracy of the model is 0.6028, indicating that 60.28% of the instances were correctly classified.
 -   The sensitivity, or true positive rate, for the low, mid, and high salary categories are 0.7672, 0.22581, and 0.6575, respectively.
 -   The specificity, or true negative rate, for the low, mid, and high salary categories are 0.7229, 0.84733, and 0.8050, respectively.
+
+
 
 # Data Mining Technique: Clustering
 
@@ -1513,19 +1318,26 @@ The average BCubed of the Recall isequal to 1
 
 # Findings
 
-## Classification Findings
+## Clasfication Findings
 
-The findings of the classification analysis reveal that the model is effective in accurately predicting the salary of an employee. The accuracy of the model, which ranges from 53.24% to 60.28%, is particularly impressive considering the complexity of the task at hand. The model has been trained to consider various factors such as work year, experience level, job title, and company location in order to accurately determine an employee's salary.
+The results of the classification analysis, particularly when evaluating different models and data splits, provide valuable insights into the performance of the predictive model for employee salaries. Let's break down the key findings:
 
-During the discussion, it was observed that the models consistently achieve moderate accuracy, with the gain ratio model performing slightly better in the 90-10 split. The sensitivity and specificity, which measure the models' ability to correctly identify positive and negative cases, vary across models and splits. Generally, the 90-10 split demonstrates better performance in this regard.
+1.  **Accuracy:**
+    -   Accuracy measures how well the model correctly predicts the salary categories. The observed accuracy ranging from 53.24% to 60.28% suggests that the model is reasonably effective in predicting employee salaries.
+2.  **Model Comparison:**
+    -   The gain ratio model consistently outperforms other models (Gini Index, Information Gain) in terms of accuracy and kappa values. This indicates that the gain ratio model is more reliable and aligns better with the actual salary categories.
+3.  **Data Split Impact:**
+    -   The evaluation results show that the 90% training and 10% testing split generally yields better performance in terms of sensitivity and specificity compared to the 70-30 and 80-20 splits. This suggests that a larger training set contributes to a more effective model.
+4.  **Decision Tree Interpretation:**
+    -   The decision tree provides a structured way to understand how the model makes predictions based on various features such as work year, experience level, job title, and company location. It offers transparency into the decision-making process.
+5.  **Sensitivity and Specificity:**
+    -   Sensitivity and specificity metrics provide insights into the model's ability to correctly identify positive and negative cases. The variations across different models and splits indicate how well the models perform in distinguishing between different salary categories.
+6.  **Recommendations:**
+    -   The recommendation to use the gain ratio model with a 90% training and 10% testing split is based on its superior performance in terms of accuracy and kappa. This combination is suggested for organizations looking to predict employee salaries effectively.
+7.  **Implications:**
+    -   The results have practical implications for organizations involved in workforce management and compensation planning. Accurate predictions of employee salaries can inform decisions related to hiring, retention, and overall human resources strategies.
 
-The kappa statistic, which adjusts the models' performance for chance, indicates fair agreement between the predicted and actual classes. The values obtained are moderate, further supporting the accuracy of the model.
-
-While the specific split used in the analysis influences the performance metrics, there is a general trend where the 90-10 split tends to yield better results compared to the 70-30 and 80-20 splits.
-
-Overall, the gain ratio model exhibits better overall performance in terms of accuracy and kappa. Therefore, it is the preferred model for predicting employee salaries.
-
-In conclusion, the mining results obtained demonstrate moderate performance across different splits, with the 90-10 split generally providing slightly better results. To predict employee salaries, it is recommended to use the 90% training and 10% testing split, along with the gain ratio selection measure. This approach yields a final tree that predicts salaries with an accuracy of 60.28%. The sensitivity and specificity for different salary categories are also provided, indicating the model's ability to correctly identify low, mid, and high salary ranges. The kappa value, which reflects the model's performance adjusted for chance, is 34.77%.
+In summary, the results signify the model's effectiveness in predicting employee salaries, with the gain ratio model and the 90-10 split identified as the preferred choices based on their superior performance. These findings contribute valuable insights for organizations seeking reliable and accurate salary predictions.
 
 ## Clustering Findings
 
