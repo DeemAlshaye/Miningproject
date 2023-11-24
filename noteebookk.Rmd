@@ -1276,7 +1276,6 @@ total_wss <- kmeans_result$tot.withinss
 print(total_wss)
 ```
 
-Total within-cluster sum of square represents the sum of square distances between every point in the dataset it is defined how close the points are "within the cluster" and here the value=9655.23 represent how tight the point in the same cluster are.
 
 #### BCubed precision and recall
 
@@ -1392,7 +1391,9 @@ recall <- metrics$recall
 cat("BCubed Precision:", precision, "\n")
 cat("BCubed Recall:", recall, "\n")
 ```
+The BCubed precision of 0.1010837 and recall of 0.5055741 for k=3 signify a moderate performance in terms of clustering accuracy. These values indicate that, compared to k=2 where precision is higher but recall might be compromised due to potential overlap, and k=10 where clusters are too close, k=3 achieves a balance.
 
+In essence, for k=3, the clustering model demonstrates a reasonable ability to correctly group items from the same category within clusters while maintaining a certain level of comprehensiveness. The mid-range values suggest that k=3 strikes a trade-off between the precision-oriented approach of k=2 and the recall-oriented approach of k=10. This equilibrium makes k=3 a viable option for clustering in scenarios where achieving a balanced trade-off between precision and recall is desirable.
 #### for k=10
 
 ```{r}
@@ -1443,6 +1444,11 @@ recall <- metrics$recall
 cat("BCubed Precision:", precision, "\n")
 cat("BCubed Recall:", recall, "\n")
 ```
+For k=10, the BCubed precision of 0.1110498 and recall of 0.2913048 these metrics suggest that the precision, or the accuracy of correctly assigning items to their respective clusters, is relatively low. Similarly, the recall, which measures the ability to capture and include all items from the same category within their clusters, is also on the lower side.
+
+The values for k=10 reaffirm the earlier observation that this choice of k leads to overlapping clusters, where points within the same cluster are not closely grouped together. This compromises both precision and recall, making k=10 less effective for capturing distinct and cohesive clusters in the dataset.
+
+In summary, the BCubed precision and recall values for k=10 indicate a suboptimal clustering outcome, reinforcing the notion that this particular choice of k does not align well with the standard expectations and requirements for successful clustering.
 
 +------------------------------------+----------------------+----------------------+----------------------+
 |                                    | K=2                  | K=3                  | K=10                 |
