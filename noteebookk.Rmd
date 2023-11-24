@@ -8,7 +8,17 @@ output:
 
 # Problem
 
+Salary stands as a pivotal factor for employees, job seekers, and organizations, particularly in the ever-expanding field of data science. Comprehending the variables influencing salaries in data science roles becomes essential. This understanding could serve as a tool for individuals and businesses to stay abreast of market trends, enabling well-informed decisions. Moreover, it empowers organizations to establish equitable and competitive salary structures.
+
+By delving into data analysis through classification and clustering, we aim to create a predictive model for future investigations. This model will explore the impact of various job and employee attributes, such as experience level, type of employment, years of service, job title, salary, remote work percentage, employee location, company address, and company size.
+
 # Data Mining task
+
+For our project, we intend to employ two data mining techniques which are classification and clustering. These methods will assist us in analyzing data to develop a predictive model for estimating the salaries. Our goal is to explore the influence of diverse job and employee characteristics on salary amounts through these analytical approaches.
+
+For classification, we will train our model to be able to predict the class label(salary in usd) for science job, and the prediction is made on the rest of the attributes like work_year, employment_type, joUSDb_title, salary, remote_ratio, etc.
+
+For clustering, our model will generate a series of clusters for Science job salaries with comparable characteristics. These clusters will be instrumental in predicting outcomes for new Science job salaries.
 
 # Data
 
@@ -85,7 +95,7 @@ dim(ds_salaries)
 
 ## summary the data
 
-we used summary function to show each numeric value min, median, max, Q1 and Q3
+we used summary function to show each numeric value min, median, max, Q1 and Q3 which Q1 represents first quartile and Q3 represents third quartile
 
 ```{r}
 summary(ds_salaries)
@@ -117,7 +127,7 @@ median(ds_salaries$remote_ratio)
 quantile(ds_salaries$remote_ratio)
 ```
 
-with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
+with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 which means most work done was not online and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
 
 ```{r}
 mean(ds_salaries$work_year)
@@ -125,7 +135,7 @@ median(ds_salaries$work_year)
 quantile(ds_salaries$work_year)
 ```
 
-we see that the median is 2022 wich means that most pepole work year is 2022,and the quantile shows that the number of employee with work year 2020 are the least.
+we see that the median is 2022 which means that most people work year is 2022, and the quantile shows that the number of employee with a work year of 2020 are the least.
 
 ```{r}
 var(ds_salaries$salary)
@@ -156,19 +166,19 @@ we compared some variables with each other to find how they are distributed
 boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s" ,main="boxplot of salary in 1000s")
 ```
 
-Box plot represents salaries of employees,it displays the five number summary of the salary it shows that the salary has a lot of outliers that's need to be smoothed to remove the noise
+Box plot represents salaries of employees, it displays the five number summary of the salary min, median, max, Q1 and Q3, it shows that the salary has a lot of outliers that are need to be smoothed to remove the noise
 
 ```{r}
 boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s" ,main="boxplot of salary in usd in 1000s")
 ```
 
-Box plot represents salary in (usd), it displays the five number summary of the salary in USD it shows that the salary in USD has a lot of outliers thats need to be smoothed to remove the noise
+Box plot represents salary in (usd), it displays the five number summary of the salary in USD min, median, max, Q1 and Q3, it shows that the salary in USD has a lot of outliers thats need to be smoothed to remove the noise
 
 ```{r}
 boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency"  ,main="boxplot of Work year")
 ```
 
-Box plot represents work year (2020,2021,2022,2023), the work year box plot shows that there is a one outlier of 2020 year, that will be smoothed later to have more accurate data
+Box plot represents work year at (2020,2021,2022,2023), the work year box plot shows that there is a one outlier of 2020 year, that will be smoothed later to have more accurate data
 
 ### histogram
 
@@ -177,7 +187,7 @@ hist(ds_salaries$salary_1000s,ylim=c(0,100),ylab="Frequency",xlab="salary in 100
 
 ```
 
-The histogram represent the frequency of salaries for each employee, it shows that most of employees has small amount of salary
+The histogram represents the frequency of salaries for each employee, it shows that most employees has small amount of salary
 
 ### bar plot
 
@@ -201,9 +211,11 @@ top_5_job_salaries
 
 ```
 
+We have tow bar plot one is for remote ratio and the other one for work year
+
 First, the bar plot of 'remote ratio' represent the total of remote ratio for each employee, it show that most employees work on site then the employees who work online, the employees who work on both (online and onsite) have the smaller frequency
 
-Second, the bar plot of 'work year' represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees, the number of employees increases annually
+Second, the bar plot of 'work year' represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees and 2023 year has the highest number of employees , we note that the number of employees increases annually
 
 ### Scatter plot
 
@@ -211,7 +223,7 @@ Second, the bar plot of 'work year' represent the work year and number of employ
   with(ds_salaries,plot(ds_salaries$salary_1000s,ds_salaries$salaryusd_1000s,xlab="salary in 1000s",ylab = "salary in usd 1000s",main="Scatter plot with salary and salary in USD") )
 ```
 
-The scatter plot represents the correlation in salary and salary in usd, we notice that most of the salary and salary in usd are redundant data and the two attributes are strongly correlated
+The scatter plot represents the correlation between salary and salary in usd, we notice that most of the salary and salary in usd are redundant data and the two attributes are strongly correlated
 
 ### pie chart
 
@@ -226,9 +238,7 @@ pie(tab,labels=txt)
 
 ```
 
-The pie chart represent the percentages for company size by taken sample of company, it shows that 2(Medium) has the highest frequency
-
-### Visualisation
+The pie chart represents the percentages for company size by taking a sample of company, it shows that 1(Large) has the middle frequency and represent 18%, 2(Medium) has the highest frequency and represent 80%, and 3(Small) has the lowest frequency and represent 2% of Visualization
 
 ```{r}
 ggplot(top_5_job_salaries, aes(x=job_title, y=Avg_Sal)) +
@@ -238,7 +248,7 @@ ggplot(top_5_job_salaries, aes(x=job_title, y=Avg_Sal)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning has the highest salary
+the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning has the highest salary, Principal Data Architect has the middle salary, and BI Data Analyst has the lowest amount of salary
 
 ```{r}
 ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
@@ -247,7 +257,7 @@ ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
   theme_minimal()
 ```
 
-the box plot represent the percentages for experience level by taken sample of employees, it shows that salary aare different for each experience level, Also employees with the same experience level can have significantly higher salary than there category which can be observed from the box plot as outliers
+the box plot represent the percentages for experience level by taken sample of employees, it shows that salary are different for each experience level, Also employees with the same experience level can have significantly higher or lower salary than there category which can be observed from the box plot as outliers
 
 ## Average Salaries in each Year
 
@@ -484,12 +494,15 @@ ds_salaries <- ds_salaries %>%
 ```
 
 ## snapshot of the original dataset
+
 ```{r}
 original_dataset= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
 head(original_dataset)
 tail(original_dataset)
 ```
+
 ## snapshot of the preprossesd dataset
+
 ```{r}
 preprossesd_dataset= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/preprossesData.csv"), header=TRUE)
 head(preprossesd_dataset)
@@ -1053,10 +1066,10 @@ These results emphasize the effectiveness of the Gain Ratio algorithm in achievi
 
 We will apply clustering on the data set based on the number of k that represent number of clusters without knowing the class label (unsupervised learning), By applying K-means clustering with different values of K (2,3, and 10), and evaluating the results using various metrics, we can gain insights into the optimal number of clusters and assess the quality of the clustering solution. Visualizing the results aids in understanding the patterns and relationships within the dataset and the algorithm's performance in grouping similar data points together.
 
-the R packages used in clustring are: 
+the R packages used in clustring are:
 
-- factoextra: This package is used for visualizing clustering results, such as cluster centers and data points.
-- cluster: This package provides various functions for clustering analysis, including k-means clustering.
+-   factoextra: This package is used for visualizing clustering results, such as cluster centers and data points.
+-   cluster: This package provides various functions for clustering analysis, including k-means clustering.
 
 ```{r}
 #sbset of original dataset
