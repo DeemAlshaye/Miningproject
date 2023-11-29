@@ -8,7 +8,17 @@ output:
 
 # Problem
 
+Salary stands as a pivotal factor for employees, job seekers, and organizations, particularly in the ever-expanding field of data science. Comprehending the variables influencing salaries in data science roles becomes essential. This understanding could serve as a tool for individuals and businesses to stay abreast of market trends, enabling well-informed decisions. Moreover, it empowers organizations to establish equitable and competitive salary structures.
+
+By delving into data analysis through classification and clustering, we aim to create a predictive model for future investigations. This model will explore the impact of various job and employee attributes, such as experience level, type of employment, years of service, job title, salary, remote work percentage, employee location, company address, and company size.
+
 # Data Mining task
+
+For our project, we intend to employ two data mining techniques which are classification and clustering. These methods will assist us in analyzing data to develop a predictive model for estimating the salaries. Our goal is to explore the influence of diverse job and employee characteristics on salary amounts through these analytical approaches.
+
+For classification, we will train our model to be able to predict the class label(salary in usd) for science job, and the prediction is made on the rest of the attributes like work_year, employment_type, joUSDb_title, salary, remote_ratio, etc.
+
+For clustering, our model will generate a series of clusters for Science job salaries with comparable characteristics. These clusters will be instrumental in predicting outcomes for new Science job salaries.
 
 # Data
 
@@ -85,7 +95,7 @@ dim(ds_salaries)
 
 ## summary the data
 
-we used summary function to show each numeric value min, median, max, Q1 and Q3
+we used summary function to show each numeric value min, median, max, Q1 and Q3 which Q1 represents first quartile and Q3 represents third quartile
 
 ```{r}
 summary(ds_salaries)
@@ -117,7 +127,7 @@ median(ds_salaries$remote_ratio)
 quantile(ds_salaries$remote_ratio)
 ```
 
-with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 wich means most work done was not onine and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
+with only 3 valus for remote ratio we see a big diifrence between mean and median with the median being 0 which means most work done was not online and the quantile with the values 0 and 100 meaning there is really low number of work done half online half offline.
 
 ```{r}
 mean(ds_salaries$work_year)
@@ -125,7 +135,7 @@ median(ds_salaries$work_year)
 quantile(ds_salaries$work_year)
 ```
 
-we see that the median is 2022 wich means that most pepole work year is 2022,and the quantile shows that the number of employee with work year 2020 are the least.
+we see that the median is 2022 which means that most people work year is 2022, and the quantile shows that the number of employee with a work year of 2020 are the least.
 
 ```{r}
 var(ds_salaries$salary)
@@ -156,19 +166,19 @@ we compared some variables with each other to find how they are distributed
 boxplot(ds_salaries$salary_1000s,ylim=c(0,1000),xlab="Salary",ylab="Salary in 1000s" ,main="boxplot of salary in 1000s")
 ```
 
-Box plot represents salaries of employees,it displays the five number summary of the salary it shows that the salary has a lot of outliers that's need to be smoothed to remove the noise
+Box plot represents salaries of employees, it displays the five number summary of the salary min, median, max, Q1 and Q3, it shows that the salary has a lot of outliers that are need to be smoothed to remove the noise
 
 ```{r}
 boxplot(ds_salaries$salaryusd_1000s,ylim=c(0,1000),xlab="Salary in USD",ylab="Salary in usd 1000s" ,main="boxplot of salary in usd in 1000s")
 ```
 
-Box plot represents salary in (usd), it displays the five number summary of the salary in USD it shows that the salary in USD has a lot of outliers thats need to be smoothed to remove the noise
+Box plot represents salary in (usd), it displays the five number summary of the salary in USD min, median, max, Q1 and Q3, it shows that the salary in USD has a lot of outliers thats need to be smoothed to remove the noise
 
 ```{r}
 boxplot(ds_salaries$work_year,xlab="Work year",ylab="Frequency"  ,main="boxplot of Work year")
 ```
 
-Box plot represents work year (2020,2021,2022,2023), the work year box plot shows that there is a one outlier of 2020 year, that will be smoothed later to have more accurate data
+Box plot represents work year at (2020,2021,2022,2023), the work year box plot shows that there is a one outlier of 2020 year, that will be smoothed later to have more accurate data
 
 ### histogram
 
@@ -177,7 +187,7 @@ hist(ds_salaries$salary_1000s,ylim=c(0,100),ylab="Frequency",xlab="salary in 100
 
 ```
 
-The histogram represent the frequency of salaries for each employee, it shows that most of employees has small amount of salary
+The histogram represents the frequency of salaries for each employee, it shows that most employees has small amount of salary
 
 ### bar plot
 
@@ -201,9 +211,11 @@ top_5_job_salaries
 
 ```
 
+We have tow bar plot one is for remote ratio and the other one for work year
+
 First, the bar plot of 'remote ratio' represent the total of remote ratio for each employee, it show that most employees work on site then the employees who work online, the employees who work on both (online and onsite) have the smaller frequency
 
-Second, the bar plot of 'work year' represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees, the number of employees increases annually
+Second, the bar plot of 'work year' represent the work year and number of employee in each year, it show that 2020 year has the lowest number of employees and 2023 year has the highest number of employees , we note that the number of employees increases annually
 
 ### Scatter plot
 
@@ -211,7 +223,7 @@ Second, the bar plot of 'work year' represent the work year and number of employ
   with(ds_salaries,plot(ds_salaries$salary_1000s,ds_salaries$salaryusd_1000s,xlab="salary in 1000s",ylab = "salary in usd 1000s",main="Scatter plot with salary and salary in USD") )
 ```
 
-The scatter plot represents the correlation in salary and salary in usd, we notice that most of the salary and salary in usd are redundant data and the two attributes are strongly correlated
+The scatter plot represents the correlation between salary and salary in usd, we notice that most of the salary and salary in usd are redundant data and the two attributes are strongly correlated
 
 ### pie chart
 
@@ -226,9 +238,7 @@ pie(tab,labels=txt)
 
 ```
 
-The pie chart represent the percentages for company size by taken sample of company, it shows that 2(Medium) has the highest frequency
-
-### Visualisation
+The pie chart represents the percentages for company size by taking a sample of company, it shows that 1(Large) has the middle frequency and represent 18%, 2(Medium) has the highest frequency and represent 80%, and 3(Small) has the lowest frequency and represent 2% of Visualization
 
 ```{r}
 ggplot(top_5_job_salaries, aes(x=job_title, y=Avg_Sal)) +
@@ -238,7 +248,7 @@ ggplot(top_5_job_salaries, aes(x=job_title, y=Avg_Sal)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning has the highest salary
+the bar plot of 'Top 5 job Title Salaries' represent the job title and the salary for each job, it shows that Head of Machine Learning has the highest salary, Principal Data Architect has the middle salary, and BI Data Analyst has the lowest amount of salary
 
 ```{r}
 ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
@@ -247,7 +257,7 @@ ggplot(ds_salaries, aes(x=experience_level, y=salaryusd_1000s)) +
   theme_minimal()
 ```
 
-the box plot represent the percentages for experience level by taken sample of employees, it shows that salary aare different for each experience level, Also employees with the same experience level can have significantly higher salary than there category which can be observed from the box plot as outliers
+the box plot represent the percentages for experience level by taken sample of employees, it shows that salary are different for each experience level, Also employees with the same experience level can have significantly higher or lower salary than there category which can be observed from the box plot as outliers
 
 ## Average Salaries in each Year
 
@@ -398,13 +408,14 @@ ds_salaries <- ds_salaries %>%
   )
 ```
 
-We did this to make sure our data is more accurate and representative of the majority of the values.The justification for these techniques is to enhance the quality of the data and improve the validity of the analysis. By identifying and handling missing values, outliers, and anomalies, we ensure that our data is accurate, reliable, and suitable for analysis. 
+We did this to make sure our data is more accurate and representative of the majority of the values.The justification for these techniques is to enhance the quality of the data and improve the validity of the analysis. By identifying and handling missing values, outliers, and anomalies, we ensure that our data is accurate, reliable, and suitable for analysis.
 
 ## Data transformation
 
 ### Normalization
 
 Normalizing the data helps in improving the performance of machine learning models by scaling the data between 0 and 1. In this case, the normalize() function was applied to the salary and salary_in_usd attributes. Normalization ensures that these variables are on a similar scale, preventing one from dominating the other during analysis or modeling.
+
 ```{r}
 normalize <- function(x) {return((x-min(x))/(max(x)-min(x)))}
 ds_salaries$salary<-normalize(ds_salaries$salary)
@@ -413,7 +424,6 @@ ds_salaries$salary_in_usd<-normalize(ds_salaries$salary_in_usd)
 num1_cols=ds_salaries[, c(5,7 )] 
 head(num1_cols)
 ```
-
 
 ### Discretization
 
@@ -433,7 +443,6 @@ ds_salaries$salary_in_usd_disc <- cut(ds_salaries$salary_in_usd,
 head(ds_salaries$salary_in_usd_disc)
                                
 ```
-
 
 ### Encoding
 
@@ -471,7 +480,7 @@ our data set has 2 salary coulombs salary, and salary in usd, for this, we will 
 cor(ds_salaries$salary,ds_salaries$salary_in_usd)
 ```
 
-we see that salary and salary_in_usd are highly correlated to avoid redundancy, we will only take the salary in USD.
+we see that salary and salary_in_usd are highly correlated, to avoid redundancy, we will only take the salary in USD.
 
 we decided to remove employee resident due to its being irrelevant to our data sense the employee resident has nothing to do with his salary.
 
@@ -484,12 +493,31 @@ ds_salaries <- ds_salaries %>%
   head(ds_salaries)
 ```
 
+## snapshot of the original dataset
+
+```{r}
+original_dataset= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/ds_salaries.csv"), header=TRUE)
+head(original_dataset)
+tail(original_dataset)
+```
+
+## snapshot of the preprossesd dataset
+
+```{r}
+preprossesd_dataset= read.csv(url("https://raw.githubusercontent.com/DeemAlshaye/Miningproject/main/dataset/preprossesData.csv"), header=TRUE)
+head(preprossesd_dataset)
+tail(preprossesd_dataset)
+```
 
 # Evaluation and Comparison
 
 # Data Mining Technique: Classification
 
 The classification process involves dividing our dataset into training and testing subsets to build and evaluate machine learning models.that will predict the class lable(salary in usd) which has three classes:low,mid,and high,the prediction is made on the rest attributes, we will explore three different split ratios: 1- Training(80%) and Testing(20%) 2- Training(70%) and Testing(30%) 3- Training(90%) and Testing(10%), along with different decision tree algorithms that utilize the Gini index, Gain ratio, and Information gain as selection measures.
+
+The r packages used in the classification
+
+• caret: This package is used for data splitting and other data manipulation tasks. • rpart: This package is used for building decision trees using the Gini index as the splitting criterion. • rpart.plot: This package is used for visualizing the resulting decision tree. • C50: This package is used for building decision trees using different splitting measures such as gain ratio. • printr: This package is used to print the decision tree model in a visually appealing format.
 
 ## checking if the data is balanced
 
@@ -558,7 +586,6 @@ rpart.plot(fit, extra = 100,type = 4)
 
 ```
 
-
 rpart() function uses the Gini impurity measure to split the note.
 
 ```{r}
@@ -570,8 +597,6 @@ result<-table(predict_unseen, data_test$salary_in_usd_disc)
 co_result <- confusionMatrix(result)
 print(co_result)
 ```
-
-
 
 ### B-Decision Tree Using gain ratio
 
@@ -600,16 +625,12 @@ results <- predict(model, data_test, type="class")
 plot(model, type="simple")
 ```
 
-
-
 ```{r}
 library(caret)
 result1<- table(results, data_test$salary_in_usd_disc)
 co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
-
-
 
 ### C-Decision Tree Using information gain
 
@@ -643,8 +664,6 @@ classify_dataset <- function(dataset, class_label) {
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
-
-
 
 ## 2-Split the Dataset into two subsets: Training(70%) and Testing(30%):
 
@@ -688,8 +707,6 @@ fit <- rpart(salary_in_usd_disc~., data = data_train70, method = 'class')
 rpart.plot(fit, extra = 100,type = 4)
 ```
 
-
-
 ```{r}
 predict_unseen70 <-predict(fit, data_test70, type = 'class')
 ```
@@ -715,7 +732,6 @@ co_result70_gini <- confusionMatrix(result70_gini)
 print(co_result70_gini)
 ```
 
-
 ### B-Decision Tree Using gain ratio
 
 Applying Decision trees classification using gain ratio selection measure
@@ -736,7 +752,6 @@ results70_gain <- predict(object=model70, newdata=data_test70, type="class")
 ```{r}
 plot(model70, type="simple")
 ```
-
 
 Confusion Matrix and Statistics
 
@@ -769,10 +784,6 @@ decision_tree <- rpart(formula = as.formula(paste(class_label, "~ .")), data = d
 
 classify_dataset(ds_salaries, "salary_in_usd_disc")
 ```
-
-
-
-
 
 ## 3-Split the datasets into two subsets: Training(90%) and Testing(10%):
 
@@ -832,8 +843,6 @@ print(rules)
 
 ```
 
-
-
 ```{r}
 predict_unseen <-predict(fit, data_test, type = 'class')
 ```
@@ -843,8 +852,6 @@ result<-table(predict_unseen, data_test$salary_in_usd_disc)
 co_result <- confusionMatrix(result)
 print(co_result)
 ```
-
-
 
 ### gain ratio
 
@@ -880,8 +887,6 @@ plot(party_model,type="simple")
 print(party_model)
 ```
 
-
-
 ```{r}
 results <- predict(model, data_test, type="class")
 
@@ -893,8 +898,6 @@ result1<- table(results, data_test$salary_in_usd_disc)
 co_result1 <- confusionMatrix(result1)
 print(co_result1)
 ```
-
-
 
 ### information gain
 
@@ -937,99 +940,95 @@ classify_dataset(ds_salaries, "salary_in_usd_disc")
 
 ```
 
-
-
-
-## comparing 
+## comparing
 
 ### gini index
 
-+----------------+------------------------------------+------------------------------------+------------------------------------+
-|                | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
-+================+====================================+====================================+====================================+
-| Accuracy       | 57.46%                             | 55.77%                             | 54.46%                             |
-+----------------+------------------------------------+------------------------------------+------------------------------------+
-| precision      | -   'low': 76.02%                  | -   'low': 71.70%                  | -   'low': 72.40%                  |
-|                |                                    |                                    |                                    |
-|                | -   'mid': 30.56%                  | -   'mid': 36.28%                  | -   'mid': 33.33%                  |
-|                |                                    |                                    |                                    |
-|                | -   'high': 46.43%                 | -   'high': 45.17%                 | -   'high': 45.44%                 |
-+----------------+------------------------------------+------------------------------------+------------------------------------+
-| sensitivity    | -   'low': 68.78%                  | -   'low': 70.15%                  | -   'low': 67.49%                  |
-|                |                                    |                                    |                                    |
-|                | -   'mid': 23.66%                  | -   'mid': 17.13%                  | -   'mid': 12.35%                  |
-|                |                                    |                                    |                                    |
-|                | -   'high': 71.23%                 | -   'high': 77.51%                 | -   'high': 84.75%                 |
-+----------------+------------------------------------+------------------------------------+------------------------------------+
-| specificity    | -   'low': 75.30%                  | -   'low': 76.62%                  | -   'low': 81.67%                  |
-|                |                                    |                                    |                                    |
-|                | -   'mid': 80.92%                  | -   'mid': 86.84%                  | -   'mid': 88.41%                  |
-|                |                                    |                                    |                                    |
-|                | -   'high': 78.72%                 | -   'high': 70.61%                 | -   'high': 63.35%                 |
-+----------------+------------------------------------+------------------------------------+------------------------------------+
-
-
++--------------+------------------------------------+------------------------------------+------------------------------------+
+|              | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
++==============+====================================+====================================+====================================+
+| Accuracy     | 57.46%                             | 55.77%                             | 54.46%                             |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| precision    | -   'low': 76.02%                  | -   'low': 71.70%                  | -   'low': 72.40%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 30.56%                  | -   'mid': 36.28%                  | -   'mid': 33.33%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 46.43%                 | -   'high': 45.17%                 | -   'high': 45.44%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| sensitivity  | -   'low': 68.78%                  | -   'low': 70.15%                  | -   'low': 67.49%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 23.66%                  | -   'mid': 17.13%                  | -   'mid': 12.35%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 71.23%                 | -   'high': 77.51%                 | -   'high': 84.75%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| specificity  | -   'low': 75.30%                  | -   'low': 76.62%                  | -   'low': 81.67%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 80.92%                  | -   'mid': 86.84%                  | -   'mid': 88.41%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 78.72%                 | -   'high': 70.61%                 | -   'high': 63.35%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
 
 ### gain ratio
 
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-|             | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
-+=============+====================================+====================================+====================================+
-| Accuracy    | 60.28%                             | 53.8%                              | 53.24%                             |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| precision   | -   'low': 75.92%                  | -   'low': 66.08%                  | -   'low': 71.92%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 34.43%                  | -   'mid': 28.57%                  | -   'mid': 35.82%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 46.60%                 | -   'high': 44.39%                 | -   'high': 43.45%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| sensitivity | -   'low': 76.72%                  | -   'low': 80.31%                  | -   'low': 71.11%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 22.58%                  | -   'mid': 15.74%                  | -   'mid': 28.24%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 65.75%                 | -   'high': 51.48%                 | -   'high': 55.32%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| specificity | -   'low': 72.29%                  | -   'low': 65.19%                  | -   'low': 80.23%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 84.73%                  | -   'mid': 82.79%                  | -   'mid': 76.28%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 80.50%                 | -   'high': 79.85%                 | -   'high': 74.07%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
++--------------+------------------------------------+------------------------------------+------------------------------------+
+|              | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
++==============+====================================+====================================+====================================+
+| Accuracy     | 60.28%                             | 53.8%                              | 53.24%                             |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| precision    | -   'low': 75.92%                  | -   'low': 66.08%                  | -   'low': 71.92%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 34.43%                  | -   'mid': 28.57%                  | -   'mid': 35.82%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 46.60%                 | -   'high': 44.39%                 | -   'high': 43.45%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| sensitivity  | -   'low': 76.72%                  | -   'low': 80.31%                  | -   'low': 71.11%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 22.58%                  | -   'mid': 15.74%                  | -   'mid': 28.24%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 65.75%                 | -   'high': 51.48%                 | -   'high': 55.32%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| specificity  | -   'low': 72.29%                  | -   'low': 65.19%                  | -   'low': 80.23%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 84.73%                  | -   'mid': 82.79%                  | -   'mid': 76.28%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 80.50%                 | -   'high': 79.85%                 | -   'high': 74.07%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
 
 ### information gain
 
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-|             | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
-+=============+====================================+====================================+====================================+
-| Accuracy    | 59.44%                             | 53.38%                             | 53.38%                             |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| precision   | -   'low': 80.61%                  | -   'low': 76.92%                  | -   'low': 70.62%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 37.08%                  | -   'mid': 19.44%                  | -   'mid': 28.77%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 44.55%                 | -   'high': 51.48%                 | -   'high': 41.43%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| sensitivity | -   'low': 70.37%                  | -   'low': 76.92%                  | -   'low': 76.92%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 35.48%                  | -   'mid': 19.44%                  | -   'mid': 19.44%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 61.64%                 | -   'high': 51.48%:                | -   'high': 51.48%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
-| specificity | -   'low': 80.72%                  | -   'low': 72.99%                  | -   'low': 72.99%                  |
-|             |                                    |                                    |                                    |
-|             | -   'mid': 78.63%                  | -   'mid': 78.95%                  | -   'mid': 78.95%                  |
-|             |                                    |                                    |                                    |
-|             | -   'high': 80.14%                 | -   'high': 77.26%                 | -   'high': 77.26%                 |
-+-------------+------------------------------------+------------------------------------+------------------------------------+
++--------------+------------------------------------+------------------------------------+------------------------------------+
+|              | 90 %t raining set 10% testing set: | 80 %t raining set 20% testing set: | 70 %t raining set 30% testing set: |
++==============+====================================+====================================+====================================+
+| Accuracy     | 59.44%                             | 53.38%                             | 53.38%                             |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| precision    | -   'low': 80.61%                  | -   'low': 76.92%                  | -   'low': 70.62%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 37.08%                  | -   'mid': 19.44%                  | -   'mid': 28.77%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 44.55%                 | -   'high': 51.48%                 | -   'high': 41.43%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| sensitivity  | -   'low': 70.37%                  | -   'low': 76.92%                  | -   'low': 76.92%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 35.48%                  | -   'mid': 19.44%                  | -   'mid': 19.44%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 61.64%                 | -   'high': 51.48%:                | -   'high': 51.48%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+| specificity  | -   'low': 80.72%                  | -   'low': 72.99%                  | -   'low': 72.99%                  |
+|              |                                    |                                    |                                    |
+|              | -   'mid': 78.63%                  | -   'mid': 78.95%                  | -   'mid': 78.95%                  |
+|              |                                    |                                    |                                    |
+|              | -   'high': 80.14%                 | -   'high': 77.26%                 | -   'high': 77.26%                 |
++--------------+------------------------------------+------------------------------------+------------------------------------+
+
 ### What is the best algorithm in each partition
 
 ### 90% Training, 10% Testing:
 
 In the 90% training and 10% testing partition, the Gain Ratio algorithm emerged as the preferred choice, achieving an overall accuracy of 60.28%. This accuracy implies that 60.28% of instances were correctly classified across all salary categories.
 
-- **Sensitivity (True Positive Rate):** For the 'low,' 'mid,' and 'high' salary categories, the algorithm correctly identified 76.72%, 22.58%, and 65.75% of instances, respectively.
-  
-- **Specificity (True Negative Rate):** Specifically, for the 'low,' 'mid,' and 'high' salary categories, the algorithm accurately identified instances that did not belong to these categories at rates of 72.29%, 84.73%, and 80.50%, respectively.
+-   **Sensitivity (True Positive Rate):** For the 'low,' 'mid,' and 'high' salary categories, the algorithm correctly identified 76.72%, 22.58%, and 65.75% of instances, respectively.
+
+-   **Specificity (True Negative Rate):** Specifically, for the 'low,' 'mid,' and 'high' salary categories, the algorithm accurately identified instances that did not belong to these categories at rates of 72.29%, 84.73%, and 80.50%, respectively.
 
 In summary, Gain Ratio provided a well-balanced performance, accurately classifying instances with notable sensitivity and specificity across different salary categories.
 
@@ -1037,9 +1036,9 @@ In summary, Gain Ratio provided a well-balanced performance, accurately classify
 
 In the 70% training and 30% testing partition, the Gini Index stood out with the highest accuracy of 54.46%, denoting that 54.46% of instances were correctly classified.
 
-- **Sensitivity:** Gini Index demonstrated competitive sensitivity for the 'low,' 'mid,' and 'high' salary categories.
-  
-- **Specificity:** It achieved specificity rates of 72.29%, 84.73%, and 80.50% for the 'low,' 'mid,' and 'high' salary categories, respectively.
+-   **Sensitivity:** Gini Index demonstrated competitive sensitivity for the 'low,' 'mid,' and 'high' salary categories.
+
+-   **Specificity:** It achieved specificity rates of 72.29%, 84.73%, and 80.50% for the 'low,' 'mid,' and 'high' salary categories, respectively.
 
 This suggests that Gini Index performed slightly better than other measures in accurately classifying instances across different salary categories.
 
@@ -1047,9 +1046,9 @@ This suggests that Gini Index performed slightly better than other measures in a
 
 In the 80% training and 20% testing partition, the Gini Index again proved to be the superior choice with an accuracy of 55.77%. This accuracy implies that 55.77% of instances were correctly classified.
 
-- **Sensitivity:** Gini Index excelled in sensitivity for the 'low' and 'high' salary categories but struggled with sensitivity for the 'mid' category.
-  
-- **Specificity:** It exhibited specificity rates of 76.62%, 70.61%, and 77.51% for the 'low,' 'mid,' and 'high' salary categories, respectively.
+-   **Sensitivity:** Gini Index excelled in sensitivity for the 'low' and 'high' salary categories but struggled with sensitivity for the 'mid' category.
+
+-   **Specificity:** It exhibited specificity rates of 76.62%, 70.61%, and 77.51% for the 'low,' 'mid,' and 'high' salary categories, respectively.
 
 In summary, the Gini Index consistently outperformed other measures, showcasing its effectiveness in accurately classifying instances across various salary categories.
 
@@ -1057,17 +1056,20 @@ In summary, the Gini Index consistently outperformed other measures, showcasing 
 
 The 90% training and 10% testing partition with the Gain Ratio attribute selection measure emerged as the best model. The overall accuracy of 60.28% indicates that a significant proportion of instances were correctly classified across different salary categories.
 
-- **Sensitivity:** The algorithm demonstrated high sensitivity, correctly identifying instances within each salary category.
-  
-- **Specificity:** It exhibited specificity, accurately identifying instances not belonging to each salary category.
+-   **Sensitivity:** The algorithm demonstrated high sensitivity, correctly identifying instances within each salary category.
+
+-   **Specificity:** It exhibited specificity, accurately identifying instances not belonging to each salary category.
 
 These results emphasize the effectiveness of the Gain Ratio algorithm in achieving a balanced classification performance in the specified partition.
 
-
-
 # Data Mining Technique: Clustering
 
-We will apply clustering on the data set based on the number of k that represent number of clusters without knowing the class label (unsupervised learning),By applying K-means clustering with different values of K (1,3, and 10), and evaluating the results using various metrics, we can gain insights into the optimal number of clusters and assess the quality of the clustering solution. Visualizing the results aids in understanding the patterns and relationships within the dataset and the algorithm's performance in grouping similar data points together.
+We will apply clustering on the data set based on the number of k that represent number of clusters without knowing the class label (unsupervised learning), By applying K-means clustering with different values of K (2,3, and 10), and evaluating the results using various metrics, we can gain insights into the optimal number of clusters and assess the quality of the clustering solution. Visualizing the results aids in understanding the patterns and relationships within the dataset and the algorithm's performance in grouping similar data points together.
+
+the R packages used in clustring are:
+
+-   factoextra: This package is used for visualizing clustering results, such as cluster centers and data points.
+-   cluster: This package provides various functions for clustering analysis, including k-means clustering.
 
 ```{r}
 #sbset of original dataset
@@ -1109,7 +1111,7 @@ ds_salaries_clustering=scale(ds_salaries_clustering)
 
 ## perform K-means clustering
 
-We used the K-means algorithm with varying values of 3 K for clustering, aiming to determine the optimal number of clusters.The kmeans() function from the base R package is used to perform K-means clustering, We computed the average silhouette width for each K, leading to the following conclusions:. 
+We used the K-means algorithm with varying values of 3 K for clustering, aiming to determine the optimal number of clusters.The kmeans() function from the base R package is used to perform K-means clustering, We computed the average silhouette width for each K, leading to the following conclusions:.
 
 ```{r}
 perform_kmeans <- function(data, k) {
@@ -1122,8 +1124,7 @@ perform_kmeans <- function(data, k) {
 
 ## different number of clusters:
 
-To visualize the clustering results, the fviz_cluster() function from the factoextra package is used.
-The quality of the clustering results is evaluated using the silhouette coefficient. The silhouette() function from the cluster package is used to calculate the silhouette scores for each data point based on their assigned clusters. The fviz_silhouette() function from the factoextra package is then used to visualize the silhouette plot.
+To visualize the clustering results, the fviz_cluster() function from the factoextra package is used. The quality of the clustering results is evaluated using the silhouette coefficient. The silhouette() function from the cluster package is used to calculate the silhouette scores for each data point based on their assigned clusters. The fviz_silhouette() function from the factoextra package is then used to visualize the silhouette plot.
 
 ## k=2
 
@@ -1240,83 +1241,228 @@ We use silhouette coefficient (extrinsic method) method to calculate the optimal
 
 #### Total within-cluster sum of square
 
+The total within-cluster sum of squares indicates the sum of squared distances between each point in the dataset. It defines the proximity of points "within the cluster", illustrating the tightness of points within the same cluster.
+
+#### for K=2
+
+```{r}
+total_wss <- kmeans_result2$tot.withinss
+print(total_wss)
+```
+
+When k equal to 2, it shows the highest value indicates that the points in these two clusters are close together, showing a strong clustering pattern. This suggests effective separation between the clusters.
+
+#### for K=3
+
+```{r}
+total_wss <- kmeans_result3$tot.withinss
+print(total_wss)
+
+```
+
+For k=3, the total_wss falls in the middle between k=2 and k=10, indicating a mid level of clustering. This means a less clear separation among the clusters.
+
+#### for K=10
+
+```{r}
+total_wss <- kmeans_result10$tot.withinss
+print(total_wss)
+```
+
+for k=10, it has the lowest value among the 3 defined k means, that means the points within the same cluster are not close enough to each other.
+
 ```{r}
 total_wss <- kmeans_result$tot.withinss
 print(total_wss)
 ```
 
-Total within-cluster sum of square represents the sum of square distances between every point in the dataset it is defined how close the points are "within the cluster" and here the value=9655.23 represent how tight the point in the same cluster are.
 
 #### BCubed precision and recall
 
 BCubed Precision and Recall are evaluation metrics used to assess the quality of clustering results, The bcubed_precision_recall() function defines the calculation of these metrics based on the true cluster labels (labels_true) and the predicted cluster assignments (labels_pred).
 
+BCubed Precision and Recall metrics evaluate the Precision and Recall for every object in a clustering on our data set according to the ground truth "class label".
+
+The Precision value is a metric that quantifies the ratio of items from the same category correctly placed in their cluster to the total number of items assigned to that cluster. In other words, it measures the accuracy of the clustering algorithm in correctly grouping items of the same category within their respective clusters. Higher precision values indicate a better ability of the clustering algorithm to avoid false positives and accurately identify items belonging to a specific category within a cluster.
+
+and the Recall value is a metric that gauges the ability of a clustering algorithm to capture and include all items from the same category within their respective clusters. It is calculated as the ratio of the number of items from a specific category correctly assigned to their cluster to the total number of items belonging to that category. In core, Recall measures the algorithm's effectiveness in identifying and including all relevant items of a particular category within their assigned clusters. Higher Recall values signify a better ability to avoid false negatives and ensure comprehensive coverage of items from the same category in the clustering results. here we apply the precision and recall for all k (number of clusters) we choose.
+
+#### for k=2
+
 ```{r}
-# Define k_means_clustering function
-k_means_clustering <- function(data, k) {
-  k_means_result <- kmeans(data, centers = k)  # Perform k-means clustering
-  return(k_means_result$cluster)  # Return cluster assignments
-}
 
-# Example usage
-selected_data <- ds_salaries_clustering  # Use the entire dataset
-k <- 3  # Number of clusters
-cluster_assignments <- k_means_clustering(selected_data, k)
+cluster_assignments <- c(kmeans_result2$cluster)
+ground_truth_labels <- c(ds_salaries_clustering)
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
 
-# Convert cluster assignments to integer codes
-cluster_codes <- as.integer(cluster_assignments)
-
-# Add cluster assignments to the selected data
-selected_data$Cluster <- as.factor(cluster_codes)
-
-# Corrected B-Cubed metrics calculation for k-means
-bcubed_precision_recall <- function(labels_true, labels_pred) {
-  labels_true <- as.factor(labels_true)
-  labels_pred <- as.factor(labels_pred)
-  
-  unique_labels <- unique(labels_true)
-  num_points <- length(labels_true)
-  
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
   precision_sum <- 0
   recall_sum <- 0
-  
-  for (true_label in unique_labels) {
-    true_indices <- labels_true == true_label
-    pred_labels <- labels_pred[true_indices]
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
     
-    unique_pred_labels <- unique(pred_labels)
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
     
-    for (pred_label in unique_pred_labels) {
-      common_points <- sum(pred_labels == pred_label)
-      precision_sum <- precision_sum + common_points / sum(labels_pred == pred_label)
-      recall_sum <- recall_sum + common_points / sum(labels_true == true_label)
-    }
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
   }
-  
-  precision <- precision_sum / num_points
-  recall <- recall_sum / num_points
-  
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
   return(list(precision = precision, recall = recall))
 }
 
-precision_recall <- bcubed_precision_recall(selected_data$Cluster, cluster_codes)
-precision <- precision_recall$precision
-recall <- precision_recall$recall
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
 
-print(paste("B-Cubed Precision:", precision))
-print(paste("B-Cubed Recall:", recall))
+# Extract precision and recall from the metrics
+precision <- metrics$precision
+recall <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision, "\n")
+cat("BCubed Recall:", recall, "\n")
 
 ```
 
-BCubed Precision and Recall metrics for the elbow value that equal to 3 to evaluate the Precision and Recall for every object in a clustering on our data set according to the ground truth"class label
+For k=2, although precision is lower, it has the highest Recall value, suggesting it effectively captures most items from the same category within clusters, even with some overlap. Overall, k=2 is favored as the best number of clusters due to its emphasis on Recall, highlighting its ability to comprehensively include items from the same category in clustering results.
 
-The Precision value represents the number of items from the same category in its cluster per the number of items in its cluster.
+#### for k=3
 
-The average BCubed of the Precision is equal to 1
+```{r}
 
-The Recall value represents the number of items from the same category in its cluster per the number of items in its category
+cluster_assignments <- c(kmeans_result3$cluster)
+ground_truth_labels <- c(ds_salaries_clustering)
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
 
-The average BCubed of the Recall isequal to 1
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
+  precision_sum <- 0
+  recall_sum <- 0
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
+    
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
+    
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
+  }
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
+  return(list(precision = precision, recall = recall))
+}
+
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
+
+# Extract precision and recall from the metrics
+precision <- metrics$precision
+recall <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision, "\n")
+cat("BCubed Recall:", recall, "\n")
+```
+The BCubed precision of 0.1010837 and recall of 0.5055741 for k=3 signify a moderate performance in terms of clustering accuracy. These values indicate that, compared to k=2 where precision is higher but recall might be compromised due to potential overlap, and k=10 where clusters are too close, k=3 achieves a balance.
+
+In essence, for k=3, the clustering model demonstrates a reasonable ability to correctly group items from the same category within clusters while maintaining a certain level of comprehensiveness. The mid-range values suggest that k=3 strikes a trade-off between the precision-oriented approach of k=2 and the recall-oriented approach of k=10. This equilibrium makes k=3 a viable option for clustering in scenarios where achieving a balanced trade-off between precision and recall is desirable.
+#### for k=10
+
+```{r}
+
+cluster_assignments <- c(kmeans_result10$cluster)
+ground_truth_labels <- c(ds_salaries_clustering)
+data <- data.frame(cluster = cluster_assignments, label = ground_truth_labels)
+
+# Function to calculate BCubed precision and recall
+calculate_bcubed_metrics <- function(data) {
+  n <- nrow(data)
+  precision_sum <- 0
+  recall_sum <- 0
+
+  for (i in 1:n) {
+    cluster <- data$cluster[i]
+    label <- data$label[i]
+    
+# Count the number of items from the same category within the same cluster
+same_category_same_cluster <- sum(data$label[data$cluster == cluster] == label)
+    
+# Count the total number of items in the same cluster
+total_same_cluster <- sum(data$cluster == cluster)
+    
+# Count the total number of items with the same category
+total_same_category <- sum(data$label == label)
+    
+# Calculate precision and recall for the current item and add them to the sums
+precision_sum <- precision_sum + same_category_same_cluster /total_same_cluster
+recall_sum <- recall_sum + same_category_same_cluster / total_same_category
+  }
+
+  # Calculate average precision and recall
+  precision <- precision_sum / n
+  recall <- recall_sum / n
+
+  return(list(precision = precision, recall = recall))
+}
+
+# Calculate BCubed precision and recall
+metrics <- calculate_bcubed_metrics(data)
+
+# Extract precision and recall from the metrics
+precision <- metrics$precision
+recall <- metrics$recall
+
+# Print the results
+cat("BCubed Precision:", precision, "\n")
+cat("BCubed Recall:", recall, "\n")
+```
+For k=10, the BCubed precision of 0.1110498 and recall of 0.2913048 these metrics suggest that the precision, or the accuracy of correctly assigning items to their respective clusters, is relatively low. Similarly, the recall, which measures the ability to capture and include all items from the same category within their clusters, is also on the lower side.
+
+The values for k=10 reaffirm the earlier observation that this choice of k leads to overlapping clusters, where points within the same cluster are not closely grouped together. This compromises both precision and recall, making k=10 less effective for capturing distinct and cohesive clusters in the dataset.
+
+In summary, the BCubed precision and recall values for k=10 indicate a suboptimal clustering outcome, reinforcing the notion that this particular choice of k does not align well with the standard expectations and requirements for successful clustering.
+
++------------------------------------+----------------------+----------------------+----------------------+
+|                                    | K=2                  | K=3                  | K=10                 |
++====================================+:=====================+======================+======================+
+| Average Silhouette width           | 0.37                 | 0.27                 | 0.32                 |
++------------------------------------+----------------------+----------------------+----------------------+
+| total within-cluster sum of square | 21594.76             | 18247.46             | 9646.581             |
++------------------------------------+----------------------+----------------------+----------------------+
+| BCubed precision                   | 0.09200684           | 0.1010837            | 0.1110498            |
++------------------------------------+----------------------+----------------------+----------------------+
+| BCubed recall                      | 0.8441542            | 0.5055741            | 0.2913048            |
++------------------------------------+----------------------+----------------------+----------------------+
+| Visualization                      | In the figures above | In the figures above | In the figures above |
++------------------------------------+----------------------+----------------------+----------------------+
 
 # Findings
 
@@ -1343,10 +1489,10 @@ In summary, the results signify the model's effectiveness in predicting employee
 
 ## Clustering Findings
 
-Finally we find that the clustering method is not working successfully for our data set because when we use the optimal number of k that equal to 10 the model for this cluster have an overlap for the clusters.
+In conclusion, our exploration indicates that the clustering method may not be the optimal choice for our dataset. The utilization of the optimal k value, specifically set at 10, results in undesirable overlapping clusters. This contradicts the conventional expectation in clustering methods, where clusters should ideally be distinct from one another, with objects inside each cluster tightly grouped around the cluster center. The observed deviation from this norm, where clusters are very close, and objects within each cluster are distant from the center, highlights the ineffectiveness of choosing k=10 for clustering our dataset.
 
- Previously we know that the clusters in clustering method should be far from each other and the objects inside each cluster should be close to the center for the cluster but here in the optimal number of k equal to 10 that opposite of that role is happening.
+In contrast, the exploration reveals that k=2 stands out as the best clustering option, displaying the highest Recall value, despite lower precision and potential overlap. This suggests that, overall, k=2 successfully captures a comprehensive representation of items from the same category within their clusters. Additionally, k=3 is considered a reasonable choice, presenting a balance between precision and recall.
 
- So we can say the 10 is a bad number of k to cluster our dataset because the clusters is very close to each other and the objects inside each cluster is far from the center.
+Given these findings, we assert that 10 is an unsuitable number of clusters for our dataset, as it deviates from standard clustering criteria. This leads us to consider that a classification method might be more suitable for our dataset. Unlike clustering, classification involves assigning predefined labels to data points and appears to be more effective in dividing and categorizing our dataset. Therefore, we may conclude that a classification approach is more appropriate for our dataset, particularly favoring k=2 for clustering purposes.
 
- So we assume that the classification method for our dataset is classify and divide the dataset successfully and useful more than clustering , so we just need to do a classification and don't need to cluster the dataset.
+By employing clustering methods on the dataset's rich attributes, this solution aims to unravel patterns and relationships influencing salaries in the data science domain. The subsequent creation of a predictive model will empower stakeholders with the ability to anticipate salary trends and make informed decisions, fostering equitable and competitive salary structures in the ever-evolving field of data science. rewrite this 
