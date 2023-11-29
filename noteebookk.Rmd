@@ -1134,13 +1134,13 @@ library(cluster)
 set.seed(200)
 # Perform k-means clustering
 k <- 2
-kmeans_result <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
+kmeans_result2 <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
 
 # Visualize cluster centers and data points
-fviz_cluster(kmeans_result, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
+fviz_cluster(kmeans_result2, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
 
 # Calculate silhouette scores
-silhouette_scores <- silhouette(kmeans_result$cluster, dist(ds_salaries_clustering))
+silhouette_scores <- silhouette(kmeans_result2$cluster, dist(ds_salaries_clustering))
 
 # Visualize silhouette plot
 fviz_silhouette(silhouette_scores)
@@ -1160,13 +1160,13 @@ set.seed(900)
 
 # Perform k-means clustering
 k <- 3
-kmeans_result <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
+kmeans_result3 <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
 
 # Visualize cluster centers and data points
-fviz_cluster(kmeans_result, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
+fviz_cluster(kmeans_result3, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
 
 # Calculate silhouette scores
-silhouette_scores <- silhouette(kmeans_result$cluster, dist(ds_salaries_clustering))
+silhouette_scores <- silhouette(kmeans_result3$cluster, dist(ds_salaries_clustering))
 
 # Visualize silhouette plot
 fviz_silhouette(silhouette_scores)
@@ -1189,13 +1189,13 @@ The average silhouette width for k= 3 is equal to 0.27 have the lowest value for
 set.seed(8203)
 # Perform k-means clustering
 k <- 10
-kmeans_result <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
+kmeans_result10 <- kmeans(ds_salaries_clustering, centers = k, nstart = 25)
 
 # Visualize cluster centers and data points
-fviz_cluster(kmeans_result, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
+fviz_cluster(kmeans_result10, data = ds_salaries_clustering, geom = "point", ellipse.type = "convex")
 
 # Calculate silhouette scores
-silhouette_scores <- silhouette(kmeans_result$cluster, dist(ds_salaries_clustering))
+silhouette_scores <- silhouette(kmeans_result10$cluster, dist(ds_salaries_clustering))
 
 # Visualize silhouette plot
 fviz_silhouette(silhouette_scores)
@@ -1270,12 +1270,6 @@ print(total_wss)
 ```
 
 for k=10, it has the lowest value among the 3 defined k means, that means the points within the same cluster are not close enough to each other.
-
-```{r}
-total_wss <- kmeans_result$tot.withinss
-print(total_wss)
-```
-
 
 #### BCubed precision and recall
 
@@ -1391,10 +1385,10 @@ recall <- metrics$recall
 cat("BCubed Precision:", precision, "\n")
 cat("BCubed Recall:", recall, "\n")
 ```
+
 The BCubed precision of 0.1010837 and recall of 0.5055741 for k=3 signify a moderate performance in terms of clustering accuracy. These values indicate that, compared to k=2 where precision is higher but recall might be compromised due to potential overlap, and k=10 where clusters are too close, k=3 achieves a balance.
 
-In essence, for k=3, the clustering model demonstrates a reasonable ability to correctly group items from the same category within clusters while maintaining a certain level of comprehensiveness. The mid-range values suggest that k=3 strikes a trade-off between the precision-oriented approach of k=2 and the recall-oriented approach of k=10. This equilibrium makes k=3 a viable option for clustering in scenarios where achieving a balanced trade-off between precision and recall is desirable.
-#### for k=10
+In essence, for k=3, the clustering model demonstrates a reasonable ability to correctly group items from the same category within clusters while maintaining a certain level of comprehensiveness. The mid-range values suggest that k=3 strikes a trade-off between the precision-oriented approach of k=2 and the recall-oriented approach of k=10. This equilibrium makes k=3 a viable option for clustering in scenarios where achieving a balanced trade-off between precision and recall is desirable. \#### for k=10
 
 ```{r}
 
@@ -1444,6 +1438,7 @@ recall <- metrics$recall
 cat("BCubed Precision:", precision, "\n")
 cat("BCubed Recall:", recall, "\n")
 ```
+
 For k=10, the BCubed precision of 0.1110498 and recall of 0.2913048 these metrics suggest that the precision, or the accuracy of correctly assigning items to their respective clusters, is relatively low. Similarly, the recall, which measures the ability to capture and include all items from the same category within their clusters, is also on the lower side.
 
 The values for k=10 reaffirm the earlier observation that this choice of k leads to overlapping clusters, where points within the same cluster are not closely grouped together. This compromises both precision and recall, making k=10 less effective for capturing distinct and cohesive clusters in the dataset.
@@ -1495,4 +1490,4 @@ In contrast, the exploration reveals that k=2 stands out as the best clustering 
 
 Given these findings, we assert that 10 is an unsuitable number of clusters for our dataset, as it deviates from standard clustering criteria. This leads us to consider that a classification method might be more suitable for our dataset. Unlike clustering, classification involves assigning predefined labels to data points and appears to be more effective in dividing and categorizing our dataset. Therefore, we may conclude that a classification approach is more appropriate for our dataset, particularly favoring k=2 for clustering purposes.
 
-By employing clustering methods on the dataset's rich attributes, this solution aims to unravel patterns and relationships influencing salaries in the data science domain. The subsequent creation of a predictive model will empower stakeholders with the ability to anticipate salary trends and make informed decisions, fostering equitable and competitive salary structures in the ever-evolving field of data science. rewrite this 
+By employing clustering methods on the dataset's rich attributes, this solution aims to unravel patterns and relationships influencing salaries in the data science domain. The subsequent creation of a predictive model will empower stakeholders with the ability to anticipate salary trends and make informed decisions, fostering equitable and competitive salary structures in the ever-evolving field of data science. rewrite this
