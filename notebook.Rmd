@@ -8,7 +8,7 @@ output:
 
 # Problem
 
-Understanding how salaries are determined is vital for employees, job seekers, and organizations, particularly in data science. It helps individuals and businesses make smart decisions and allows organizations to set fair and competitive pay structures. The complexity of data science roles requires looking at factors like experience, job type, years of service, job title, salary, remote work, location, company address, and size.
+Salary is a crucial component for employees, job hunters, and organizations, especially in the field of data science, which is in constant growth, understanding the factors that affect data science job salaries could be a way to help individuals and businesses keep track of the market trends, making informed choices. It also allows organizations to set up fair and competitive salary ranges, as well as support discussions while hiring employees for a particular job.
 
 # Data Mining task
 
