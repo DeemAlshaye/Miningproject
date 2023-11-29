@@ -1457,6 +1457,15 @@ In summary, the BCubed precision and recall values for k=10 indicate a suboptima
 | Visualization                      | In the figures above | In the figures above | In the figures above |
 +------------------------------------+----------------------+----------------------+----------------------+
 
+1.	**Average Silhouette Width:**
+o	The silhouette width measures how similar an object is to its own cluster compared to other clusters. A higher value is generally better. In this case, K=2 has the highest silhouette width, suggesting that it might be a better choice based on this metric alone.
+2.	**Total Within-Cluster Sum of Square:**
+o	This value represents the compactness of the clusters. A lower value indicates tighter clusters. K=10 has the lowest within-cluster sum of squares, suggesting better cluster compactness. However, this alone doesn't make it the best choice; it depends on the balance with other metrics.
+3.	**BCubed Precision and Recall:**
+o	Precision and recall are measures of how well the clusters match the ground truth. K=2 has the highest BCubed recall, suggesting that it captures the ground truth better. However, precision is quite low, indicating that while it captures a lot of the true positives, it also has a high rate of false positives.
+Conclusion:
+•	Based on the provided metrics, K=2 seems to be a reasonable choice. It has the highest silhouette width and recall, although precision is relatively low so, the choice of the best cluster is highly dependent in specific goals and characteristics of the dataset.
+
 # Findings
 
 ## Clasfication Findings
