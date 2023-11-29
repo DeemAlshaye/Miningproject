@@ -8,9 +8,7 @@ output:
 
 # Problem
 
-Salary stands as a pivotal factor for employees, job seekers, and organizations, particularly in the ever-expanding field of data science. Comprehending the variables influencing salaries in data science roles becomes essential. This understanding could serve as a tool for individuals and businesses to stay abreast of market trends, enabling well-informed decisions. Moreover, it empowers organizations to establish equitable and competitive salary structures.
-
-By delving into data analysis through classification and clustering, we aim to create a predictive model for future investigations. This model will explore the impact of various job and employee attributes, such as experience level, type of employment, years of service, job title, salary, remote work percentage, employee location, company address, and company size.
+Understanding how salaries are determined is vital for employees, job seekers, and organizations, particularly in data science. It helps individuals and businesses make smart decisions and allows organizations to set fair and competitive pay structures. The complexity of data science roles requires looking at factors like experience, job type, years of service, job title, salary, remote work, location, company address, and size.
 
 # Data Mining task
 
