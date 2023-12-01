@@ -1802,7 +1802,7 @@ print(party_model)
 # References
 
 
--   numbers in IEEE style:D. Singh, "Encoding Data with R \| Pluralsight," Nov. 12, 2019. [Online]. Available: <https://www.pluralsight.com/guides/encoding-data-with-r>
+-   D. Singh, "Encoding Data with R \| Pluralsight," Nov. 12, 2019. [Online]. Available: <https://www.pluralsight.com/guides/encoding-data-with-r>
 
 -   John, "How to Remove Outliers in R \| R-bloggers," R-bloggers, Jan. 19, 2020. [Online]. Available: <https://www.r-bloggers.com/2020/01/how-to-remove-outliers-in-r/>
 
