@@ -491,6 +491,9 @@ ds_salaries <- ds_salaries %>%
   head(ds_salaries)
 ```
 
+
+for our  small dataset with a few attributes, feature selection may not be as critical. With fewer attributes, the computational cost of training a model is generally lower, and the risk of overfitting may be reduced. Additionally, removing features from small datasets may lead to a loss of information that could potentially be valuable for modeling, so we decided not to preform it.
+
 ## snapshot of the original dataset
 
 ```{r}
